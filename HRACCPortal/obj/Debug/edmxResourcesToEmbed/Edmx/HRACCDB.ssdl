@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRACCDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActiveConsultants">
+    <Key>
+      <PropertyRef Name="ActiveConsultantId" />
+    </Key>
+    <Property Name="ActiveConsultantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultantIdFK" Type="int" Nullable="false" />
+    <Property Name="PositionNo" Type="nvarchar(max)" />
+    <Property Name="Hours" Type="nvarchar(max)" />
+    <Property Name="OTHours" Type="nvarchar(max)" />
+    <Property Name="Total" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="IsFirstLogin" Type="bit" />
+    <Property Name="FailedLoginAttempts" Type="int" />
+    <Property Name="IsLocked" Type="bit" />
+    <Property Name="ResetPasswordFlag" Type="bit" />
+  </EntityType>
+  <EntityType Name="BalanceSheet">
+    <Key>
+      <PropertyRef Name="BalanceSheetId" />
+    </Key>
+    <Property Name="BalanceSheetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+    <Property Name="Year" Type="nvarchar(max)" />
+    <Property Name="Month" Type="nvarchar(max)" />
+    <Property Name="InvoiceNumber" Type="nvarchar(max)" />
+    <Property Name="InvoiceAmount" Type="nvarchar(max)" />
+    <Property Name="PaymentReceived" Type="nvarchar(max)" />
+    <Property Name="Balance" Type="nvarchar(max)" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="InactiveDate" Type="nvarchar(max)" />
+    <Property Name="InactiveReason" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyIdPK" />
+    </Key>
+    <Property Name="CompanyIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar(max)" />
+    <Property Name="CompanyPhone" Type="nvarchar(max)" />
+    <Property Name="CompanyEmail" Type="nvarchar(max)" />
+    <Property Name="CompanyAddress1" Type="nvarchar(max)" />
+    <Property Name="CompanyAddress2" Type="nvarchar(max)" />
+    <Property Name="CompanyCity" Type="nvarchar(max)" />
+    <Property Name="CompanyState" Type="nvarchar(max)" />
+    <Property Name="CompanyZip" Type="nvarchar(max)" />
+    <Property Name="CompanyFax" Type="nvarchar(max)" />
+    <Property Name="CompanyLogoImage" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Consultant">
+    <Key>
+      <PropertyRef Name="ConsultantIdPK" />
+    </Key>
+    <Property Name="ConsultantIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="MiddleName" Type="nvarchar(max)" />
+    <Property Name="ConsultantNameAbbrv" Type="nvarchar(max)" />
+    <Property Name="Address1" Type="nvarchar(max)" />
+    <Property Name="Address2" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar(max)" />
+    <Property Name="State" Type="nvarchar(max)" />
+    <Property Name="Zip" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="WorkerType" Type="nvarchar(max)" />
+    <Property Name="StartDate" Type="nvarchar(max)" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="InactiveDate" Type="nvarchar(max)" />
+    <Property Name="InactiveReason" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ConsultantPositionDetails">
+    <Key>
+      <PropertyRef Name="ConsultantPositionIdPK" />
+    </Key>
+    <Property Name="ConsultantPositionIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultantIdFK" Type="int" Nullable="false" />
+    <Property Name="PositionIdFK" Type="int" Nullable="false" />
+    <Property Name="PositionRateIdFK" Type="int" Nullable="false" />
+    <Property Name="PositionStartDate" Type="nvarchar(max)" />
+    <Property Name="PositionEndDate" Type="nvarchar(max)" />
+    <Property Name="PositionActive" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactIdPK" />
+    </Key>
+    <Property Name="ContactIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactName" Type="nvarchar(max)" />
+    <Property Name="ContactPhone" Type="nvarchar(max)" />
+    <Property Name="ContactEmail" Type="nvarchar(max)" />
+    <Property Name="ContactAddress1" Type="nvarchar(max)" />
+    <Property Name="ContactAddress2" Type="nvarchar(max)" />
+    <Property Name="ContactCity" Type="nvarchar(max)" />
+    <Property Name="ContactState" Type="nvarchar(max)" />
+    <Property Name="ContactZip" Type="nvarchar(max)" />
+    <Property Name="ContactFEID" Type="nvarchar(max)" />
+    <Property Name="ContactType" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerIdPK" />
+    </Key>
+    <Property Name="CustomerIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar(max)" />
+    <Property Name="CustomerContactPhone" Type="nvarchar(max)" />
+    <Property Name="CustomerContactEmail" Type="nvarchar(max)" />
+    <Property Name="CustomerFEID" Type="nvarchar(max)" />
+    <Property Name="CustomerContactAddress1" Type="nvarchar(max)" />
+    <Property Name="CustomerContactAddress2" Type="nvarchar(max)" />
+    <Property Name="CustomerContactCity" Type="nvarchar(max)" />
+    <Property Name="CustomerContactState" Type="nvarchar(max)" />
+    <Property Name="CustomerContactZip" Type="nvarchar(max)" />
+    <Property Name="CustomerTerm" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeIdPk" />
+    </Key>
+    <Property Name="EmployeeIdPk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyIdFK" Type="int" Nullable="false" />
+    <Property Name="EmployeeRoleIdFK" Type="int" Nullable="false" />
+    <Property Name="EmployeeName" Type="nvarchar(max)" />
+    <Property Name="EmployeePhone" Type="nvarchar(max)" />
+    <Property Name="EmployeeEmail" Type="nvarchar(max)" />
+    <Property Name="EmployeeAddress1" Type="nvarchar(max)" />
+    <Property Name="EmployeeAddress2" Type="nvarchar(max)" />
+    <Property Name="EmployeeCity" Type="nvarchar(max)" />
+    <Property Name="EmployeeState" Type="nvarchar(max)" />
+    <Property Name="EmployeeZip" Type="nvarchar(max)" />
+    <Property Name="EmployeeTitle" Type="nvarchar(max)" />
+    <Property Name="EmployeeType" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeRole">
+    <Key>
+      <PropertyRef Name="EmployeeRoleIdPK" />
+    </Key>
+    <Property Name="EmployeeRoleIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeRoleName" Type="nchar" MaxLength="10" />
+    <Property Name="EmployeeRoleActive" Type="nchar" MaxLength="10" />
+    <Property Name="Inactive" Type="nchar" MaxLength="10" />
+    <Property Name="InactiveReason" Type="nchar" MaxLength="10" />
+    <Property Name="DateAdded" Type="nchar" MaxLength="10" />
+    <Property Name="DateUpdated" Type="nchar" MaxLength="10" />
+    <Property Name="AddedBy" Type="nchar" MaxLength="10" />
+    <Property Name="UpdatedBy" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Employer">
+    <Key>
+      <PropertyRef Name="EmployerIdPK" />
+    </Key>
+    <Property Name="EmployerIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployerName" Type="nvarchar(max)" />
+    <Property Name="EmployerContactPhone" Type="nvarchar(max)" />
+    <Property Name="EmployerContactEmail" Type="nvarchar(max)" />
+    <Property Name="EmployerContactAddress1" Type="nvarchar(max)" />
+    <Property Name="EmployerContactAddress2" Type="nvarchar(max)" />
+    <Property Name="EmployerContactCity" Type="nvarchar(max)" />
+    <Property Name="EmployerContactState" Type="nvarchar(max)" />
+    <Property Name="EmployerContactZip" Type="nvarchar(max)" />
+    <Property Name="EmployerFEID" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceIdPK" />
+    </Key>
+    <Property Name="InvoiceIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="nvarchar(max)" />
+    <Property Name="Year" Type="nvarchar(max)" />
+    <Property Name="Month" Type="nvarchar(max)" />
+    <Property Name="InvoiceDate" Type="nvarchar(max)" />
+    <Property Name="DueDate" Type="nvarchar(max)" />
+    <Property Name="ConsultantIdFK" Type="int" />
+    <Property Name="ConsultantPositionIdFK" Type="int" />
+    <Property Name="RegularHours" Type="nvarchar(max)" />
+    <Property Name="OvertimeHours" Type="nvarchar(max)" />
+    <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="InvoiceGeneration">
+    <Key>
+      <PropertyRef Name="InvoiceGenerationId" />
+    </Key>
+    <Property Name="InvoiceGenerationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceDate" Type="nvarchar(max)" />
+    <Property Name="InvoiceMonth" Type="nvarchar(max)" />
+    <Property Name="InvoiceDueDate" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="InvoiceReconcile">
+    <Key>
+      <PropertyRef Name="InvoiceReconcileIdPK" />
+    </Key>
+    <Property Name="InvoiceReconcileIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InvoiceIdFK" Type="int" Nullable="false" />
+    <Property Name="ReconcileIdFK" Type="int" Nullable="false" />
+    <Property Name="Reconcile" Type="nvarchar(max)" />
+    <Property Name="InvoiceAmount" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="InvoiceSubmission">
+    <Key>
+      <PropertyRef Name="InvoiceSubmissionId" />
+    </Key>
+    <Property Name="InvoiceSubmissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+    <Property Name="Year" Type="nvarchar(max)" />
+    <Property Name="Month" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PaymentsReceived">
+    <Key>
+      <PropertyRef Name="PaymentsReceivedId" />
+    </Key>
+    <Property Name="PaymentsReceivedId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="nvarchar(max)" />
+    <Property Name="InvoiceAmount" Type="nvarchar(max)" />
+    <Property Name="InvoiceDueDate" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionIdPK" />
+    </Key>
+    <Property Name="PositionIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+    <Property Name="PositionNumber" Type="nvarchar(max)" />
+    <Property Name="PositionTitle" Type="nvarchar(max)" />
+    <Property Name="PositionFamily" Type="nvarchar(max)" />
+    <Property Name="PositionScopeVariant" Type="nvarchar(max)" />
+    <Property Name="PurchaseOrderNo" Type="nvarchar(max)" />
+    <Property Name="PurchaseRequisitionNo" Type="nvarchar(max)" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="InactiveDate" Type="nvarchar(max)" />
+    <Property Name="InactiveReason" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PositionRate">
+    <Key>
+      <PropertyRef Name="PositionRateIdPK" />
+    </Key>
+    <Property Name="PositionRateIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PositionIdFK" Type="int" Nullable="false" />
+    <Property Name="FiscalYearStart" Type="nvarchar(max)" />
+    <Property Name="FiscalYearEnd" Type="nvarchar(max)" />
+    <Property Name="FiscalYearAbbrv" Type="nvarchar(max)" />
+    <Property Name="Rate" Type="int" />
+    <Property Name="OvertimeRate" Type="int" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="InactiveDate" Type="nvarchar(max)" />
+    <Property Name="InactiveReason" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="QuaterlySalesReport">
+    <Key>
+      <PropertyRef Name="QuaterlySalesReportIdPK" />
+    </Key>
+    <Property Name="QuaterlySalesReportIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+    <Property Name="Quarter" Type="nvarchar(max)" />
+    <Property Name="Month" Type="nvarchar(max)" />
+    <Property Name="ConsultantName" Type="nvarchar(max)" />
+    <Property Name="InvoiceAmount" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Reconcile">
+    <Key>
+      <PropertyRef Name="ReconcileIdPK" />
+    </Key>
+    <Property Name="ReconcileIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CheckNumber" Type="nvarchar(max)" />
+    <Property Name="CheckRecievedDate" Type="nvarchar(max)" />
+    <Property Name="CheckAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SecurityQuestions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Question" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="AnswerHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubContractor">
+    <Key>
+      <PropertyRef Name="SubContractorIdPK" />
+    </Key>
+    <Property Name="SubContractorIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubContractorName" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactPhone" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactEmail" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactAddress1" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactAddress2" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactCity" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactState" Type="nvarchar(max)" />
+    <Property Name="SubContractorFEID" Type="nvarchar(max)" />
+    <Property Name="SubContractorContactZip" Type="nvarchar(max)" />
+    <Property Name="SubContractorTerm" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="WorkerIdPK" />
+    </Key>
+    <Property Name="WorkerIdPK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkerName" Type="nvarchar(max)" />
+    <Property Name="WorkerPhone" Type="nvarchar(max)" />
+    <Property Name="WorkerEmail" Type="nvarchar(max)" />
+    <Property Name="WorkerTitle" Type="nvarchar(max)" />
+    <Property Name="WorkerSalary" Type="nvarchar(max)" />
+    <Property Name="WorkerAddress1" Type="nvarchar(max)" />
+    <Property Name="WorkerAddress2" Type="nvarchar(max)" />
+    <Property Name="WorkerCity" Type="nvarchar(max)" />
+    <Property Name="WorkerState" Type="nvarchar(max)" />
+    <Property Name="WorkerZip" Type="nvarchar(max)" />
+    <Property Name="DateAdded" Type="nvarchar(max)" />
+    <Property Name="DateUpdated" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__SecurityQ__UserI__1F63A897">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="SecurityQuestions" Type="Self.SecurityQuestions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SecurityQuestions">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HRACCDBModelStoreContainer">
+    <EntitySet Name="ActiveConsultants" EntityType="Self.ActiveConsultants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BalanceSheet" EntityType="Self.BalanceSheet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Consultant" EntityType="Self.Consultant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsultantPositionDetails" EntityType="Self.ConsultantPositionDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employer" EntityType="Self.Employer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceGeneration" EntityType="Self.InvoiceGeneration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceReconcile" EntityType="Self.InvoiceReconcile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceSubmission" EntityType="Self.InvoiceSubmission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaymentsReceived" EntityType="Self.PaymentsReceived" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PositionRate" EntityType="Self.PositionRate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QuaterlySalesReport" EntityType="Self.QuaterlySalesReport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reconcile" EntityType="Self.Reconcile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SecurityQuestions" EntityType="Self.SecurityQuestions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubContractor" EntityType="Self.SubContractor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="SecurityQuestions" EntitySet="SecurityQuestions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

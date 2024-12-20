@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRACCDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyIdPK" />
+    </Key>
+    <Property Name="CompanyIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyLogoImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyFax" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Consultant">
+    <Key>
+      <PropertyRef Name="ConsultantIdPK" />
+    </Key>
+    <Property Name="ConsultantIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConsultantNameAbbrv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="InactiveDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InactiveReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="EmployeeRole">
+    <Key>
+      <PropertyRef Name="EmployeeRoleIdPK" />
+    </Key>
+    <Property Name="EmployeeRoleIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeRoleName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="EmployeeRoleActive" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Inactive" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="InactiveReason" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="HRACCDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="Consultants" EntityType="Self.Consultant" />
+    <EntitySet Name="EmployeeRoles" EntityType="Self.EmployeeRole" />
+    <EntitySet Name="Positions" EntityType="HRACCDBModel.Position" />
+    <AssociationSet Name="FK_Position_Customer" Association="HRACCDBModel.FK_Position_Customer">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Position1" EntitySet="Positions" />
+    </AssociationSet>
+    <EntitySet Name="PositionRates" EntityType="HRACCDBModel.PositionRate" />
+    <EntitySet Name="Invoices" EntityType="HRACCDBModel.Invoice" />
+    <EntitySet Name="InvoiceReconciles" EntityType="HRACCDBModel.InvoiceReconcile" />
+    <EntitySet Name="Reconciles" EntityType="HRACCDBModel.Reconcile" />
+    <EntitySet Name="ConsultantPositionDetails" EntityType="HRACCDBModel.ConsultantPositionDetail" />
+    <EntitySet Name="UserDetails" EntityType="HRACCDBModel.UserDetail" />
+    <EntitySet Name="ActiveConsultants" EntityType="HRACCDBModel.ActiveConsultant" />
+    <EntitySet Name="InvoiceGenerations" EntityType="HRACCDBModel.InvoiceGeneration" />
+    <EntitySet Name="InvoiceSubmissions" EntityType="HRACCDBModel.InvoiceSubmission" />
+    <AssociationSet Name="FK_InvoiceGeneration_InvoiceGeneration" Association="HRACCDBModel.FK_InvoiceGeneration_InvoiceGeneration">
+      <End Role="InvoiceGeneration" EntitySet="InvoiceGenerations" />
+      <End Role="InvoiceGeneration1" EntitySet="InvoiceGenerations" />
+    </AssociationSet>
+    <EntitySet Name="QuaterlySalesReports" EntityType="HRACCDBModel.QuaterlySalesReport" />
+    <EntitySet Name="PaymentsReceiveds" EntityType="HRACCDBModel.PaymentsReceived" />
+    <EntitySet Name="Employers" EntityType="HRACCDBModel.Employer" />
+    <EntitySet Name="Customers" EntityType="HRACCDBModel.Customer" />
+    <EntitySet Name="Employees" EntityType="HRACCDBModel.Employee" />
+    <EntitySet Name="Workers" EntityType="HRACCDBModel.Worker" />
+    <EntitySet Name="SubContractors" EntityType="HRACCDBModel.SubContractor" />
+    <EntitySet Name="BalanceSheets" EntityType="HRACCDBModel.BalanceSheet" />
+    <EntitySet Name="Contacts" EntityType="HRACCDBModel.Contact" />
+    <EntitySet Name="SecurityQuestions" EntityType="HRACCDBModel.SecurityQuestion" />
+    <EntitySet Name="AspNetUsers" EntityType="HRACCDBModel.AspNetUser" />
+    <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="HRACCDBModel.FK__SecurityQ__UserI__1F63A897">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="SecurityQuestion" EntitySet="SecurityQuestions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PositionIdPK" />
+    </Key>
+    <Property Name="PositionIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="PositionNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionFamily" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionScopeVariant" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PurchaseOrderNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PurchaseRequisitionNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="InactiveDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InactiveReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Position1" Relationship="HRACCDBModel.FK_Position_Customer" FromRole="Position" ToRole="Position1" />
+    <NavigationProperty Name="Position2" Relationship="HRACCDBModel.FK_Position_Customer" FromRole="Position1" ToRole="Position" />
+  </EntityType>
+  <Association Name="FK_Position_Customer">
+    <End Type="HRACCDBModel.Position" Role="Position" Multiplicity="1" />
+    <End Type="HRACCDBModel.Position" Role="Position1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionIdPK" />
+      </Principal>
+      <Dependent Role="Position1">
+        <PropertyRef Name="PositionIdPK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PositionRate">
+    <Key>
+      <PropertyRef Name="PositionRateIdPK" />
+    </Key>
+    <Property Name="PositionRateIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionIdFK" Type="Int32" Nullable="false" />
+    <Property Name="FiscalYearStart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FiscalYearEnd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FiscalYearAbbrv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rate" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="InactiveDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InactiveReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OvertimeRate" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceIdPK" />
+    </Key>
+    <Property Name="InvoiceIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Month" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DueDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConsultantIdFK" Type="Int32" />
+    <Property Name="ConsultantPositionIdFK" Type="Int32" />
+    <Property Name="RegularHours" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OvertimeHours" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="InvoiceReconcile">
+    <Key>
+      <PropertyRef Name="InvoiceReconcileIdPK" />
+    </Key>
+    <Property Name="InvoiceReconcileIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceIdFK" Type="Int32" Nullable="false" />
+    <Property Name="ReconcileIdFK" Type="Int32" Nullable="false" />
+    <Property Name="Reconcile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Reconcile">
+    <Key>
+      <PropertyRef Name="ReconcileIdPK" />
+    </Key>
+    <Property Name="ReconcileIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CheckNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckRecievedDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CheckAmount" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ConsultantPositionDetail">
+    <Key>
+      <PropertyRef Name="ConsultantPositionIdPK" />
+    </Key>
+    <Property Name="ConsultantPositionIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConsultantIdFK" Type="Int32" Nullable="false" />
+    <Property Name="PositionIdFK" Type="Int32" Nullable="false" />
+    <Property Name="PositionStartDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionEndDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionActive" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PositionRateIdFK" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ActiveConsultant">
+    <Key>
+      <PropertyRef Name="ActiveConsultantId" />
+    </Key>
+    <Property Name="ActiveConsultantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConsultantIdFK" Type="Int32" Nullable="false" />
+    <Property Name="PositionNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Hours" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OTHours" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="InvoiceGeneration">
+    <Key>
+      <PropertyRef Name="InvoiceGenerationId" />
+    </Key>
+    <Property Name="InvoiceGenerationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceMonth" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceDueDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoiceGeneration1" Relationship="HRACCDBModel.FK_InvoiceGeneration_InvoiceGeneration" FromRole="InvoiceGeneration" ToRole="InvoiceGeneration1" />
+    <NavigationProperty Name="InvoiceGeneration2" Relationship="HRACCDBModel.FK_InvoiceGeneration_InvoiceGeneration" FromRole="InvoiceGeneration1" ToRole="InvoiceGeneration" />
+  </EntityType>
+  <EntityType Name="InvoiceSubmission">
+    <Key>
+      <PropertyRef Name="InvoiceSubmissionId" />
+    </Key>
+    <Property Name="InvoiceSubmissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Month" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_InvoiceGeneration_InvoiceGeneration">
+    <End Type="HRACCDBModel.InvoiceGeneration" Role="InvoiceGeneration" Multiplicity="1" />
+    <End Type="HRACCDBModel.InvoiceGeneration" Role="InvoiceGeneration1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="InvoiceGeneration">
+        <PropertyRef Name="InvoiceGenerationId" />
+      </Principal>
+      <Dependent Role="InvoiceGeneration1">
+        <PropertyRef Name="InvoiceGenerationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="QuaterlySalesReport">
+    <Key>
+      <PropertyRef Name="QuaterlySalesReportIdPK" />
+    </Key>
+    <Property Name="QuaterlySalesReportIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="Quarter" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Month" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConsultantName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PaymentsReceived">
+    <Key>
+      <PropertyRef Name="PaymentsReceivedId" />
+    </Key>
+    <Property Name="PaymentsReceivedId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceDueDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Employer">
+    <Key>
+      <PropertyRef Name="EmployerIdPK" />
+    </Key>
+    <Property Name="EmployerIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerContactZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployerFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerIdPK" />
+    </Key>
+    <Property Name="CustomerIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerContactZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerTerm" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="CustomerFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeIdPk" />
+    </Key>
+    <Property Name="EmployeeIdPk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyIdFK" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeRoleIdFK" Type="Int32" Nullable="false" />
+    <Property Name="EmployeeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeePhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="EmployeeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="WorkerIdPK" />
+    </Key>
+    <Property Name="WorkerIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerSalary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WorkerZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubContractor">
+    <Key>
+      <PropertyRef Name="SubContractorIdPK" />
+    </Key>
+    <Property Name="SubContractorIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubContractorName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorContactZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubContractorTerm" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <Property Name="SubContractorFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="BalanceSheet">
+    <Key>
+      <PropertyRef Name="BalanceSheetId" />
+    </Key>
+    <Property Name="BalanceSheetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Month" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentReceived" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="InactiveDate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InactiveReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactIdPK" />
+    </Key>
+    <Property Name="ContactIdPK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContactName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactAddress1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactCity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactZip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SecurityQuestion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Question" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerHash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="HRACCDBModel.FK__SecurityQ__UserI__1F63A897" FromRole="SecurityQuestion" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="IsFirstLogin" Type="Boolean" />
+    <Property Name="FailedLoginAttempts" Type="Int32" />
+    <Property Name="IsLocked" Type="Boolean" />
+    <Property Name="ResetPasswordFlag" Type="Boolean" />
+    <NavigationProperty Name="SecurityQuestions" Relationship="HRACCDBModel.FK__SecurityQ__UserI__1F63A897" FromRole="AspNetUser" ToRole="SecurityQuestion" />
+  </EntityType>
+  <Association Name="FK__SecurityQ__UserI__1F63A897">
+    <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="HRACCDBModel.SecurityQuestion" Role="SecurityQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SecurityQuestion">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
