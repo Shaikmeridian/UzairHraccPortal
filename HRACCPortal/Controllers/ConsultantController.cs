@@ -13,9 +13,11 @@ using HRACCPortal.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Runtime.CompilerServices;
+using HRACCPortal.Helpers;
 
 namespace HRACCPortal.Controllers
 {
+    [RoleAuthorize("2", "4")]
     [Authorize]
     public class ConsultantController : Controller
     {
@@ -79,6 +81,7 @@ namespace HRACCPortal.Controllers
         // GET: Consultant
         public ActionResult Index()
         {
+            
             return View();
         }
 
@@ -107,7 +110,8 @@ namespace HRACCPortal.Controllers
                         ConfirmPassword = randomPassword,
                         PhoneNumber = consultant.Phone,
                         Active = consultant.Active,
-                        UserName = consultant.UserName
+                        UserName = consultant.UserName,
+                        RoleId ="4",
                     };
 
 
@@ -141,6 +145,7 @@ namespace HRACCPortal.Controllers
 
         public ActionResult ViewConsultants()
         {
+            
             cls.GetConsultants();
             return View(cls);
         }

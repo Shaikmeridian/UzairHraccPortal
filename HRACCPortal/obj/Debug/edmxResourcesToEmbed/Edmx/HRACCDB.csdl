@@ -99,6 +99,29 @@
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="SecurityQuestion" EntitySet="SecurityQuestions" />
     </AssociationSet>
+    <EntitySet Name="AspNetRoles" EntityType="HRACCDBModel.AspNetRole" />
+    <AssociationSet Name="FK_AspNetUsers_AspNetRoles" Association="HRACCDBModel.FK_AspNetUsers_AspNetRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="EmployeeEmployers" EntityType="HRACCDBModel.EmployeeEmployer" />
+    <AssociationSet Name="FK__EmployeeE__Emplo__345EC57D" Association="HRACCDBModel.FK__EmployeeE__Emplo__345EC57D">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeEmployer" EntitySet="EmployeeEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeE__Emplo__3552E9B6" Association="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="EmployeeEmployer" EntitySet="EmployeeEmployers" />
+    </AssociationSet>
+    <EntitySet Name="CustomerContacts" EntityType="HRACCDBModel.CustomerContact" />
+    <AssociationSet Name="FK__CustomerC__Conta__2180FB33" Association="HRACCDBModel.FK__CustomerC__Conta__2180FB33">
+      <End Role="Contact" EntitySet="Contacts" />
+      <End Role="CustomerContact" EntitySet="CustomerContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerC__Custo__208CD6FA" Association="HRACCDBModel.FK__CustomerC__Custo__208CD6FA">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerContact" EntitySet="CustomerContacts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
     <Key>
@@ -332,6 +355,7 @@
     <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="Employer" ToRole="EmployeeEmployer" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -353,6 +377,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="CustomerFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="Customer" ToRole="CustomerContact" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -376,6 +401,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="EmployeeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__345EC57D" FromRole="Employee" ToRole="EmployeeEmployer" />
   </EntityType>
   <EntityType Name="Worker">
     <Key>
@@ -459,6 +485,7 @@
     <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Conta__2180FB33" FromRole="Contact" ToRole="CustomerContact" />
   </EntityType>
   <EntityType Name="SecurityQuestion">
     <Key>
@@ -491,6 +518,8 @@
     <Property Name="IsLocked" Type="Boolean" />
     <Property Name="ResetPasswordFlag" Type="Boolean" />
     <NavigationProperty Name="SecurityQuestions" Relationship="HRACCDBModel.FK__SecurityQ__UserI__1F63A897" FromRole="AspNetUser" ToRole="SecurityQuestion" />
+    <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetRole" Relationship="HRACCDBModel.FK_AspNetUsers_AspNetRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
   </EntityType>
   <Association Name="FK__SecurityQ__UserI__1F63A897">
     <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -501,6 +530,95 @@
       </Principal>
       <Dependent Role="SecurityQuestion">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="HRACCDBModel.FK_AspNetUsers_AspNetRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_AspNetUsers_AspNetRoles">
+    <End Type="HRACCDBModel.AspNetRole" Role="AspNetRole" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUser">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="EmployeeEmployer">
+    <Key>
+      <PropertyRef Name="EmployeeEmployerId" />
+    </Key>
+    <Property Name="EmployeeEmployerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeIdFK" Type="Int32" Nullable="false" />
+    <Property Name="EmployerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__345EC57D" FromRole="EmployeeEmployer" ToRole="Employee" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="EmployeeEmployer" ToRole="Employer" />
+  </EntityType>
+  <Association Name="FK__EmployeeE__Emplo__345EC57D">
+    <End Type="HRACCDBModel.Employee" Role="Employee" Multiplicity="1" />
+    <End Type="HRACCDBModel.EmployeeEmployer" Role="EmployeeEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeIdPk" />
+      </Principal>
+      <Dependent Role="EmployeeEmployer">
+        <PropertyRef Name="EmployeeIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeE__Emplo__3552E9B6">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+    <End Type="HRACCDBModel.EmployeeEmployer" Role="EmployeeEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="EmployeeEmployer">
+        <PropertyRef Name="EmployerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CustomerContact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="ContactId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Contact" Relationship="HRACCDBModel.FK__CustomerC__Conta__2180FB33" FromRole="CustomerContact" ToRole="Contact" />
+    <NavigationProperty Name="Customer" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="CustomerContact" ToRole="Customer" />
+  </EntityType>
+  <Association Name="FK__CustomerC__Conta__2180FB33">
+    <End Type="HRACCDBModel.Contact" Role="Contact" Multiplicity="1" />
+    <End Type="HRACCDBModel.CustomerContact" Role="CustomerContact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contact">
+        <PropertyRef Name="ContactIdPK" />
+      </Principal>
+      <Dependent Role="CustomerContact">
+        <PropertyRef Name="ContactId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerC__Custo__208CD6FA">
+    <End Type="HRACCDBModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="HRACCDBModel.CustomerContact" Role="CustomerContact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="CustomerContact">
+        <PropertyRef Name="CustomerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

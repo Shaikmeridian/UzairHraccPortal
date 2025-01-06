@@ -60,5 +60,86 @@ namespace HRACCPortal.Controllers
             ContactModel cl = cls.GetContactById(id);
             return Json(new { cl = cl, JsonRequestBehavior.AllowGet });
         }
+
+        [HttpGet]
+        public ActionResult AssignContact(int customerId)
+        {
+            ViewBag.CustomerId = customerId;
+
+            var contacts = entities.Contacts
+                             .Select(c => new ContactModel
+                             {
+                                 ContactIdPK = c.ContactIdPK,
+                                 ContactName = c.ContactName,
+                                 ContactEmail = c.ContactEmail,
+                                 ContactPhone = c.ContactPhone,
+
+                             })
+                             .ToList();
+
+            return View(contacts);
+        }
+
+        [HttpPost]
+        public JsonResult SaveCustomerContacts(int customerId, List<int> selectedContactIds)
+        {
+            // Get the existing contacts for the customer
+            var existingContacts = entities.CustomerContacts.Where(cc => cc.CustomerId == customerId).ToList();
+
+            // Remove existing contacts
+            if (existingContacts.Count > 0)
+            {
+                // Remove existing contacts
+                foreach (var contact in existingContacts)
+                {
+                    entities.CustomerContacts.DeleteObject(contact);
+                }
+            }
+            // Add new contacts
+            if (selectedContactIds != null && selectedContactIds.Count > 0)
+            {
+                foreach (var contactId in selectedContactIds)
+                {
+                    var newContact = new CustomerContact
+                    {
+                        CustomerId = customerId,
+                        ContactId = contactId
+                    };
+                    entities.CustomerContacts.AddObject(newContact);
+                }
+            }
+
+            // Save changes to the database
+            entities.SaveChanges();
+
+            return Json(new { success = true, message = "Contacts successfully assigned!" });
+        }
+
+
+        [HttpGet]
+        public ActionResult ViewAssignedContact(int customerId)
+        {
+            // Step 1: Find all Contact IDs associated with the given Customer ID
+            var contactIds = entities.CustomerContacts
+                                    .Where(cc => cc.CustomerId == customerId)
+                                    .Select(cc => cc.ContactId)
+                                    .ToList();
+
+            // Step 2: Query the Contact table to get the details of those Contacts
+            var assignedContacts = entities.Contacts
+                                            .Where(c => contactIds.Contains(c.ContactIdPK))
+                                            .Select(c => new ContactModel
+                                            {
+                                                ContactIdPK = c.ContactIdPK,
+                                                ContactName = c.ContactName,
+                                                ContactEmail = c.ContactEmail,
+                                                ContactPhone = c.ContactPhone
+                                            })
+                                            .ToList();
+
+            // Step 3: Return the result to the view
+            return View(assignedContacts);
+        }
+
     }
 }

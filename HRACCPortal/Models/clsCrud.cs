@@ -357,6 +357,86 @@ namespace HRACCPortal.Models
             return employerModel;
         }
 
+        public EmployerModel GetEmployerByEmail(string email)
+        {
+            var employer = entities.Employers.Where(x => x.EmployerContactEmail == email).FirstOrDefault();
+
+            // Check if employer exists to prevent null reference issues.
+            if (employer == null)
+                return null;
+
+            var employerModel = new EmployerModel
+            {
+                AddedBy = employer.AddedBy,
+                EmployerContactAddress1 = employer.EmployerContactAddress1,
+                EmployerContactAddress2 = employer.EmployerContactAddress2,
+                EmployerContactCity = employer.EmployerContactCity,
+                EmployerContactEmail = employer.EmployerContactEmail,
+                EmployerContactPhone = employer.EmployerContactPhone,
+                EmployerContactState = employer.EmployerContactState,
+                EmployerContactZip = employer.EmployerContactZip,
+                EmployerName = employer.EmployerName,
+                EmployerFEID = employer.EmployerFEID,
+                DateAdded = employer.DateAdded,
+                DateUpdated = employer.DateUpdated,
+                UpdatedBy = employer.UpdatedBy,
+                EmployerIdPK = employer.EmployerIdPK,
+                isActive = employer.isActive
+            };
+
+            // Initialize the EmployerList for compatibility with the view.
+            EmployerList = new List<EmployerModel> { employerModel };
+
+            return employerModel;
+        }
+
+        public void GetEmployersForEmployee(string email)
+        {
+            // Get EmployeeIdPK for the logged-in email
+            var employee = entities.Employees.FirstOrDefault(x => x.EmployeeEmail == email);
+            if (employee == null)
+            {
+                EmployerList = new List<EmployerModel>(); // No employers found
+                return;
+            }
+
+            var employeeIdPK = employee.EmployeeIdPk;
+
+            // Get EmployerIdFKs from EmployeeEmployer table
+            var employerIds = entities.EmployeeEmployers
+                                      .Where(x => x.EmployeeIdFK == employeeIdPK)
+                                      .Select(x => x.EmployerIdFK)
+                                      .ToList();
+
+            // Fetch employer details
+            EmployerList = entities.Employers
+                                   .Where(x => employerIds.Contains(x.EmployerIdPK))
+                                   .Select(employer => new EmployerModel
+                                   {
+                                       EmployerIdPK = employer.EmployerIdPK,
+                                       EmployerName = employer.EmployerName,
+                                       EmployerContactEmail = employer.EmployerContactEmail,
+                                       // Add other fields as needed
+                                       AddedBy = employer.AddedBy,
+                                       EmployerContactAddress1 = employer.EmployerContactAddress1,
+                                       EmployerContactAddress2 = employer.EmployerContactAddress2,
+                                       EmployerContactCity = employer.EmployerContactCity,
+                                     
+                                       EmployerContactPhone = employer.EmployerContactPhone,
+                                       EmployerContactState = employer.EmployerContactState,
+                                       EmployerContactZip = employer.EmployerContactZip,
+                                        
+                                       EmployerFEID = employer.EmployerFEID,
+                                       DateAdded = employer.DateAdded,
+                                       // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
+                                      
+                                       // DateUpdated = customer.DateUpdated,
+                                       UpdatedBy = employer.UpdatedBy,
+                                    
+                                       isActive = employer.isActive
+                                   }).ToList();
+        }
+
         #endregion
 
 
@@ -457,8 +537,95 @@ namespace HRACCPortal.Models
                                    // DateUpdated = customer.DateUpdated,
                                    UpdatedBy = employee.UpdatedBy,
                                    EmployeeIdPk = employee.EmployeeIdPk,
-                                   
+
                                }).ToList();
+        }
+
+        public void GetEmployeesForEmployer(string employerEmail)
+        {
+            // Get EmployerIdPK based on the logged-in employer's email
+            var employer = entities.Employers.FirstOrDefault(x => x.EmployerContactEmail == employerEmail);
+
+            if (employer == null)
+            {
+                EmployeeList = new List<EmployeeModel>(); // No employees found
+                return;
+            }
+
+            var employerIdPK = employer.EmployerIdPK;
+
+            // Fetch employees for this employer from EmployeeEmployer table
+            var employeeIds = entities.EmployeeEmployers
+                                      .Where(x => x.EmployerIdFK == employerIdPK)
+                                      .Select(x => x.EmployeeIdFK)
+                                      .Distinct()
+                                      .ToList();
+
+            EmployeeList = entities.Employees
+                                   .Where(x => employeeIds.Contains(x.EmployeeIdPk))
+                                   .Select(employee => new EmployeeModel
+                                   {
+                                       EmployeeIdPk = employee.EmployeeIdPk,
+                                       EmployeeName = employee.EmployeeName,
+                                       EmployeeEmail = employee.EmployeeEmail,
+                                       EmployeePhone = employee.EmployeePhone,
+                                       EmployeeTitle = employee.EmployeeTitle,
+                                       EmployeeAddress1 = employee.EmployeeAddress1,
+                                       EmployeeCity = employee.EmployeeCity,
+                                       EmployeeState = employee.EmployeeState,
+                                       EmployeeZip = employee.EmployeeZip,
+                                       isActive = employee.isActive,
+                                       DateAdded = employee.DateAdded,
+                                      
+                                       UpdatedBy = employee.UpdatedBy,
+                                   }).ToList();
+        }
+
+        public void GetEmployeesForEmployee(string employeeEmail)
+        {
+            // Get EmployeeIdPK for the logged-in email
+            var employee = entities.Employees.FirstOrDefault(x => x.EmployeeEmail == employeeEmail);
+
+            if (employee == null)
+            {
+                EmployeeList = new List<EmployeeModel>(); // No employees found
+                return;
+            }
+
+            var employeeIdPK = employee.EmployeeIdPk;
+
+            // Get EmployerIdFKs from EmployeeEmployer table for this employee
+            var employerIds = entities.EmployeeEmployers
+                                      .Where(x => x.EmployeeIdFK == employeeIdPK)
+                                      .Select(x => x.EmployerIdFK)
+                                      .Distinct()
+                                      .ToList();
+
+            // Fetch all employees for these employers
+            var employeeIds = entities.EmployeeEmployers
+                                      .Where(x => employerIds.Contains(x.EmployerIdFK))
+                                      .Select(x => x.EmployeeIdFK)
+                                      .Distinct()
+                                      .ToList();
+
+            EmployeeList = entities.Employees
+                                   .Where(x => employeeIds.Contains(x.EmployeeIdPk))
+                                   .Select(employees => new EmployeeModel
+                                   {
+                                       EmployeeIdPk = employees.EmployeeIdPk,
+                                       EmployeeName = employees.EmployeeName,
+                                       EmployeeEmail = employees.EmployeeEmail,
+                                       EmployeePhone = employees.EmployeePhone,
+                                       EmployeeTitle = employees.EmployeeTitle,
+                                       EmployeeAddress1 = employees.EmployeeAddress1,
+                                       EmployeeCity = employees.EmployeeCity,
+                                       EmployeeState = employees.EmployeeState,
+                                       EmployeeZip = employees.EmployeeZip,
+                                       isActive = employees.isActive,
+                                       DateAdded = employees.DateAdded,
+                                    //   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                       UpdatedBy = employees.UpdatedBy,
+                                   }).ToList();
         }
         public EmployeeModel GetEmployeeById(int id)
         {

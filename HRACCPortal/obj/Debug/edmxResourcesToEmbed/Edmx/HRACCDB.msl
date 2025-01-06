@@ -430,6 +430,7 @@
     <EntitySetMapping Name="AspNetUsers">
       <EntityTypeMapping TypeName="HRACCDBModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="ResetPasswordFlag" ColumnName="ResetPasswordFlag" />
           <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
           <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
@@ -445,6 +446,33 @@
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="HRACCDBModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeEmployers">
+      <EntityTypeMapping TypeName="HRACCDBModel.EmployeeEmployer">
+        <MappingFragment StoreEntitySet="EmployeeEmployer">
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <ScalarProperty Name="EmployerIdFK" ColumnName="EmployerIdFK" />
+          <ScalarProperty Name="EmployeeIdFK" ColumnName="EmployeeIdFK" />
+          <ScalarProperty Name="EmployeeEmployerId" ColumnName="EmployeeEmployerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerContacts">
+      <EntityTypeMapping TypeName="HRACCDBModel.CustomerContact">
+        <MappingFragment StoreEntitySet="CustomerContacts">
+          <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -15,6 +15,13 @@
     <Property Name="AddedBy" Type="nvarchar(max)" />
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
   <EntityType Name="AspNetUsers">
     <Key>
       <PropertyRef Name="Id" />
@@ -35,6 +42,7 @@
     <Property Name="FailedLoginAttempts" Type="int" />
     <Property Name="IsLocked" Type="bit" />
     <Property Name="ResetPasswordFlag" Type="bit" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" />
   </EntityType>
   <EntityType Name="BalanceSheet">
     <Key>
@@ -162,6 +170,14 @@
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
     <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="CustomerContacts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="ContactId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Employee">
     <Key>
       <PropertyRef Name="EmployeeIdPk" />
@@ -184,6 +200,15 @@
     <Property Name="AddedBy" Type="nvarchar(max)" />
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
     <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeEmployer">
+    <Key>
+      <PropertyRef Name="EmployeeEmployerId" />
+    </Key>
+    <Property Name="EmployeeEmployerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeIdFK" Type="int" Nullable="false" />
+    <Property Name="EmployerIdFK" Type="int" Nullable="false" />
+    <Property Name="DateAdded" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="EmployeeRole">
     <Key>
@@ -424,7 +449,55 @@
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
     <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
-  <Association Name="FK__SecurityQ__UserI__1F63A897">
+  <Association Name="FK__CustomerC__Conta__2180FB33">
+    <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
+    <End Role="CustomerContacts" Type="Self.CustomerContacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contact">
+        <PropertyRef Name="ContactIdPK" />
+      </Principal>
+      <Dependent Role="CustomerContacts">
+        <PropertyRef Name="ContactId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerC__Custo__208CD6FA">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="CustomerContacts" Type="Self.CustomerContacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="CustomerContacts">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeE__Emplo__22751F6C">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeEmployer" Type="Self.EmployeeEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeIdPk" />
+      </Principal>
+      <Dependent Role="EmployeeEmployer">
+        <PropertyRef Name="EmployeeIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeE__Emplo__236943A5">
+    <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+    <End Role="EmployeeEmployer" Type="Self.EmployeeEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="EmployeeEmployer">
+        <PropertyRef Name="EmployerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SecurityQ__UserI__245D67DE">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="SecurityQuestions" Type="Self.SecurityQuestions" Multiplicity="*" />
     <ReferentialConstraint>
@@ -436,8 +509,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AspNetUsers_AspNetRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUsers">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="HRACCDBModelStoreContainer">
     <EntitySet Name="ActiveConsultants" EntityType="Self.ActiveConsultants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="BalanceSheet" EntityType="Self.BalanceSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
@@ -445,7 +531,9 @@
     <EntitySet Name="ConsultantPositionDetails" EntityType="Self.ConsultantPositionDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerContacts" EntityType="Self.CustomerContacts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeEmployer" EntityType="Self.EmployeeEmployer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employer" EntityType="Self.Employer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
@@ -461,9 +549,29 @@
     <EntitySet Name="SubContractor" EntityType="Self.SubContractor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
+    <AssociationSet Name="FK__CustomerC__Conta__2180FB33" Association="Self.FK__CustomerC__Conta__2180FB33">
+      <End Role="Contact" EntitySet="Contact" />
+      <End Role="CustomerContacts" EntitySet="CustomerContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerC__Custo__208CD6FA" Association="Self.FK__CustomerC__Custo__208CD6FA">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerContacts" EntitySet="CustomerContacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeE__Emplo__22751F6C" Association="Self.FK__EmployeeE__Emplo__22751F6C">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeE__Emplo__236943A5" Association="Self.FK__EmployeeE__Emplo__236943A5">
+      <End Role="Employer" EntitySet="Employer" />
+      <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SecurityQ__UserI__245D67DE" Association="Self.FK__SecurityQ__UserI__245D67DE">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SecurityQuestions" EntitySet="SecurityQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUsers_AspNetRoles" Association="Self.FK_AspNetUsers_AspNetRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

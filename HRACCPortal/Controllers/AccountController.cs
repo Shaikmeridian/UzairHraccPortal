@@ -116,7 +116,8 @@ namespace HRACCPortal.Controllers
                         // Redirect to security questions page if it's the user's first login
                         return RedirectToAction("ResetPasswordModel", "Account", new { IsFirstLogin = user.IsFirstLogin, email = user.Email });
                     }
-
+                    Session["UserRole"] = user.RoleId;
+                    Session["UserEmail"] = user.Email;
                     // Otherwise, redirect to the return URL
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -190,11 +191,13 @@ namespace HRACCPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsFirstLogin = true };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IsFirstLogin = true ,RoleId=model.RoleId};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -209,6 +212,11 @@ namespace HRACCPortal.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult UnauthorizedAccess()
+        {
+            return View();
         }
 
         //public async Task<ActionResult> AddConsultant(ConsultantModel consultant)

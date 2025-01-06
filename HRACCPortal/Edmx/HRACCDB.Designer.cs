@@ -22,6 +22,11 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK_Position_Customer", "Position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Position), "Position1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.Position), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK_InvoiceGeneration_InvoiceGeneration", "InvoiceGeneration", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.InvoiceGeneration), "InvoiceGeneration1", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.InvoiceGeneration), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__SecurityQ__UserI__1F63A897", "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.AspNetUser), "SecurityQuestion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.SecurityQuestion), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK_AspNetUsers_AspNetRoles", "AspNetRole", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.AspNetRole), "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetUser), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__345EC57D", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Employee), "EmployeeEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.EmployeeEmployer), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__3552E9B6", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Employer), "EmployeeEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.EmployeeEmployer), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__CustomerC__Conta__2180FB33", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Contact), "CustomerContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.CustomerContact), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__CustomerC__Custo__208CD6FA", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Customer), "CustomerContact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.CustomerContact), true)]
 
 #endregion
 
@@ -456,6 +461,54 @@ namespace HRACCPortal.Edmx
             }
         }
         private ObjectSet<AspNetUser> _AspNetUsers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AspNetRole> AspNetRoles
+        {
+            get
+            {
+                if ((_AspNetRoles == null))
+                {
+                    _AspNetRoles = base.CreateObjectSet<AspNetRole>("AspNetRoles");
+                }
+                return _AspNetRoles;
+            }
+        }
+        private ObjectSet<AspNetRole> _AspNetRoles;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EmployeeEmployer> EmployeeEmployers
+        {
+            get
+            {
+                if ((_EmployeeEmployers == null))
+                {
+                    _EmployeeEmployers = base.CreateObjectSet<EmployeeEmployer>("EmployeeEmployers");
+                }
+                return _EmployeeEmployers;
+            }
+        }
+        private ObjectSet<EmployeeEmployer> _EmployeeEmployers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CustomerContact> CustomerContacts
+        {
+            get
+            {
+                if ((_CustomerContacts == null))
+                {
+                    _CustomerContacts = base.CreateObjectSet<CustomerContact>("CustomerContacts");
+                }
+                return _CustomerContacts;
+            }
+        }
+        private ObjectSet<CustomerContact> _CustomerContacts;
 
         #endregion
 
@@ -651,6 +704,30 @@ namespace HRACCPortal.Edmx
         public void AddToAspNetUsers(AspNetUser aspNetUser)
         {
             base.AddObject("AspNetUsers", aspNetUser);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AspNetRoles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAspNetRoles(AspNetRole aspNetRole)
+        {
+            base.AddObject("AspNetRoles", aspNetRole);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EmployeeEmployers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEmployeeEmployers(EmployeeEmployer employeeEmployer)
+        {
+            base.AddObject("EmployeeEmployers", employeeEmployer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CustomerContacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCustomerContacts(CustomerContact customerContact)
+        {
+            base.AddObject("CustomerContacts", customerContact);
         }
 
         #endregion
@@ -930,6 +1007,114 @@ namespace HRACCPortal.Edmx
         private global::System.String _UpdatedBy;
         partial void OnUpdatedByChanging(global::System.String value);
         partial void OnUpdatedByChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="AspNetRole")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AspNetRole : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AspNetRole object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static AspNetRole CreateAspNetRole(global::System.String id, global::System.String name)
+        {
+            AspNetRole aspNetRole = new AspNetRole();
+            aspNetRole.Id = id;
+            aspNetRole.Name = name;
+            return aspNetRole;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, false, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.String _Id;
+        partial void OnIdChanging(global::System.String value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_AspNetUsers_AspNetRoles", "AspNetUser")]
+        public EntityCollection<AspNetUser> AspNetUsers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AspNetUser>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetUser");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetUser>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetUser", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -1358,6 +1543,30 @@ namespace HRACCPortal.Edmx
         private Nullable<global::System.Boolean> _ResetPasswordFlag;
         partial void OnResetPasswordFlagChanging(Nullable<global::System.Boolean> value);
         partial void OnResetPasswordFlagChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String RoleId
+        {
+            get
+            {
+                return _RoleId;
+            }
+            set
+            {
+                OnRoleIdChanging(value);
+                ReportPropertyChanging("RoleId");
+                _RoleId = StructuralObject.SetValidValue(value, true, "RoleId");
+                ReportPropertyChanged("RoleId");
+                OnRoleIdChanged();
+            }
+        }
+        private global::System.String _RoleId;
+        partial void OnRoleIdChanging(global::System.String value);
+        partial void OnRoleIdChanged();
 
         #endregion
 
@@ -1381,6 +1590,44 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SecurityQuestion>("HRACCDBModel.FK__SecurityQ__UserI__1F63A897", "SecurityQuestion", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_AspNetUsers_AspNetRoles", "AspNetRole")]
+        public AspNetRole AspNetRole
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetRole>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetRole").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetRole>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetRole").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AspNetRole> AspNetRoleReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetRole>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetRole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AspNetRole>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetRole", value);
                 }
             }
         }
@@ -3479,6 +3726,32 @@ namespace HRACCPortal.Edmx
 
         #endregion
 
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__CustomerC__Conta__2180FB33", "CustomerContact")]
+        public EntityCollection<CustomerContact> CustomerContacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CustomerContact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "CustomerContact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CustomerContact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "CustomerContact", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
     
     /// <summary>
@@ -3894,6 +4167,220 @@ namespace HRACCPortal.Edmx
         private global::System.String _CustomerFEID;
         partial void OnCustomerFEIDChanging(global::System.String value);
         partial void OnCustomerFEIDChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__CustomerC__Custo__208CD6FA", "CustomerContact")]
+        public EntityCollection<CustomerContact> CustomerContacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CustomerContact>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "CustomerContact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CustomerContact>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "CustomerContact", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="CustomerContact")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CustomerContact : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CustomerContact object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="customerId">Initial value of the CustomerId property.</param>
+        /// <param name="contactId">Initial value of the ContactId property.</param>
+        public static CustomerContact CreateCustomerContact(global::System.Int32 id, global::System.Int32 customerId, global::System.Int32 contactId)
+        {
+            CustomerContact customerContact = new CustomerContact();
+            customerContact.Id = id;
+            customerContact.CustomerId = customerId;
+            customerContact.ContactId = contactId;
+            return customerContact;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CustomerId
+        {
+            get
+            {
+                return _CustomerId;
+            }
+            set
+            {
+                OnCustomerIdChanging(value);
+                ReportPropertyChanging("CustomerId");
+                _CustomerId = StructuralObject.SetValidValue(value, "CustomerId");
+                ReportPropertyChanged("CustomerId");
+                OnCustomerIdChanged();
+            }
+        }
+        private global::System.Int32 _CustomerId;
+        partial void OnCustomerIdChanging(global::System.Int32 value);
+        partial void OnCustomerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContactId
+        {
+            get
+            {
+                return _ContactId;
+            }
+            set
+            {
+                OnContactIdChanging(value);
+                ReportPropertyChanging("ContactId");
+                _ContactId = StructuralObject.SetValidValue(value, "ContactId");
+                ReportPropertyChanged("ContactId");
+                OnContactIdChanged();
+            }
+        }
+        private global::System.Int32 _ContactId;
+        partial void OnContactIdChanging(global::System.Int32 value);
+        partial void OnContactIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__CustomerC__Conta__2180FB33", "Contact")]
+        public Contact Contact
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "Contact").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "Contact").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Contact> ContactReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Contact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "Contact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Contact>("HRACCDBModel.FK__CustomerC__Conta__2180FB33", "Contact", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__CustomerC__Custo__208CD6FA", "Customer")]
+        public Customer Customer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "Customer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "Customer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Customer> CustomerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "Customer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("HRACCDBModel.FK__CustomerC__Custo__208CD6FA", "Customer", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -4364,6 +4851,246 @@ namespace HRACCPortal.Edmx
         private global::System.String _EmployeeType;
         partial void OnEmployeeTypeChanging(global::System.String value);
         partial void OnEmployeeTypeChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__345EC57D", "EmployeeEmployer")]
+        public EntityCollection<EmployeeEmployer> EmployeeEmployers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EmployeeEmployer>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "EmployeeEmployer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EmployeeEmployer>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "EmployeeEmployer", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="EmployeeEmployer")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EmployeeEmployer : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EmployeeEmployer object.
+        /// </summary>
+        /// <param name="employeeEmployerId">Initial value of the EmployeeEmployerId property.</param>
+        /// <param name="employeeIdFK">Initial value of the EmployeeIdFK property.</param>
+        /// <param name="employerIdFK">Initial value of the EmployerIdFK property.</param>
+        /// <param name="dateAdded">Initial value of the DateAdded property.</param>
+        public static EmployeeEmployer CreateEmployeeEmployer(global::System.Int32 employeeEmployerId, global::System.Int32 employeeIdFK, global::System.Int32 employerIdFK, global::System.DateTime dateAdded)
+        {
+            EmployeeEmployer employeeEmployer = new EmployeeEmployer();
+            employeeEmployer.EmployeeEmployerId = employeeEmployerId;
+            employeeEmployer.EmployeeIdFK = employeeIdFK;
+            employeeEmployer.EmployerIdFK = employerIdFK;
+            employeeEmployer.DateAdded = dateAdded;
+            return employeeEmployer;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployeeEmployerId
+        {
+            get
+            {
+                return _EmployeeEmployerId;
+            }
+            set
+            {
+                if (_EmployeeEmployerId != value)
+                {
+                    OnEmployeeEmployerIdChanging(value);
+                    ReportPropertyChanging("EmployeeEmployerId");
+                    _EmployeeEmployerId = StructuralObject.SetValidValue(value, "EmployeeEmployerId");
+                    ReportPropertyChanged("EmployeeEmployerId");
+                    OnEmployeeEmployerIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EmployeeEmployerId;
+        partial void OnEmployeeEmployerIdChanging(global::System.Int32 value);
+        partial void OnEmployeeEmployerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployeeIdFK
+        {
+            get
+            {
+                return _EmployeeIdFK;
+            }
+            set
+            {
+                OnEmployeeIdFKChanging(value);
+                ReportPropertyChanging("EmployeeIdFK");
+                _EmployeeIdFK = StructuralObject.SetValidValue(value, "EmployeeIdFK");
+                ReportPropertyChanged("EmployeeIdFK");
+                OnEmployeeIdFKChanged();
+            }
+        }
+        private global::System.Int32 _EmployeeIdFK;
+        partial void OnEmployeeIdFKChanging(global::System.Int32 value);
+        partial void OnEmployeeIdFKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployerIdFK
+        {
+            get
+            {
+                return _EmployerIdFK;
+            }
+            set
+            {
+                OnEmployerIdFKChanging(value);
+                ReportPropertyChanging("EmployerIdFK");
+                _EmployerIdFK = StructuralObject.SetValidValue(value, "EmployerIdFK");
+                ReportPropertyChanged("EmployerIdFK");
+                OnEmployerIdFKChanged();
+            }
+        }
+        private global::System.Int32 _EmployerIdFK;
+        partial void OnEmployerIdFKChanging(global::System.Int32 value);
+        partial void OnEmployerIdFKChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateAdded
+        {
+            get
+            {
+                return _DateAdded;
+            }
+            set
+            {
+                OnDateAddedChanging(value);
+                ReportPropertyChanging("DateAdded");
+                _DateAdded = StructuralObject.SetValidValue(value, "DateAdded");
+                ReportPropertyChanged("DateAdded");
+                OnDateAddedChanged();
+            }
+        }
+        private global::System.DateTime _DateAdded;
+        partial void OnDateAddedChanging(global::System.DateTime value);
+        partial void OnDateAddedChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__345EC57D", "Employee")]
+        public Employee Employee
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "Employee").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "Employee").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Employee> EmployeeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "Employee");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employee>("HRACCDBModel.FK__EmployeeE__Emplo__345EC57D", "Employee", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__3552E9B6", "Employer")]
+        public Employer Employer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "Employer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "Employer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Employer> EmployerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "Employer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "Employer", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -5006,6 +5733,32 @@ namespace HRACCPortal.Edmx
         private global::System.Boolean _isActive;
         partial void OnisActiveChanging(global::System.Boolean value);
         partial void OnisActiveChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__EmployeeE__Emplo__3552E9B6", "EmployeeEmployer")]
+        public EntityCollection<EmployeeEmployer> EmployeeEmployers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<EmployeeEmployer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "EmployeeEmployer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<EmployeeEmployer>("HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6", "EmployeeEmployer", value);
+                }
+            }
+        }
 
         #endregion
 

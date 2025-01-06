@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="loginString-Web.config Connection String" description="loginString Connection String used in web.config by the application to access the database." defaultValue="Data Source=sqldatabasehracc.database.windows.net;Initial Catalog=HRACCDB;User ID=hraccportal;Password=Admin@2025;MultipleActiveResultSets=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Admin\\Desktop\\New\ HRACC\\UzairHraccPortal\\HRACCPortal\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='loginString']/@connectionString" />
+  </parameter>
+  <parameter name="HRACCDBEntities-Web.config Connection String" description="HRACCDBEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Edmx.HRACCDB.csdl|res://*/Edmx.HRACCDB.ssdl|res://*/Edmx.HRACCDB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=sqldatabasehracc.database.windows.net;initial catalog=HRACCDB;User ID=hraccportal;Password=Admin@2025;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Admin\\Desktop\\New\ HRACC\\UzairHraccPortal\\HRACCPortal\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='HRACCDBEntities']/@connectionString" />
+  </parameter>
+</parameters>

@@ -32,6 +32,14 @@
         <EntityTypeShape EntityType="HRACCDBModel.SecurityQuestion" Width="1.5" PointX="15.375" PointY="5.75" />
         <EntityTypeShape EntityType="HRACCDBModel.AspNetUser" Width="1.5" PointX="13.125" PointY="17.625" />
         <AssociationConnector Association="HRACCDBModel.FK__SecurityQ__UserI__1F63A897" />
+        <EntityTypeShape EntityType="HRACCDBModel.AspNetRole" Width="1.5" PointX="15.375" PointY="8.75" />
+        <AssociationConnector Association="HRACCDBModel.FK_AspNetUsers_AspNetRoles" />
+        <EntityTypeShape EntityType="HRACCDBModel.EmployeeEmployer" Width="1.5" PointX="15.625" PointY="11.25" />
+        <AssociationConnector Association="HRACCDBModel.FK__EmployeeE__Emplo__345EC57D" />
+        <AssociationConnector Association="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" />
+        <EntityTypeShape EntityType="HRACCDBModel.CustomerContact" Width="1.5" PointX="18.875" PointY="1.875" />
+        <AssociationConnector Association="HRACCDBModel.FK__CustomerC__Conta__2180FB33" />
+        <AssociationConnector Association="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

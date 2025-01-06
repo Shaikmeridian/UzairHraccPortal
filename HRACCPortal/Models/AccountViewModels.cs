@@ -62,7 +62,7 @@ namespace HRACCPortal.Models
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
 
-        
+
     }
 
     public class RegisterViewModel
@@ -91,6 +91,7 @@ namespace HRACCPortal.Models
 
         public string UserName { get; set; } = string.Empty;
 
+        public string RoleId { get; set; } = "6";
 
     }
 

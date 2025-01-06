@@ -109,7 +109,9 @@
                                                     <!--begin::Action=-->
                                                     <td class="text-end">
                                                         @*<button type="button" class="btn btn-primary btnEdit" id="@item.ConsultantIdPK" onClick="GFG_click(this.id)">Edit</button>*@
+                                                        <a href="/Contact/AssignContact?customerId=@item.CustomerIdPK" class="btn btn-primary">Add Contacts</a>
 
+                                                        <a href="/Contact/ViewAssignedContact?customerId=@item.CustomerIdPK" class="btn btn-primary">View Contacts</a>
 
 
                                                         <a href="javascript:void(0)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="@item.CustomerIdPK" onClick="GFG_click(this.id)">

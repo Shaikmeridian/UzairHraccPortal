@@ -211,6 +211,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\RoleAuthorizeAttribute.cs" />
     <Compile Include="Migrations\202303101906267_InitialCreate.cs" />
     <Compile Include="Migrations\202303101906267_InitialCreate.Designer.cs">
       <DependentUpon>202303101906267_InitialCreate.cs</DependentUpon>
@@ -223,6 +224,7 @@
     <Compile Include="Models\ConsultantPositionDetailsModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\EmployeeEmployerModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -257,6 +259,8 @@
     <Compile Include="ObjectModel\WorkerObjectModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConsultantService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\EmployerService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2478,6 +2482,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\HRACCPortal-Meridian - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\meridianit - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -2566,6 +2571,12 @@
     <Content Include="Views\Account\Lockout.cshtml" />
     <Content Include="Views\Account\ContactAdministrator.cshtml" />
     <Content Include="Views\Account\ResetPasswordForUser.cshtml" />
+    <Content Include="Views\Shared\_AssignEmployer.cshtml" />
+    <Content Include="Views\Account\UnauthorizedAccess.cshtml" />
+    <Content Include="Views\Employer\AssignEmployers.cshtml" />
+    <Content Include="Views\Employer\ViewAssignedEmployers.cshtml" />
+    <Content Include="Views\Contact\AssignContact.cshtml" />
+    <Content Include="Views\Contact\ViewAssignedContact.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

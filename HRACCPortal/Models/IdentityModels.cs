@@ -12,8 +12,11 @@ namespace HRACCPortal.Models
         public ApplicationUser()
         {
             // Ensure IsLocked is initialized to a valid boolean value
+            IsFirstLogin = true;
             IsLocked = false;  // Default value is false (not locked)
-            FailedLoginAttempts = 0; // Initialize FailedLoginAttempts to 0
+            FailedLoginAttempts = 0;
+            
+           // Initialize FailedLoginAttempts to 0
         }
         public bool IsFirstLogin { get; set; }
 
@@ -21,6 +24,7 @@ namespace HRACCPortal.Models
 
         public bool IsLocked { get; set; }
 
+        public string RoleId { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
