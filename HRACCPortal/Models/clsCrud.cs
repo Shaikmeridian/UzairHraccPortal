@@ -214,6 +214,68 @@ namespace HRACCPortal.Models
                                    isActive = customer.isActive
                                }).ToList();
         }
+
+        public void GetCustomersForEmployer(string employerEmail)
+        {
+            CustomerList = (from ce in entities.CustomerEmployers
+                            join c in entities.Customers on ce.CustomerIdFK equals c.CustomerIdPK
+                            join e in entities.Employers on ce.EmployerIdFK equals e.EmployerIdPK
+                            where e.EmployerContactEmail == employerEmail
+                            select c)
+                            .AsEnumerable()
+                            .Select(customer => new CustomerModel
+                            {
+                                AddedBy = customer.AddedBy,
+                                CustomerContactAddress1 = customer.CustomerContactAddress1,
+                                CustomerContactAddress2 = customer.CustomerContactAddress2,
+                                CustomerContactCity = customer.CustomerContactCity,
+                                CustomerContactEmail = customer.CustomerContactEmail,
+                                CustomerContactPhone = customer.CustomerContactPhone,
+                                CustomerContactState = customer.CustomerContactState,
+                                CustomerContactZip = customer.CustomerContactZip,
+                                CustomerName = customer.CustomerName,
+                                CustomerFEID = customer.CustomerFEID,
+                                CustomerTerm = customer.CustomerTerm,
+                                DateAdded = customer.DateAdded,
+                                DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                UpdatedBy = customer.UpdatedBy,
+                                CustomerIdPK = customer.CustomerIdPK,
+                                isActive = customer.isActive
+                            }).ToList();
+        }
+
+
+        public void GetCustomersForEmployee(string employeeEmail)
+        {
+            CustomerList = (from ee in entities.EmployeeEmployers
+                            join ce in entities.CustomerEmployers on ee.EmployerIdFK equals ce.EmployerIdFK
+                            join c in entities.Customers on ce.CustomerIdFK equals c.CustomerIdPK
+                            join e in entities.Employees on ee.EmployeeIdFK equals e.EmployeeIdPk
+                            where e.EmployeeEmail == employeeEmail
+                            select c)
+                            .Distinct() // Ensure unique customers if an employee has multiple employers
+                            .AsEnumerable()
+                            .Select(customer => new CustomerModel
+                            {
+                                AddedBy = customer.AddedBy,
+                                CustomerContactAddress1 = customer.CustomerContactAddress1,
+                                CustomerContactAddress2 = customer.CustomerContactAddress2,
+                                CustomerContactCity = customer.CustomerContactCity,
+                                CustomerContactEmail = customer.CustomerContactEmail,
+                                CustomerContactPhone = customer.CustomerContactPhone,
+                                CustomerContactState = customer.CustomerContactState,
+                                CustomerContactZip = customer.CustomerContactZip,
+                                CustomerName = customer.CustomerName,
+                                CustomerFEID = customer.CustomerFEID,
+                                CustomerTerm = customer.CustomerTerm,
+                                DateAdded = customer.DateAdded,
+                                DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                UpdatedBy = customer.UpdatedBy,
+                                CustomerIdPK = customer.CustomerIdPK,
+                                isActive = customer.isActive
+                            }).ToList();
+        }
+
         public CustomerModel GetCustomerById(int id)
         {
             var customer = entities.Customers.Where(x => x.CustomerIdPK == id).FirstOrDefault();
@@ -1018,6 +1080,81 @@ namespace HRACCPortal.Models
                                    ConsultantIdPK = obj.ConsultantIdPK
                                }).ToList();
         }
+
+        public void GetConsultantsForEmployer(string employerEmail)
+        {
+            ConsultantList = (from ce in entities.ConsultantEmployers
+                              join c in entities.Consultants on ce.ConsultantIdFK equals c.ConsultantIdPK
+                              join e in entities.Employers on ce.EmployerIdFK equals e.EmployerIdPK
+                              where e.EmployerContactEmail == employerEmail
+                              select c)
+                              .AsEnumerable()
+                              .Select(obj => new ConsultantModel
+                              {
+                                  AddedBy = obj.AddedBy,
+                                  Active = obj.Active,
+                                  Address1 = obj.Address1,
+                                  Address2 = obj.Address2,
+                                  City = obj.City,
+                                  ConsultantNameAbbrv = obj.ConsultantNameAbbrv,
+                                  Email = obj.Email,
+                                  FirstName = obj.FirstName,
+                                  InactiveDate = obj.InactiveDate,
+                                  InactiveReason = obj.InactiveReason,
+                                  LastName = obj.LastName,
+                                  MiddleName = obj.MiddleName,
+                                  Phone = obj.Phone,
+                                  UserName = obj.UserName,
+                                  StartDate = obj.StartDate,
+                                  DateAdded = obj.DateAdded,
+                                  DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  UpdatedBy = obj.UpdatedBy,
+                                  State = obj.State,
+                                  WorkerType = obj.WorkerType,
+                                  Title = obj.Title,
+                                  Zip = obj.Zip,
+                                  ConsultantIdPK = obj.ConsultantIdPK
+                              }).ToList();
+        }
+
+        public void GetConsultantsForEmployee(string employeeEmail)
+        {
+            ConsultantList = (from ee in entities.EmployeeEmployers
+                              join ce in entities.ConsultantEmployers on ee.EmployerIdFK equals ce.EmployerIdFK
+                              join c in entities.Consultants on ce.ConsultantIdFK equals c.ConsultantIdPK
+                              join e in entities.Employees on ee.EmployeeIdFK equals e.EmployeeIdPk
+                              where e.EmployeeEmail == employeeEmail
+                              select c)
+                              .Distinct() // Ensure unique consultants if an employee has multiple employers
+                              .AsEnumerable()
+                              .Select(obj => new ConsultantModel
+                              {
+                                  AddedBy = obj.AddedBy,
+                                  Active = obj.Active,
+                                  Address1 = obj.Address1,
+                                  Address2 = obj.Address2,
+                                  City = obj.City,
+                                  ConsultantNameAbbrv = obj.ConsultantNameAbbrv,
+                                  Email = obj.Email,
+                                  FirstName = obj.FirstName,
+                                  InactiveDate = obj.InactiveDate,
+                                  InactiveReason = obj.InactiveReason,
+                                  LastName = obj.LastName,
+                                  MiddleName = obj.MiddleName,
+                                  Phone = obj.Phone,
+                                  UserName = obj.UserName,
+                                  StartDate = obj.StartDate,
+                                  DateAdded = obj.DateAdded,
+                                  DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  UpdatedBy = obj.UpdatedBy,
+                                  State = obj.State,
+                                  WorkerType = obj.WorkerType,
+                                  Title = obj.Title,
+                                  Zip = obj.Zip,
+                                  ConsultantIdPK = obj.ConsultantIdPK
+                              }).ToList();
+        }
+
         public ConsultantModel GetConsultantById(int id)
         {
             var obj = entities.Consultants.Where(x => x.ConsultantIdPK == id).FirstOrDefault();

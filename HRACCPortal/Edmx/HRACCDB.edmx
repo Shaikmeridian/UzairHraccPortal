@@ -117,6 +117,15 @@
           <Property Name="UpdatedBy" Type="nvarchar(max)" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="ConsultantEmployers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConsultantIdFK" Type="int" Nullable="false" />
+          <Property Name="EmployerIdFK" Type="int" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" />
+        </EntityType>
         <EntityType Name="ConsultantPositionDetails">
           <Key>
             <PropertyRef Name="ConsultantPositionIdPK" />
@@ -182,6 +191,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="ContactId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomerEmployers">
+          <Key>
+            <PropertyRef Name="CustomerEmployerId" />
+          </Key>
+          <Property Name="CustomerEmployerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+          <Property Name="EmployerIdFK" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -454,7 +471,31 @@
           <Property Name="UpdatedBy" Type="nvarchar(max)" />
           <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK__CustomerC__Conta__2180FB33">
+        <Association Name="FK__Consultan__Consu__59904A2C">
+          <End Role="Consultant" Type="Self.Consultant" Multiplicity="1" />
+          <End Role="ConsultantEmployers" Type="Self.ConsultantEmployers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ConsultantIdPK" />
+            </Principal>
+            <Dependent Role="ConsultantEmployers">
+              <PropertyRef Name="ConsultantIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultan__Emplo__5A846E65">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="ConsultantEmployers" Type="Self.ConsultantEmployers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerIdPK" />
+            </Principal>
+            <Dependent Role="ConsultantEmployers">
+              <PropertyRef Name="EmployerIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerC__Conta__42ACE4D4">
           <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
           <End Role="CustomerContacts" Type="Self.CustomerContacts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -466,7 +507,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerC__Custo__208CD6FA">
+        <Association Name="FK__CustomerC__Custo__41B8C09B">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="CustomerContacts" Type="Self.CustomerContacts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -478,7 +519,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EmployeeE__Emplo__22751F6C">
+        <Association Name="FK__CustomerE__Custo__4589517F">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerEmployers" Type="Self.CustomerEmployers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerIdPK" />
+            </Principal>
+            <Dependent Role="CustomerEmployers">
+              <PropertyRef Name="CustomerIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerE__Emplo__467D75B8">
+          <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+          <End Role="CustomerEmployers" Type="Self.CustomerEmployers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerIdPK" />
+            </Principal>
+            <Dependent Role="CustomerEmployers">
+              <PropertyRef Name="EmployerIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeE__Emplo__345EC57D">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeEmployer" Type="Self.EmployeeEmployer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -490,7 +555,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__EmployeeE__Emplo__236943A5">
+        <Association Name="FK__EmployeeE__Emplo__3552E9B6">
           <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
           <End Role="EmployeeEmployer" Type="Self.EmployeeEmployer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -502,7 +567,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SecurityQ__UserI__245D67DE">
+        <Association Name="FK__SecurityQ__UserI__1F63A897">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="SecurityQuestions" Type="Self.SecurityQuestions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -533,10 +598,12 @@
           <EntitySet Name="BalanceSheet" EntityType="Self.BalanceSheet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Consultant" EntityType="Self.Consultant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsultantEmployers" EntityType="Self.ConsultantEmployers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConsultantPositionDetails" EntityType="Self.ConsultantPositionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerContacts" EntityType="Self.CustomerContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerEmployers" EntityType="Self.CustomerEmployers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeEmployer" EntityType="Self.EmployeeEmployer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeRole" EntityType="Self.EmployeeRole" Schema="dbo" store:Type="Tables" />
@@ -554,23 +621,39 @@
           <EntitySet Name="SubContractor" EntityType="Self.SubContractor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerC__Conta__2180FB33" Association="Self.FK__CustomerC__Conta__2180FB33">
+          <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="Self.FK__Consultan__Consu__59904A2C">
+            <End Role="Consultant" EntitySet="Consultant" />
+            <End Role="ConsultantEmployers" EntitySet="ConsultantEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultan__Emplo__5A846E65" Association="Self.FK__Consultan__Emplo__5A846E65">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="ConsultantEmployers" EntitySet="ConsultantEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerC__Conta__42ACE4D4" Association="Self.FK__CustomerC__Conta__42ACE4D4">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="CustomerContacts" EntitySet="CustomerContacts" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerC__Custo__208CD6FA" Association="Self.FK__CustomerC__Custo__208CD6FA">
+          <AssociationSet Name="FK__CustomerC__Custo__41B8C09B" Association="Self.FK__CustomerC__Custo__41B8C09B">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerContacts" EntitySet="CustomerContacts" />
           </AssociationSet>
-          <AssociationSet Name="FK__EmployeeE__Emplo__22751F6C" Association="Self.FK__EmployeeE__Emplo__22751F6C">
+          <AssociationSet Name="FK__CustomerE__Custo__4589517F" Association="Self.FK__CustomerE__Custo__4589517F">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerEmployers" EntitySet="CustomerEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerE__Emplo__467D75B8" Association="Self.FK__CustomerE__Emplo__467D75B8">
+            <End Role="Employer" EntitySet="Employer" />
+            <End Role="CustomerEmployers" EntitySet="CustomerEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeE__Emplo__345EC57D" Association="Self.FK__EmployeeE__Emplo__345EC57D">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
           </AssociationSet>
-          <AssociationSet Name="FK__EmployeeE__Emplo__236943A5" Association="Self.FK__EmployeeE__Emplo__236943A5">
+          <AssociationSet Name="FK__EmployeeE__Emplo__3552E9B6" Association="Self.FK__EmployeeE__Emplo__3552E9B6">
             <End Role="Employer" EntitySet="Employer" />
             <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
           </AssociationSet>
-          <AssociationSet Name="FK__SecurityQ__UserI__245D67DE" Association="Self.FK__SecurityQ__UserI__245D67DE">
+          <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="SecurityQuestions" EntitySet="SecurityQuestions" />
           </AssociationSet>
@@ -630,6 +713,7 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WorkerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="Consultant" ToRole="ConsultantEmployer" />
         </EntityType>
         <EntityType Name="EmployeeRole">
           <Key>
@@ -704,6 +788,24 @@
           <AssociationSet Name="FK__CustomerC__Custo__208CD6FA" Association="HRACCDBModel.FK__CustomerC__Custo__208CD6FA">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="CustomerContact" EntitySet="CustomerContacts" />
+          </AssociationSet>
+          <EntitySet Name="CustomerEmployers" EntityType="HRACCDBModel.CustomerEmployer" />
+          <AssociationSet Name="FK__CustomerE__Custo__4589517F" Association="HRACCDBModel.FK__CustomerE__Custo__4589517F">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerEmployer" EntitySet="CustomerEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CustomerE__Emplo__467D75B8" Association="HRACCDBModel.FK__CustomerE__Emplo__467D75B8">
+            <End Role="Employer" EntitySet="Employers" />
+            <End Role="CustomerEmployer" EntitySet="CustomerEmployers" />
+          </AssociationSet>
+          <EntitySet Name="ConsultantEmployers" EntityType="HRACCDBModel.ConsultantEmployer" />
+          <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="HRACCDBModel.FK__Consultan__Consu__59904A2C">
+            <End Role="Consultant" EntitySet="Consultants" />
+            <End Role="ConsultantEmployer" EntitySet="ConsultantEmployers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultan__Emplo__5A846E65" Association="HRACCDBModel.FK__Consultan__Emplo__5A846E65">
+            <End Role="Employer" EntitySet="Employers" />
+            <End Role="ConsultantEmployer" EntitySet="ConsultantEmployers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Position">
@@ -939,6 +1041,8 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="Employer" ToRole="EmployeeEmployer" />
+          <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="Employer" ToRole="CustomerEmployer" />
+          <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="Employer" ToRole="ConsultantEmployer" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -961,6 +1065,7 @@
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="CustomerFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="Customer" ToRole="CustomerContact" />
+          <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="Customer" ToRole="CustomerEmployer" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1202,6 +1307,75 @@
             </Principal>
             <Dependent Role="CustomerContact">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerEmployer">
+          <Key>
+            <PropertyRef Name="CustomerEmployerId" />
+          </Key>
+          <Property Name="CustomerEmployerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+          <Property Name="EmployerIdFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="CustomerEmployer" ToRole="Customer" />
+          <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="CustomerEmployer" ToRole="Employer" />
+        </EntityType>
+        <Association Name="FK__CustomerE__Custo__4589517F">
+          <End Type="HRACCDBModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="HRACCDBModel.CustomerEmployer" Role="CustomerEmployer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerIdPK" />
+            </Principal>
+            <Dependent Role="CustomerEmployer">
+              <PropertyRef Name="CustomerIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CustomerE__Emplo__467D75B8">
+          <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+          <End Type="HRACCDBModel.CustomerEmployer" Role="CustomerEmployer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerIdPK" />
+            </Principal>
+            <Dependent Role="CustomerEmployer">
+              <PropertyRef Name="EmployerIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ConsultantEmployer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConsultantIdFK" Type="Int32" Nullable="false" />
+          <Property Name="EmployerIdFK" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Consultant" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="ConsultantEmployer" ToRole="Consultant" />
+          <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="ConsultantEmployer" ToRole="Employer" />
+        </EntityType>
+        <Association Name="FK__Consultan__Consu__59904A2C">
+          <End Type="HRACCDBModel.Consultant" Role="Consultant" Multiplicity="1" />
+          <End Type="HRACCDBModel.ConsultantEmployer" Role="ConsultantEmployer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consultant">
+              <PropertyRef Name="ConsultantIdPK" />
+            </Principal>
+            <Dependent Role="ConsultantEmployer">
+              <PropertyRef Name="ConsultantIdFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultan__Emplo__5A846E65">
+          <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+          <End Type="HRACCDBModel.ConsultantEmployer" Role="ConsultantEmployer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employer">
+              <PropertyRef Name="EmployerIdPK" />
+            </Principal>
+            <Dependent Role="ConsultantEmployer">
+              <PropertyRef Name="EmployerIdFK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1683,6 +1857,25 @@
               <MappingFragment StoreEntitySet="CustomerContacts">
                 <ScalarProperty Name="ContactId" ColumnName="ContactId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerEmployers">
+            <EntityTypeMapping TypeName="HRACCDBModel.CustomerEmployer">
+              <MappingFragment StoreEntitySet="CustomerEmployers">
+                <ScalarProperty Name="EmployerIdFK" ColumnName="EmployerIdFK" />
+                <ScalarProperty Name="CustomerIdFK" ColumnName="CustomerIdFK" />
+                <ScalarProperty Name="CustomerEmployerId" ColumnName="CustomerEmployerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConsultantEmployers">
+            <EntityTypeMapping TypeName="HRACCDBModel.ConsultantEmployer">
+              <MappingFragment StoreEntitySet="ConsultantEmployers">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="EmployerIdFK" ColumnName="EmployerIdFK" />
+                <ScalarProperty Name="ConsultantIdFK" ColumnName="ConsultantIdFK" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

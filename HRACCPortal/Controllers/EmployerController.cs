@@ -251,7 +251,7 @@ namespace HRACCPortal.Controllers
                         EmployerIdPK = employer.EmployerIdPK,
                         EmployerName = employer.EmployerName,
                         EmployerContactEmail = employer.EmployerContactEmail,
-                        
+
                     })
                 .ToList();
 
@@ -260,6 +260,7 @@ namespace HRACCPortal.Controllers
 
             return View(assignedEmployers); // Return to View with the data
         }
+
         private string GenerateRandomPassword()
         {
             const int passwordLength = 12;

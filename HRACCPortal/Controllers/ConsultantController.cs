@@ -17,8 +17,8 @@ using HRACCPortal.Helpers;
 
 namespace HRACCPortal.Controllers
 {
-    [RoleAuthorize("2", "4")]
-    [Authorize]
+    //[RoleAuthorize("2", "4")]
+    //[Authorize]
     public class ConsultantController : Controller
     {
 
@@ -81,7 +81,7 @@ namespace HRACCPortal.Controllers
         // GET: Consultant
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -111,14 +111,14 @@ namespace HRACCPortal.Controllers
                         PhoneNumber = consultant.Phone,
                         Active = consultant.Active,
                         UserName = consultant.UserName,
-                        RoleId ="4",
+                        RoleId = "4",
                     };
 
 
                     // Debugging RegisterConsultantAsync call
                     mess = await ConsultantService.RegisterConsultantAsync(registerViewModel);
 
-                    if(mess =="success")
+                    if (mess == "success")
                     {
                         await SendWelcomeEmail(consultant.Email, consultant.UserName, randomPassword);
                     }
@@ -145,11 +145,33 @@ namespace HRACCPortal.Controllers
 
         public ActionResult ViewConsultants()
         {
-            
-            cls.GetConsultants();
-            return View(cls);
-        }
+            var userRole = Session["UserRole"]?.ToString();
+            var userEmail = Session["UserEmail"]?.ToString();
 
+            if (string.IsNullOrEmpty(userRole) || string.IsNullOrEmpty(userEmail))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (userRole == "1") 
+            {
+                cls.GetConsultants(); 
+            }
+            else if (userRole == "2") 
+            {
+                cls.GetConsultantsForEmployer(userEmail); 
+            }
+            else if (userRole == "3") 
+            {
+                cls.GetConsultantsForEmployee(userEmail); 
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Account");
+            }
+
+            return View(cls); 
+        }
         public ActionResult EditConsultant(int id)
         {
             ConsultantModel cl = cls.GetConsultantById(id);
@@ -209,7 +231,7 @@ namespace HRACCPortal.Controllers
             return new string(password.ToString().OrderBy(_ => random.Next()).ToArray());
         }
 
-        private async Task SendWelcomeEmail(string email, string UserName ,  string temporaryPassword)
+        private async Task SendWelcomeEmail(string email, string UserName, string temporaryPassword)
         {
             try
             {
@@ -227,8 +249,8 @@ namespace HRACCPortal.Controllers
                              $"<p>Dear Consultant,</p>" +
                              $"<p>We are excited to welcome you to the HRACC Portal. Below are your login details:</p>" +
                              $"<p><strong>Login Link:</strong> <a href='https://your-portal-login-url.com'>Login Here</a></p>" +
-                             $"<p><strong> User Name : </strong> {UserName} </p>"+
-                             $"<p><strong> Email :</strong>{email} </p>"+
+                             $"<p><strong> User Name : </strong> {UserName} </p>" +
+                             $"<p><strong> Email :</strong>{email} </p>" +
                              $"<p><strong>Temporary Password:</strong> {temporaryPassword}</p>" +
                              $"<p>Please use this password to log in and change it immediately for security purposes.</p>" +
                              $"<p>Best Regards,<br>HRACC Portal Team</p>";
@@ -252,6 +274,99 @@ namespace HRACCPortal.Controllers
                 // Log or handle the email sending failure
                 Console.WriteLine("Error sending email: " + ex.Message);
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult AssignConsultantEmployers(int consultantId)
+        {
+            // Call the existing GetEmployers method
+            cls.GetEmployers();
+
+            // Get the EmployerList populated by GetEmployers
+            var employers = cls.EmployerList.Select(employer => new EmployerModel
+            {
+                EmployerIdPK = employer.EmployerIdPK,
+                EmployerName = employer.EmployerName,
+                EmployerContactEmail = employer.EmployerContactEmail
+            }).ToList();
+            ViewBag.ConsultantIdPK = consultantId;
+            // Return as JSON to be used in the modal
+            return View(employers);
+        }
+
+
+        [HttpPost]
+        public ActionResult SaveConsultantEmployers(int consultantId, List<int> selectedEmployerIds)
+        {
+            if (selectedEmployerIds == null || !selectedEmployerIds.Any())
+            {
+                return Json(new { success = false, message = "No employers selected!" });
+            }
+
+            try
+            {
+                // Remove existing assignments for the consultant
+                var existingAssignments = entities.ConsultantEmployers
+                    .Where(ce => ce.ConsultantIdFK == consultantId)
+                    .ToList();
+
+                if (existingAssignments.Count > 0)
+                {
+                    // Remove existing contacts
+                    foreach (var consultant in existingAssignments)
+                    {
+                        entities.ConsultantEmployers.DeleteObject(consultant);
+                    }
+                }
+
+                // Add new assignments
+                foreach (var employerId in selectedEmployerIds)
+                {
+                    entities.ConsultantEmployers.AddObject(new ConsultantEmployer
+                    {
+                        ConsultantIdFK = consultantId,
+                        EmployerIdFK = employerId
+                    });
+                }
+
+                entities.SaveChanges();
+
+                return Json(new { success = true, message = "Employers assigned successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occurred: " + ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ViewAssignedConsultantEmployers(int consultantId)
+        {
+            // Fetch consultant information
+            var consultant = entities.ConsultantEmployers.FirstOrDefault(ce => ce.ConsultantIdFK == consultantId);
+            if (consultant == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Fetch assigned employers' details for the consultant
+            var assignedEmployers = entities.ConsultantEmployers
+                .Where(ce => ce.ConsultantIdFK == consultantId)
+                .Join(entities.Employers,
+                    ce => ce.EmployerIdFK,
+                    employer => employer.EmployerIdPK,
+                    (ce, employer) => new EmployerModel
+                    {
+                        EmployerIdPK = employer.EmployerIdPK,
+                        EmployerName = employer.EmployerName,
+                        EmployerContactEmail = employer.EmployerContactEmail,
+                    })
+                .ToList();
+
+            ViewBag.ConsultantId = consultantId;
+
+            return View(assignedEmployers); // Return to View with the assigned employers
         }
 
     }

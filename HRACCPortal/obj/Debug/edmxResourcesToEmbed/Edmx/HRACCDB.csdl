@@ -47,6 +47,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="WorkerType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="Consultant" ToRole="ConsultantEmployer" />
   </EntityType>
   <EntityType Name="EmployeeRole">
     <Key>
@@ -121,6 +122,24 @@
     <AssociationSet Name="FK__CustomerC__Custo__208CD6FA" Association="HRACCDBModel.FK__CustomerC__Custo__208CD6FA">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="CustomerContact" EntitySet="CustomerContacts" />
+    </AssociationSet>
+    <EntitySet Name="CustomerEmployers" EntityType="HRACCDBModel.CustomerEmployer" />
+    <AssociationSet Name="FK__CustomerE__Custo__4589517F" Association="HRACCDBModel.FK__CustomerE__Custo__4589517F">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerEmployer" EntitySet="CustomerEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerE__Emplo__467D75B8" Association="HRACCDBModel.FK__CustomerE__Emplo__467D75B8">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="CustomerEmployer" EntitySet="CustomerEmployers" />
+    </AssociationSet>
+    <EntitySet Name="ConsultantEmployers" EntityType="HRACCDBModel.ConsultantEmployer" />
+    <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="HRACCDBModel.FK__Consultan__Consu__59904A2C">
+      <End Role="Consultant" EntitySet="Consultants" />
+      <End Role="ConsultantEmployer" EntitySet="ConsultantEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consultan__Emplo__5A846E65" Association="HRACCDBModel.FK__Consultan__Emplo__5A846E65">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="ConsultantEmployer" EntitySet="ConsultantEmployers" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
@@ -356,6 +375,8 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="Employer" ToRole="EmployeeEmployer" />
+    <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="Employer" ToRole="CustomerEmployer" />
+    <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="Employer" ToRole="ConsultantEmployer" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -378,6 +399,7 @@
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="CustomerFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="Customer" ToRole="CustomerContact" />
+    <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="Customer" ToRole="CustomerEmployer" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -619,6 +641,75 @@
       </Principal>
       <Dependent Role="CustomerContact">
         <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CustomerEmployer">
+    <Key>
+      <PropertyRef Name="CustomerEmployerId" />
+    </Key>
+    <Property Name="CustomerEmployerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="EmployerIdFK" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="CustomerEmployer" ToRole="Customer" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="CustomerEmployer" ToRole="Employer" />
+  </EntityType>
+  <Association Name="FK__CustomerE__Custo__4589517F">
+    <End Type="HRACCDBModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="HRACCDBModel.CustomerEmployer" Role="CustomerEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="CustomerEmployer">
+        <PropertyRef Name="CustomerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerE__Emplo__467D75B8">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+    <End Type="HRACCDBModel.CustomerEmployer" Role="CustomerEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="CustomerEmployer">
+        <PropertyRef Name="EmployerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ConsultantEmployer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConsultantIdFK" Type="Int32" Nullable="false" />
+    <Property Name="EmployerIdFK" Type="Int32" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Consultant" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="ConsultantEmployer" ToRole="Consultant" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="ConsultantEmployer" ToRole="Employer" />
+  </EntityType>
+  <Association Name="FK__Consultan__Consu__59904A2C">
+    <End Type="HRACCDBModel.Consultant" Role="Consultant" Multiplicity="1" />
+    <End Type="HRACCDBModel.ConsultantEmployer" Role="ConsultantEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultant">
+        <PropertyRef Name="ConsultantIdPK" />
+      </Principal>
+      <Dependent Role="ConsultantEmployer">
+        <PropertyRef Name="ConsultantIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Consultan__Emplo__5A846E65">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+    <End Type="HRACCDBModel.ConsultantEmployer" Role="ConsultantEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="ConsultantEmployer">
+        <PropertyRef Name="EmployerIdFK" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

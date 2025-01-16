@@ -2,6 +2,7 @@
 
 // Class definition
 var KTCustomersList = function () {
+    debugger
     // Define shared variables
     var datatable;
     var filterMonth;
@@ -10,6 +11,7 @@ var KTCustomersList = function () {
 
     // Private functions
     var initCustomerList = function () {
+        debugger
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
 
@@ -29,8 +31,11 @@ var KTCustomersList = function () {
             ]
         });
 
+        console.log(datatable);
+
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
+            debugger
             initToggleToolbar();
             handleDeleteRows();
             toggleToolbars();
@@ -80,6 +85,7 @@ var KTCustomersList = function () {
 
     // Delete customer
     var handleDeleteRows = () => {
+        debugger
         // Select all delete buttons
         const deleteButtons = table.querySelectorAll('[data-kt-customer-table-filter="delete_row"]');
 
@@ -263,6 +269,7 @@ var KTCustomersList = function () {
     // Public methods
     return {
         init: function () {
+            debugger
             table = document.querySelector('#kt_customers_table');
             
             if (!table) {
@@ -281,5 +288,6 @@ var KTCustomersList = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
+    debugger
     KTCustomersList.init();
 });

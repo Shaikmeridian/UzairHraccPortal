@@ -477,5 +477,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CustomerEmployers">
+      <EntityTypeMapping TypeName="HRACCDBModel.CustomerEmployer">
+        <MappingFragment StoreEntitySet="CustomerEmployers">
+          <ScalarProperty Name="EmployerIdFK" ColumnName="EmployerIdFK" />
+          <ScalarProperty Name="CustomerIdFK" ColumnName="CustomerIdFK" />
+          <ScalarProperty Name="CustomerEmployerId" ColumnName="CustomerEmployerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConsultantEmployers">
+      <EntityTypeMapping TypeName="HRACCDBModel.ConsultantEmployer">
+        <MappingFragment StoreEntitySet="ConsultantEmployers">
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="EmployerIdFK" ColumnName="EmployerIdFK" />
+          <ScalarProperty Name="ConsultantIdFK" ColumnName="ConsultantIdFK" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

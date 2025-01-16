@@ -40,6 +40,12 @@
         <EntityTypeShape EntityType="HRACCDBModel.CustomerContact" Width="1.5" PointX="18.875" PointY="1.875" />
         <AssociationConnector Association="HRACCDBModel.FK__CustomerC__Conta__2180FB33" />
         <AssociationConnector Association="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" />
+        <EntityTypeShape EntityType="HRACCDBModel.CustomerEmployer" Width="1.5" PointX="17.625" PointY="7.875" />
+        <AssociationConnector Association="HRACCDBModel.FK__CustomerE__Custo__4589517F" />
+        <AssociationConnector Association="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" />
+        <EntityTypeShape EntityType="HRACCDBModel.ConsultantEmployer" Width="1.5" PointX="18.625" PointY="10.875" />
+        <AssociationConnector Association="HRACCDBModel.FK__Consultan__Consu__59904A2C" />
+        <AssociationConnector Association="HRACCDBModel.FK__Consultan__Emplo__5A846E65" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
