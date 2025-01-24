@@ -21,7 +21,7 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <input type="text" data-kt-customer-table-filter="search" id="searchInput" class="form-control form-control-solid w-250px ps-15" placeholder="Search Employers" />
                     </div>
-                    
+                    <!--<h2 class="text-center assigned-employers-heading">Assigned Employers for @ViewBag.EmployeeName</h2> -->
                 </div>
                 <!--begin::Card title-->
                 <!--begin::Card toolbar-->
@@ -29,8 +29,8 @@
                     <!--begin::Toolbar-->
 
                     <div class="d-flex justify-content-end gap-3" data-kt-contact-table-toolbar="base">
-                        <a href="/Consultant/ViewAssignedConsultantEmployers?consultantId=@ViewBag.ConsultantId" class="btn btn-secondary mb-3 ">Back to Employees</a>
-                        <a href="/Consultant/AssignConsultantEmployers?consultantId=@ViewBag.ConsultantId" class="btn btn-success mb-3">Add Employers</a>
+                        <a href="/Customer/ViewCustomers" class="btn btn-secondary mb-3 ">Back to Customers</a>
+                        <a href="/Customer/AssignCustomerEmployers?customerId=@ViewBag.CustomerId" class="btn btn-success mb-3">Add Employers</a>
                     </div>
                     <!--end::Toolbar-->
                 </div>

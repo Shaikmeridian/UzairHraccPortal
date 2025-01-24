@@ -112,6 +112,14 @@
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
     <Property Name="UserName" Type="nvarchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="ConsultantCustomers">
+    <Key>
+      <PropertyRef Name="ConsultantCustomerId" />
+    </Key>
+    <Property Name="ConsultantCustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultantIdFK" Type="int" Nullable="false" />
+    <Property Name="CustomerIdFK" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="ConsultantEmployers">
     <Key>
       <PropertyRef Name="Id" />
@@ -478,6 +486,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Consultan__Consu__67DE6983">
+    <End Role="Consultant" Type="Self.Consultant" Multiplicity="1" />
+    <End Role="ConsultantCustomers" Type="Self.ConsultantCustomers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultant">
+        <PropertyRef Name="ConsultantIdPK" />
+      </Principal>
+      <Dependent Role="ConsultantCustomers">
+        <PropertyRef Name="ConsultantIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Consultan__Custo__68D28DBC">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="ConsultantCustomers" Type="Self.ConsultantCustomers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="ConsultantCustomers">
+        <PropertyRef Name="CustomerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Consultan__Emplo__5A846E65">
     <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
     <End Role="ConsultantEmployers" Type="Self.ConsultantEmployers" Multiplicity="*" />
@@ -593,6 +625,7 @@
     <EntitySet Name="BalanceSheet" EntityType="Self.BalanceSheet" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Consultant" EntityType="Self.Consultant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsultantCustomers" EntityType="Self.ConsultantCustomers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ConsultantEmployers" EntityType="Self.ConsultantEmployers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ConsultantPositionDetails" EntityType="Self.ConsultantPositionDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
@@ -619,6 +652,14 @@
     <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="Self.FK__Consultan__Consu__59904A2C">
       <End Role="Consultant" EntitySet="Consultant" />
       <End Role="ConsultantEmployers" EntitySet="ConsultantEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consultan__Consu__67DE6983" Association="Self.FK__Consultan__Consu__67DE6983">
+      <End Role="Consultant" EntitySet="Consultant" />
+      <End Role="ConsultantCustomers" EntitySet="ConsultantCustomers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consultan__Custo__68D28DBC" Association="Self.FK__Consultan__Custo__68D28DBC">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="ConsultantCustomers" EntitySet="ConsultantCustomers" />
     </AssociationSet>
     <AssociationSet Name="FK__Consultan__Emplo__5A846E65" Association="Self.FK__Consultan__Emplo__5A846E65">
       <End Role="Employer" EntitySet="Employer" />

@@ -496,5 +496,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ConsultantCustomers">
+      <EntityTypeMapping TypeName="HRACCDBModel.ConsultantCustomer">
+        <MappingFragment StoreEntitySet="ConsultantCustomers">
+          <ScalarProperty Name="CustomerIdFK" ColumnName="CustomerIdFK" />
+          <ScalarProperty Name="ConsultantIdFK" ColumnName="ConsultantIdFK" />
+          <ScalarProperty Name="ConsultantCustomerId" ColumnName="ConsultantCustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

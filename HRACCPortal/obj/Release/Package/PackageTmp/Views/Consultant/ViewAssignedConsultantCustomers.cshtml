@@ -1,7 +1,7 @@
-﻿@model IEnumerable<HRACCPortal.Models.EmployerModel>
+﻿@model IEnumerable<HRACCPortal.Models.CustomerModel>
 
 @{
-    ViewBag.Title = "Assigned Employers";
+    ViewBag.Title = "Assigned Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,7 @@
                     <div class="d-flex align-items-center position-relative my-1">
                         <input type="text" data-kt-customer-table-filter="search" id="searchInput" class="form-control form-control-solid w-250px ps-15" placeholder="Search Employers" />
                     </div>
-                  /<!--<h2 class="text-center assigned-employers-heading">Assigned Employers for @ViewBag.EmployeeName</h2> -->
+                    
                 </div>
                 <!--begin::Card title-->
                 <!--begin::Card toolbar-->
@@ -29,8 +29,8 @@
                     <!--begin::Toolbar-->
 
                     <div class="d-flex justify-content-end gap-3" data-kt-contact-table-toolbar="base">
-                        <a href="/Employee/ViewEmployees" class="btn btn-secondary mb-3 ">Back to Employees</a>
-                        <a href="/Employer/AssignEmployers?employeeId=@ViewBag.EmployeeId" class="btn btn-success mb-3">Add Employers</a>
+                        <a href="/Consultant/ViewAssignedConsultantCustomers?consultantId=@ViewBag.ConsultantId" class="btn btn-secondary mb-3 ">Back to Cusomers</a>
+                        <a href="/Consultant/AssignConsultantCustomers?consultantId=@ViewBag.ConsultantId" class="btn btn-success mb-3">Add Customers</a>
                     </div>
                     <!--end::Toolbar-->
                 </div>
@@ -48,9 +48,9 @@
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="w-10px pe-2">#</th>
-                            <th class="min-w-125px">Employer Name</th>
-                            <th class="min-w-125px">Contact Email</th>
-                            <th class="min-w-125px">Date Assigned</th>
+                            <th class="min-w-125px">Cusomer Name</th>
+                            <th class="min-w-125px">Customer Email</th>
+                            <th class="min-w-125px">Customer Contact</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
@@ -59,13 +59,13 @@
                         @if (Model.Any())
                         {
                             int index = 1;
-                            foreach (var employer in Model)
+                            foreach (var customer in Model)
                             {
                                 <tr>
                                     <td>@index</td>
-                                    <td>@employer.EmployerName</td>
-                                    <td>@employer.EmployerContactEmail</td>
-                                    <td>1</td>
+                                    <td>@customer.CustomerName</td>
+                                    <td>@customer.CustomerContactEmail</td>
+                                    <td>@customer.CustomerContactPhone</td>
                                 </tr>
                                 index++;
                             }
@@ -73,7 +73,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="4" class="text-center">No employers assigned.</td>
+                                <td colspan="4" class="text-center">No Customers assigned.</td>
                             </tr>
                         }
                     </tbody>
