@@ -384,10 +384,15 @@ namespace HRACCPortal.Controllers
                 CustomerContactEmail = customer.CustomerContactEmail,
                 CustomerContactPhone = customer.CustomerContactPhone,
             }).ToList();
+            var assignedCustomerIds = entities.ConsultantCustomers
+                    .Where(cc => cc.ConsultantIdFK == consultantId)
+                    .Select(cc => cc.CustomerIdFK)
+                    .ToHashSet(); // Use a HashSet for quick lookups
+
+            // If no assigned customers, initialize with an empty set
+            ViewBag.AssignedCustomerIds = assignedCustomerIds ?? new HashSet<int>();
 
             ViewBag.ConsultantIdPK = consultantId;
-
-            // Return the view with customers for modal usage
             return View(customers);
         }
 

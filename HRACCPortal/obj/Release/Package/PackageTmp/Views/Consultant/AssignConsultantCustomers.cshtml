@@ -6,6 +6,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var assignedCustomerIds = ViewBag.AssignedCustomerIds as HashSet<int> ?? new HashSet<int>();
+}
 <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 
@@ -53,7 +56,10 @@
                             <tr>
                                 <!-- Added a row separator -->
                                 <td>
-                                    <input type="checkbox" name="SelectedCustomerIds" value="@customer.CustomerIdPK" />
+                                    <!-- Check if the customer ID is in the assigned IDs set -->
+                                    <input type="checkbox" name="SelectedCustomerIds" value="@customer.CustomerIdPK"
+                                           @(assignedCustomerIds.Contains(customer.CustomerIdPK) ? "checked" : "") />
+
                                 </td>
                                 <td>@customer.CustomerName</td>
                                 <td>@customer.CustomerContactEmail</td>
@@ -93,21 +99,22 @@
     <script src="~/Content/assets/js/widgets.bundle.js"></script>
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>$("#saveEmployersBtn").click(function () {
-        const consultantId = $("#hiddenEmployeeId").val();
-        const selectedCustomerIds = [];
-        $("input[name='SelectedCustomerIds']:checked").each(function () {
-            selectedCustomerIds.push($(this).val());
-        });
-    console.log(selectedCustomerIds);
-    $.post(`/Consultant/SaveConsultantCustomers`, { consultantId, selectedCustomerIds }, function (response) {
-            if (response.success) {
-                alert(response.message);
-                window.location.href = "/Consultant/ViewConsultants"; // Redirect to employee list or another page
-            } else {
-                alert(response.message);
-            }
-        });
-    });</script>
+    <script>
+    $("#saveEmployersBtn").click(function () {
+            const consultantId = $("#hiddenEmployeeId").val();
+            const selectedCustomerIds = [];
+            $("input[name='SelectedCustomerIds']:checked").each(function () {
+                selectedCustomerIds.push($(this).val());
+            });
+            console.log(selectedCustomerIds);
+            $.post(`/Consultant/SaveConsultantCustomers`, { consultantId, selectedCustomerIds }, function (response) {
+                if (response.success) {
+                    alert(response.message);
+                    window.location.href = "/Consultant/ViewConsultants"; // Redirect to employee list or another page
+                } else {
+                    alert(response.message);
+                }
+            });
+        });</script>
 }
 

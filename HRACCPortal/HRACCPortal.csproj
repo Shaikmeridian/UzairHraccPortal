@@ -2579,8 +2579,8 @@
     <Content Include="Views\Contact\ViewAssignedContact.cshtml" />
     <Content Include="Views\Customer\AssignCustomerEmployers.cshtml" />
     <Content Include="Views\Customer\ViewCustomerEmployers.cshtml" />
-    <Content Include="Views\Consultant\ViewAssignedConsultantEmployers.cshtml" />
-    <Content Include="Views\Consultant\AssignConsultantEmployers.cshtml" />
+    <Content Include="Views\Consultant\ViewAssignedConsultantCustomers.cshtml" />
+    <Content Include="Views\Consultant\AssignConsultantCustomers.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />
