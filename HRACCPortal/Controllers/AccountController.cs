@@ -96,16 +96,28 @@ namespace HRACCPortal.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ViewBag.ReturnUrl = returnUrl;
                 return View(model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("Email", "Entered email is incorrect.");
+                ViewBag.ReturnUrl = returnUrl;
+                return View(model);
+            }
+
+            if (user.IsLocked == true)
+            {
+                return View("ContactAdminstrator");
+            }
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             switch (result)
             {
                 case SignInStatus.Success:
-                    var user = await UserManager.FindByEmailAsync(model.Email);
+                     user = await UserManager.FindByEmailAsync(model.Email);
                     if (user.IsLocked == true)
                     {
                         return View("ContactAdminstrator");
@@ -126,12 +138,14 @@ namespace HRACCPortal.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("Password", "Incorrect Password");
+                    ViewBag.ReturnUrl = returnUrl;
+                
                     return View(model);
             }
         }
 
-        //
+
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -588,7 +602,7 @@ namespace HRACCPortal.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
@@ -654,17 +668,19 @@ namespace HRACCPortal.Controllers
         [HttpPost]
         public ActionResult ResetPasswordModel(ResetPasswordModel model)
         {
+            var user = _db.AspNetUsers.FirstOrDefault(u => u.Email == model.Email);
+            if (user == null)
+            {
+                return HttpNotFound("User not found.");
+            }
+
             if (!ModelState.IsValid)
             {
                 model.SecurityQuestions = GetSecurityQuestions();
                 return View(model);
             }
 
-            var user = _db.AspNetUsers.FirstOrDefault(u => u.Email == model.Email);
-            if (user == null)
-            {
-                return HttpNotFound("User not found.");
-            }
+           
 
             if (user.IsFirstLogin == true)
             {
@@ -733,6 +749,14 @@ namespace HRACCPortal.Controllers
             var model = new NewPasswordModel { Email = email };
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult TryAnotherWay()
+        {
+            
+            return View();
+        }
+
 
         [HttpPost]
         public JsonResult VerifyEmail(string email)

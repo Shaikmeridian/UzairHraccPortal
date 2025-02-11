@@ -38,7 +38,7 @@ namespace HRACCPortal.Controllers
             {
                 message = cls.AddCustomer(customer);
 
-                if(message)
+              
             }
             catch (Exception e)
             {

@@ -409,6 +409,7 @@
     <Content Include="Content\assets\js\custom\utilities\modals\users-search.js" />
     <Content Include="Content\assets\js\custom\utilities\search\horizontal.js" />
     <Content Include="Content\assets\js\custom\widgets.js" />
+    <Content Include="Content\assets\js\EmailValidation.js" />
     <Content Include="Content\assets\js\scripts.bundle.js" />
     <Content Include="Content\assets\js\widgets.bundle.js" />
     <Content Include="Content\assets\media\auth\404-error-dark.png" />
@@ -2466,6 +2467,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Images\H3U_Logo_Ariba.gif" />
     <Content Include="Content\Images\HRACC_Logo.png" />
+    <Content Include="Content\login\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2581,6 +2583,9 @@
     <Content Include="Views\Customer\ViewCustomerEmployers.cshtml" />
     <Content Include="Views\Consultant\ViewAssignedConsultantCustomers.cshtml" />
     <Content Include="Views\Consultant\AssignConsultantCustomers.cshtml" />
+    <Content Include="Views\SubContractor\ViewAssignedContractorsEmployers.cshtml" />
+    <Content Include="Views\SubContractor\AssignContractorEmployers.cshtml" />
+    <Content Include="Views\Account\TryAnotherWay.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

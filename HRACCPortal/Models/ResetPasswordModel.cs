@@ -9,6 +9,9 @@ namespace HRACCPortal.Models
     public class ResetPasswordModel
     {
         public bool IsFirstLogin { get; set; }
+
+  
+        [EmailAddress]
         public string Email { get; set; }
        
 

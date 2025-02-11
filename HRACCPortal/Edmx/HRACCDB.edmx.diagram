@@ -49,6 +49,9 @@
         <EntityTypeShape EntityType="HRACCDBModel.ConsultantCustomer" Width="1.5" PointX="19.625" PointY="4.625" />
         <AssociationConnector Association="HRACCDBModel.FK__Consultan__Consu__67DE6983" />
         <AssociationConnector Association="HRACCDBModel.FK__Consultan__Custo__68D28DBC" />
+        <EntityTypeShape EntityType="HRACCDBModel.SubcontractorEmployer" Width="1.5" PointX="15.625" PointY="14.5" />
+        <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" />
+        <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

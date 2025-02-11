@@ -151,6 +151,15 @@
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ConsultantCustomer" EntitySet="ConsultantCustomers" />
     </AssociationSet>
+    <EntitySet Name="SubcontractorEmployers" EntityType="HRACCDBModel.SubcontractorEmployer" />
+    <AssociationSet Name="FK__Subcontra__Emplo__7BE56230" Association="HRACCDBModel.FK__Subcontra__Emplo__7BE56230">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="SubcontractorEmployer" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Subcontra__Subco__7AF13DF7" Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7">
+      <End Role="SubContractor" EntitySet="SubContractors" />
+      <End Role="SubcontractorEmployer" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
     <Key>
@@ -387,6 +396,7 @@
     <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="Employer" ToRole="EmployeeEmployer" />
     <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="Employer" ToRole="CustomerEmployer" />
     <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="Employer" ToRole="ConsultantEmployer" />
+    <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" FromRole="Employer" ToRole="SubcontractorEmployer" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -477,6 +487,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="SubContractorFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubContractor" ToRole="SubcontractorEmployer" />
   </EntityType>
   <EntityType Name="BalanceSheet">
     <Key>
@@ -755,6 +766,40 @@
       </Principal>
       <Dependent Role="ConsultantCustomer">
         <PropertyRef Name="CustomerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SubcontractorEmployer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubcontractorId" Type="Int32" Nullable="false" />
+    <Property Name="EmployerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" FromRole="SubcontractorEmployer" ToRole="Employer" />
+    <NavigationProperty Name="SubContractor" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubcontractorEmployer" ToRole="SubContractor" />
+  </EntityType>
+  <Association Name="FK__Subcontra__Emplo__7BE56230">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+    <End Type="HRACCDBModel.SubcontractorEmployer" Role="SubcontractorEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployer">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Subcontra__Subco__7AF13DF7">
+    <End Type="HRACCDBModel.SubContractor" Role="SubContractor" Multiplicity="1" />
+    <End Type="HRACCDBModel.SubcontractorEmployer" Role="SubcontractorEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubContractor">
+        <PropertyRef Name="SubContractorIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployer">
+        <PropertyRef Name="SubcontractorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

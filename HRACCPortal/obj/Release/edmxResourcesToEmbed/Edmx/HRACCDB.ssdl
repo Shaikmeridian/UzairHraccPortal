@@ -441,6 +441,14 @@
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
     <Property Name="isActive" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="SubcontractorEmployers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubcontractorId" Type="int" Nullable="false" />
+    <Property Name="EmployerId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="UserDetails">
     <Key>
       <PropertyRef Name="UserId" />
@@ -606,6 +614,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Subcontra__Emplo__7BE56230">
+    <End Role="Employer" Type="Self.Employer" Multiplicity="1" />
+    <End Role="SubcontractorEmployers" Type="Self.SubcontractorEmployers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployers">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Subcontra__Subco__7AF13DF7">
+    <End Role="SubContractor" Type="Self.SubContractor" Multiplicity="1" />
+    <End Role="SubcontractorEmployers" Type="Self.SubcontractorEmployers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubContractor">
+        <PropertyRef Name="SubContractorIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployers">
+        <PropertyRef Name="SubcontractorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AspNetUsers_AspNetRoles">
     <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
@@ -647,6 +679,7 @@
     <EntitySet Name="Reconcile" EntityType="Self.Reconcile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SecurityQuestions" EntityType="Self.SecurityQuestions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubContractor" EntityType="Self.SubContractor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubcontractorEmployers" EntityType="Self.SubcontractorEmployers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="Self.FK__Consultan__Consu__59904A2C">
@@ -692,6 +725,14 @@
     <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="SecurityQuestions" EntitySet="SecurityQuestions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Subcontra__Emplo__7BE56230" Association="Self.FK__Subcontra__Emplo__7BE56230">
+      <End Role="Employer" EntitySet="Employer" />
+      <End Role="SubcontractorEmployers" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Subcontra__Subco__7AF13DF7" Association="Self.FK__Subcontra__Subco__7AF13DF7">
+      <End Role="SubContractor" EntitySet="SubContractor" />
+      <End Role="SubcontractorEmployers" EntitySet="SubcontractorEmployers" />
     </AssociationSet>
     <AssociationSet Name="FK_AspNetUsers_AspNetRoles" Association="Self.FK_AspNetUsers_AspNetRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />

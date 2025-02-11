@@ -33,6 +33,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Consultan__Emplo__5A846E65", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Employer), "ConsultantEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ConsultantEmployer), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Consultan__Consu__67DE6983", "Consultant", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Consultant), "ConsultantCustomer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ConsultantCustomer), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Consultan__Custo__68D28DBC", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Customer), "ConsultantCustomer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ConsultantCustomer), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Subcontra__Emplo__7BE56230", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Employer), "SubcontractorEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.SubcontractorEmployer), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Subcontra__Subco__7AF13DF7", "SubContractor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.SubContractor), "SubcontractorEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.SubcontractorEmployer), true)]
 
 #endregion
 
@@ -563,6 +565,22 @@ namespace HRACCPortal.Edmx
             }
         }
         private ObjectSet<ConsultantCustomer> _ConsultantCustomers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SubcontractorEmployer> SubcontractorEmployers
+        {
+            get
+            {
+                if ((_SubcontractorEmployers == null))
+                {
+                    _SubcontractorEmployers = base.CreateObjectSet<SubcontractorEmployer>("SubcontractorEmployers");
+                }
+                return _SubcontractorEmployers;
+            }
+        }
+        private ObjectSet<SubcontractorEmployer> _SubcontractorEmployers;
 
         #endregion
 
@@ -806,6 +824,14 @@ namespace HRACCPortal.Edmx
         public void AddToConsultantCustomers(ConsultantCustomer consultantCustomer)
         {
             base.AddObject("ConsultantCustomers", consultantCustomer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SubcontractorEmployers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubcontractorEmployers(SubcontractorEmployer subcontractorEmployer)
+        {
+            base.AddObject("SubcontractorEmployers", subcontractorEmployer);
         }
 
         #endregion
@@ -6561,6 +6587,28 @@ namespace HRACCPortal.Edmx
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Subcontra__Emplo__7BE56230", "SubcontractorEmployer")]
+        public EntityCollection<SubcontractorEmployer> SubcontractorEmployers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SubcontractorEmployer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "SubcontractorEmployer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SubcontractorEmployer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "SubcontractorEmployer", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -9945,6 +9993,220 @@ namespace HRACCPortal.Edmx
         private global::System.String _SubContractorFEID;
         partial void OnSubContractorFEIDChanging(global::System.String value);
         partial void OnSubContractorFEIDChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Subcontra__Subco__7AF13DF7", "SubcontractorEmployer")]
+        public EntityCollection<SubcontractorEmployer> SubcontractorEmployers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SubcontractorEmployer>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubcontractorEmployer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SubcontractorEmployer>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubcontractorEmployer", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="SubcontractorEmployer")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SubcontractorEmployer : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SubcontractorEmployer object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="subcontractorId">Initial value of the SubcontractorId property.</param>
+        /// <param name="employerId">Initial value of the EmployerId property.</param>
+        public static SubcontractorEmployer CreateSubcontractorEmployer(global::System.Int32 id, global::System.Int32 subcontractorId, global::System.Int32 employerId)
+        {
+            SubcontractorEmployer subcontractorEmployer = new SubcontractorEmployer();
+            subcontractorEmployer.Id = id;
+            subcontractorEmployer.SubcontractorId = subcontractorId;
+            subcontractorEmployer.EmployerId = employerId;
+            return subcontractorEmployer;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SubcontractorId
+        {
+            get
+            {
+                return _SubcontractorId;
+            }
+            set
+            {
+                OnSubcontractorIdChanging(value);
+                ReportPropertyChanging("SubcontractorId");
+                _SubcontractorId = StructuralObject.SetValidValue(value, "SubcontractorId");
+                ReportPropertyChanged("SubcontractorId");
+                OnSubcontractorIdChanged();
+            }
+        }
+        private global::System.Int32 _SubcontractorId;
+        partial void OnSubcontractorIdChanging(global::System.Int32 value);
+        partial void OnSubcontractorIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value, "EmployerId");
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private global::System.Int32 _EmployerId;
+        partial void OnEmployerIdChanging(global::System.Int32 value);
+        partial void OnEmployerIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Subcontra__Emplo__7BE56230", "Employer")]
+        public Employer Employer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "Employer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "Employer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Employer> EmployerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "Employer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employer>("HRACCDBModel.FK__Subcontra__Emplo__7BE56230", "Employer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Subcontra__Subco__7AF13DF7", "SubContractor")]
+        public SubContractor SubContractor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubContractor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubContractor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SubContractor> SubContractorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubContractor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubContractor>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubContractor", value);
+                }
+            }
+        }
 
         #endregion
 

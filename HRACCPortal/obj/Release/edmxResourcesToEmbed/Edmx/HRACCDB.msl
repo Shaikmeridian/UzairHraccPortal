@@ -505,5 +505,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SubcontractorEmployers">
+      <EntityTypeMapping TypeName="HRACCDBModel.SubcontractorEmployer">
+        <MappingFragment StoreEntitySet="SubcontractorEmployers">
+          <ScalarProperty Name="EmployerId" ColumnName="EmployerId" />
+          <ScalarProperty Name="SubcontractorId" ColumnName="SubcontractorId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
