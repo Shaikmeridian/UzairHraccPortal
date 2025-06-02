@@ -95,20 +95,28 @@ namespace HRACCPortal.Controllers
         [HttpGet]
         public ActionResult AssignCustomerEmployers(int customerId)
         {
-            // Call the existing GetEmployers method
+            // Populate the Employer list
             cls.GetEmployers();
 
-            // Get the EmployerList populated by GetEmployers
             var employers = cls.EmployerList.Select(employer => new EmployerModel
             {
                 EmployerIdPK = employer.EmployerIdPK,
                 EmployerName = employer.EmployerName,
                 EmployerContactEmail = employer.EmployerContactEmail
             }).ToList();
+
+            // Get all assigned employer IDs for the customer
+            var assignedEmployerIds = entities.CustomerEmployers
+                .Where(ce => ce.CustomerIdFK == customerId)
+                .Select(ce => ce.EmployerIdFK)
+                .ToHashSet(); // HashSet allows for fast lookup
+
+            ViewBag.AssignedEmployerIds = assignedEmployerIds;
             ViewBag.CustomerIdPK = customerId;
-            // Return as JSON to be used in the modal
+
             return View(employers);
         }
+
 
         [HttpPost]
         public JsonResult SaveCustomerEmployers(int customerId, List<int> selectedEmployerIds)
@@ -187,10 +195,7 @@ namespace HRACCPortal.Controllers
         {
             // Fetch customer information
             var customer = entities.CustomerEmployers.FirstOrDefault(ce => ce.CustomerIdFK == customerId);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
+           
 
             // Fetch assigned employers' details for the customer
             var assignedEmployers = entities.CustomerEmployers
@@ -203,6 +208,7 @@ namespace HRACCPortal.Controllers
                         EmployerIdPK = employer.EmployerIdPK,
                         EmployerName = employer.EmployerName,
                         EmployerContactEmail = employer.EmployerContactEmail,
+                        EmployerContactPhone = employer.EmployerContactPhone
                     })
                 .ToList();
 

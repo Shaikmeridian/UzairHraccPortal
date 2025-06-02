@@ -63,7 +63,7 @@
                             <th>Overtime Rate</th>
                             <th>Status</th>
                             <th>Last Updated Date</th>
-                            <th>&nbsp;</th>
+                            <th>Actions </th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -222,7 +222,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-solid" placeholder="" name="Rate" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="" name="Rate" maxlength="5"/>
                                         <!--end::Input-->
                                     </div>
                                     <div class="col-md-6 fv-row">
@@ -232,7 +232,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-solid" placeholder="" name="OvertimeRate" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="" name="OvertimeRate" maxlength="5"/>
                                         <!--end::Input-->
                                     </div>
                                 </div>
@@ -342,6 +342,34 @@
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
     <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector('[data-kt-customer-table-filter="search"]');
+            const tableRows = document.querySelectorAll("#kt_customers_table tbody tr");
+
+            searchInput.addEventListener("input", function () {
+                const searchValue = this.value.toLowerCase();
+
+                tableRows.forEach(function (row) {
+                    const rowText = row.innerText.toLowerCase();
+                    if (rowText.includes(searchValue)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('input[name="Rate"], input[name="OvertimeRate"]').on('input', function () {
+                // Remove non-digit characters and limit to 5 digits
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5);
+            });
+        });
+
+
+
         new tempusDominus.TempusDominus(document.getElementById("InactiveDate"), {
             display: {
                 viewMode: "calendar",
@@ -430,37 +458,102 @@
                 }
             })
         }
-        $(document).ready(function () {
-            $("#Status").click(function () {
-                if ($(this).is(":checked")) {
+        //$(document).ready(function () {
+        //    if ($("#Status").is(":checked")) {
+        //        $("#hide_inactivedetails").hide();
+        //        $("#divreason").hide();
+        //        $("#divdate").hide();
+        //    } else {
+        //        $("#hide_inactivedetails").show();
+        //        $("#divreason").show();
+        //        $("#divdate").show();
+        //    }
 
-                    $("#hide_inactivedetails").hide();
+        //    // Toggle on checkbox click
+        //    $("#Status").click(function () {
+        //        if ($(this).is(":checked")) {
+        //            $("#hide_inactivedetails").hide();
+        //            $("#divreason").hide();
+        //            $("#divdate").hide();
+        //        } else {
+        //            $("#hide_inactivedetails").show();
+        //            $("#divreason").show();
+        //            $("#divdate").show();
+        //        }
+        //    });
+
+
+        //$("#InactiveReason").blur(function () {
+        //    if ($(this).val() == "") {
+        //        $("#divreason").show();
+        //    } else {
+        //        $("#divreason").hide();
+        //    }
+        //});
+
+        //$("#InactiveDate").blur(function () {
+        //    if ($(this).val() == "") {
+        //        $("#divdate").show();
+        //    } else {
+        //        $("#divdate").hide();
+        //    }
+        //});
+        function handleStatusUI_PositionRate() {
+            if ($("#Status").is(":checked")) {
+                $("#hide_inactivedetails").hide();
+                $("#divreason").hide();
+                $("#divdate").hide();
+            } else {
+                $("#hide_inactivedetails").show();
+
+                if ($("#InactiveReason").val() === "") {
+                    $("#divreason").show();
+                } else {
                     $("#divreason").hide();
+                }
+
+                if ($("#InactiveDate").val() === "") {
+                    $("#divdate").show();
+                } else {
                     $("#divdate").hide();
                 }
-                else {
+            }
+        }
 
-                    $("#hide_inactivedetails").show();
+        $(document).ready(function () {
+            // Validation on blur
+            $("#InactiveReason").blur(function () {
+                if ($(this).val() === "") {
                     $("#divreason").show();
-                    $("#divdate").show();
+                } else {
+                    $("#divreason").hide();
                 }
             });
-        });
-        $("#InactiveReason").blur(function () {
-            if ($(this).val() == "") {
-                $("#divreason").show();
-            } else {
-                $("#divreason").hide();
-            }
+
+            $("#InactiveDate").blur(function () {
+                if ($(this).val() === "") {
+                    $("#divdate").show();
+                } else {
+                    $("#divdate").hide();
+                }
+            });
+
+            // Checkbox toggle
+            $("#Status").click(function () {
+                handleStatusUI_PositionRate();
+            });
+
+            // ✅ Correct: Listen to modal show, not form
+            $('#kt_modal_add_customer').on('shown.bs.modal', function () {
+                $("#Status").prop("checked", true);
+                $("#InactiveReason").val('');
+                $("#InactiveDate").val('');
+                handleStatusUI_PositionRate(); // Apply visibility
+            });
         });
 
-        $("#InactiveDate").blur(function () {
-            if ($(this).val() == "") {
-                $("#divdate").show();
-            } else {
-                $("#divdate").hide();
-            }
-        });
+
+
         $(document).ready(function () {
             $('#kt_td_picker_date_only_start').datetimepicker({
                 format: 'YYYY-MM-DD',

@@ -25,6 +25,10 @@ var KTModalCustomersAdd = function () {
 					},
                     'email': {
 						validators: {
+							regexp: {
+								regexp: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|org|net|edu|gov|mil|biz|info)$/,
+								message: 'Please enter a valid email address (e.g., example@gmail.com)'
+							},
 							notEmpty: {
 								message: 'Customer email is required'
 							}

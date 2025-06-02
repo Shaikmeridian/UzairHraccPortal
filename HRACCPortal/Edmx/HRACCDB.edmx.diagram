@@ -52,6 +52,22 @@
         <EntityTypeShape EntityType="HRACCDBModel.SubcontractorEmployer" Width="1.5" PointX="15.625" PointY="14.5" />
         <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" />
         <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" />
+        <EntityTypeShape EntityType="HRACCDBModel.TimesheetDetail" Width="1.5" PointX="7.25" PointY="20.625" />
+        <EntityTypeShape EntityType="HRACCDBModel.Timesheet" Width="1.5" PointX="5" PointY="20.375" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Consu__0E04126B" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" />
+        <EntityTypeShape EntityType="HRACCDBModel.C__MigrationHistory" Width="1.5" PointX="7.375" PointY="16.75" />
+        <EntityTypeShape EntityType="HRACCDBModel.AspNetUserClaim" Width="1.5" PointX="15.375" PointY="18" />
+        <EntityTypeShape EntityType="HRACCDBModel.AspNetUserLogin" Width="1.5" PointX="15.375" PointY="20.75" />
+        <AssociationConnector Association="HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HRACCDBModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="HRACCDBModel.ChequeDetail" Width="1.5" PointX="11.625" PointY="24.375" />
+        <EntityTypeShape EntityType="HRACCDBModel.Deliverable" Width="1.5" PointX="7" PointY="24.875" />
+        <AssociationConnector Association="HRACCDBModel.FK__ChequeDet__Payme__473C8FC7" />
+        <AssociationConnector Association="HRACCDBModel.FK__Deliverab__Posit__3429BB53" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -194,17 +194,25 @@ namespace HRACCPortal.Controllers
             // Call the existing GetEmployers method
             cls.GetEmployers();
 
-            // Get the EmployerList populated by GetEmployers
-            var employers = cls.EmployerList.Select(employer => new EmployerModel
+            var employers = cls.EmployerList.Where(employer => employer.isActive).Select(employer => new EmployerModel
             {
                 EmployerIdPK = employer.EmployerIdPK,
                 EmployerName = employer.EmployerName,
                 EmployerContactEmail = employer.EmployerContactEmail
             }).ToList();
+
+            // Get all employers assigned to the employee
+            var assignedEmployerIds = entities.EmployeeEmployers
+                .Where(ee => ee.EmployeeIdFK == employeeId)
+                .Select(ee => ee.EmployerIdFK)
+                .ToHashSet();
+
+            ViewBag.AssignedEmployerIds = assignedEmployerIds ?? new HashSet<int>();
             ViewBag.EmployeeId = employeeId;
-            // Return as JSON to be used in the modal
+
             return View(employers);
         }
+
 
 
         [HttpPost]
@@ -215,47 +223,72 @@ namespace HRACCPortal.Controllers
                 return Json(new { success = false, message = "No employers selected" });
             }
 
-            foreach (var employerId in selectedEmployerIds)
+            try
             {
-                var record = new EmployeeEmployer
+                // Step 1: Remove all existing employers assigned to this employee
+                var existingAssignments = entities.EmployeeEmployers
+                    .Where(ee => ee.EmployeeIdFK == employeeId)
+                    .ToList();
+
+                foreach (var assignment in existingAssignments)
                 {
-                    EmployeeIdFK = employeeId,
-                    EmployerIdFK = employerId,
-                    DateAdded = DateTime.Now
-                };
-                entities.EmployeeEmployers.AddObject(record); // Use the generated entity
+                    entities.EmployeeEmployers.DeleteObject(assignment);
+                }
+
+                // Step 2: Add newly selected employers
+                foreach (var employerId in selectedEmployerIds)
+                {
+                    entities.EmployeeEmployers.AddObject(new EmployeeEmployer
+                    {
+                        EmployeeIdFK = employeeId,
+                        EmployerIdFK = employerId,
+                        DateAdded = DateTime.Now
+                    });
+                }
+
+                // Save all changes
+                entities.SaveChanges();
+
+                return Json(new { success = true, message = "Employers assigned successfully" });
             }
-
-            entities.SaveChanges();
-
-            return Json(new { success = true, message = "Employers assigned successfully" });
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occurred: " + ex.Message });
+            }
         }
 
+        [HttpGet]
         public ActionResult ViewAssignedEmployers(int employeeId)
         {
             // Fetch employee information
             var employee = entities.EmployeeEmployers.FirstOrDefault(e => e.EmployeeIdFK == employeeId);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
+         
 
             // Fetch assigned employers' details
             var assignedEmployers = entities.EmployeeEmployers
-                .Where(ee => ee.EmployeeIdFK == employeeId)
-                .Join(entities.Employers,
-                    ee => ee.EmployerIdFK,
-                    employer => employer.EmployerIdPK,
-                    (ee, employer) => new EmployerModel
-                    {
-                        EmployerIdPK = employer.EmployerIdPK,
-                        EmployerName = employer.EmployerName,
-                        EmployerContactEmail = employer.EmployerContactEmail,
+             .Where(ee => ee.EmployeeIdFK == employeeId)
+             .Join(entities.Employers,
+                 ee => ee.EmployerIdFK,
+                 employer => employer.EmployerIdPK,
+                 (ee, employer) => new
+                 {
+                     employer.EmployerIdPK,
+                     employer.EmployerName,
+                     employer.EmployerContactEmail,
+                     employer.EmployerContactPhone,
+                     ee.DateAdded // still DateTime here
+                 })
+             .ToList() // fetch everything from the database
+             .Select(x => new EmployerModel
+             {
+                 EmployerIdPK = x.EmployerIdPK,
+                 EmployerName = x.EmployerName,
+                 EmployerContactEmail = x.EmployerContactEmail,
+                 EmployerContactPhone = x.EmployerContactPhone,
+                 DateAdded = x.DateAdded.ToString("dd-MMM-yyyy") // now safely format in-memory
+             })
+             .ToList();
 
-                    })
-                .ToList();
-
-            ViewBag.EmployeeName = "Uzair";
             ViewBag.EmployeeId = employeeId;
 
             return View(assignedEmployers); // Return to View with the data

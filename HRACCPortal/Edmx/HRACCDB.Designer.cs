@@ -35,6 +35,15 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Consultan__Custo__68D28DBC", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Customer), "ConsultantCustomer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ConsultantCustomer), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Subcontra__Emplo__7BE56230", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Employer), "SubcontractorEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.SubcontractorEmployer), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Subcontra__Subco__7AF13DF7", "SubContractor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.SubContractor), "SubcontractorEmployer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.SubcontractorEmployer), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Timesheet__Consu__0E04126B", "Consultant", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.Consultant), "Timesheet", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.Timesheet), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Timesheet__Times__13BCEBC1", "Timesheet", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.Timesheet), "TimesheetDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.TimesheetDetail), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Timesheet__Custo__2022C2A6", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.Customer), "Timesheet", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.Timesheet), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Timesheet__Emplo__2116E6DF", "Employer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(HRACCPortal.Edmx.Employer), "Timesheet", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.Timesheet), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.AspNetUser), "AspNetUserClaim", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetUserClaim), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.AspNetUser), "AspNetUserLogin", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetUserLogin), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "AspNetUserRoles", "AspNetRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetRole), "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetUser))]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.PaymentsReceived), "ChequeDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ChequeDetail), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Deliverab__Posit__3429BB53", "Position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Position), "Deliverable", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.Deliverable), true)]
 
 #endregion
 
@@ -581,6 +590,118 @@ namespace HRACCPortal.Edmx
             }
         }
         private ObjectSet<SubcontractorEmployer> _SubcontractorEmployers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<TimesheetDetail> TimesheetDetails
+        {
+            get
+            {
+                if ((_TimesheetDetails == null))
+                {
+                    _TimesheetDetails = base.CreateObjectSet<TimesheetDetail>("TimesheetDetails");
+                }
+                return _TimesheetDetails;
+            }
+        }
+        private ObjectSet<TimesheetDetail> _TimesheetDetails;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Timesheet> Timesheets
+        {
+            get
+            {
+                if ((_Timesheets == null))
+                {
+                    _Timesheets = base.CreateObjectSet<Timesheet>("Timesheets");
+                }
+                return _Timesheets;
+            }
+        }
+        private ObjectSet<Timesheet> _Timesheets;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<C__MigrationHistory> C__MigrationHistory
+        {
+            get
+            {
+                if ((_C__MigrationHistory == null))
+                {
+                    _C__MigrationHistory = base.CreateObjectSet<C__MigrationHistory>("C__MigrationHistory");
+                }
+                return _C__MigrationHistory;
+            }
+        }
+        private ObjectSet<C__MigrationHistory> _C__MigrationHistory;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AspNetUserClaim> AspNetUserClaims
+        {
+            get
+            {
+                if ((_AspNetUserClaims == null))
+                {
+                    _AspNetUserClaims = base.CreateObjectSet<AspNetUserClaim>("AspNetUserClaims");
+                }
+                return _AspNetUserClaims;
+            }
+        }
+        private ObjectSet<AspNetUserClaim> _AspNetUserClaims;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AspNetUserLogin> AspNetUserLogins
+        {
+            get
+            {
+                if ((_AspNetUserLogins == null))
+                {
+                    _AspNetUserLogins = base.CreateObjectSet<AspNetUserLogin>("AspNetUserLogins");
+                }
+                return _AspNetUserLogins;
+            }
+        }
+        private ObjectSet<AspNetUserLogin> _AspNetUserLogins;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ChequeDetail> ChequeDetails
+        {
+            get
+            {
+                if ((_ChequeDetails == null))
+                {
+                    _ChequeDetails = base.CreateObjectSet<ChequeDetail>("ChequeDetails");
+                }
+                return _ChequeDetails;
+            }
+        }
+        private ObjectSet<ChequeDetail> _ChequeDetails;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Deliverable> Deliverables
+        {
+            get
+            {
+                if ((_Deliverables == null))
+                {
+                    _Deliverables = base.CreateObjectSet<Deliverable>("Deliverables");
+                }
+                return _Deliverables;
+            }
+        }
+        private ObjectSet<Deliverable> _Deliverables;
 
         #endregion
 
@@ -832,6 +953,62 @@ namespace HRACCPortal.Edmx
         public void AddToSubcontractorEmployers(SubcontractorEmployer subcontractorEmployer)
         {
             base.AddObject("SubcontractorEmployers", subcontractorEmployer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the TimesheetDetails EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTimesheetDetails(TimesheetDetail timesheetDetail)
+        {
+            base.AddObject("TimesheetDetails", timesheetDetail);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Timesheets EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTimesheets(Timesheet timesheet)
+        {
+            base.AddObject("Timesheets", timesheet);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the C__MigrationHistory EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToC__MigrationHistory(C__MigrationHistory c__MigrationHistory)
+        {
+            base.AddObject("C__MigrationHistory", c__MigrationHistory);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AspNetUserClaims EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAspNetUserClaims(AspNetUserClaim aspNetUserClaim)
+        {
+            base.AddObject("AspNetUserClaims", aspNetUserClaim);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AspNetUserLogins EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAspNetUserLogins(AspNetUserLogin aspNetUserLogin)
+        {
+            base.AddObject("AspNetUserLogins", aspNetUserLogin);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ChequeDetails EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToChequeDetails(ChequeDetail chequeDetail)
+        {
+            base.AddObject("ChequeDetails", chequeDetail);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Deliverables EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDeliverables(Deliverable deliverable)
+        {
+            base.AddObject("Deliverables", deliverable);
         }
 
         #endregion
@@ -1216,6 +1393,28 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetUser>("HRACCDBModel.FK_AspNetUsers_AspNetRoles", "AspNetUser", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "AspNetUserRoles", "AspNetUser")]
+        public EntityCollection<AspNetUser> AspNetUsers1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AspNetUser>("HRACCDBModel.AspNetUserRoles", "AspNetUser");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetUser>("HRACCDBModel.AspNetUserRoles", "AspNetUser", value);
                 }
             }
         }
@@ -1735,6 +1934,400 @@ namespace HRACCPortal.Edmx
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUserClaim")]
+        public EntityCollection<AspNetUserClaim> AspNetUserClaims
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AspNetUserClaim>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUserClaim");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetUserClaim>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUserClaim", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUserLogin")]
+        public EntityCollection<AspNetUserLogin> AspNetUserLogins
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AspNetUserLogin>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUserLogin");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetUserLogin>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUserLogin", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "AspNetUserRoles", "AspNetRole")]
+        public EntityCollection<AspNetRole> AspNetRoles
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AspNetRole>("HRACCDBModel.AspNetUserRoles", "AspNetRole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AspNetRole>("HRACCDBModel.AspNetUserRoles", "AspNetRole", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="AspNetUserClaim")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AspNetUserClaim : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AspNetUserClaim object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        public static AspNetUserClaim CreateAspNetUserClaim(global::System.Int32 id, global::System.String userId)
+        {
+            AspNetUserClaim aspNetUserClaim = new AspNetUserClaim();
+            aspNetUserClaim.Id = id;
+            aspNetUserClaim.UserId = userId;
+            return aspNetUserClaim;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, false, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.String _UserId;
+        partial void OnUserIdChanging(global::System.String value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ClaimType
+        {
+            get
+            {
+                return _ClaimType;
+            }
+            set
+            {
+                OnClaimTypeChanging(value);
+                ReportPropertyChanging("ClaimType");
+                _ClaimType = StructuralObject.SetValidValue(value, true, "ClaimType");
+                ReportPropertyChanged("ClaimType");
+                OnClaimTypeChanged();
+            }
+        }
+        private global::System.String _ClaimType;
+        partial void OnClaimTypeChanging(global::System.String value);
+        partial void OnClaimTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ClaimValue
+        {
+            get
+            {
+                return _ClaimValue;
+            }
+            set
+            {
+                OnClaimValueChanging(value);
+                ReportPropertyChanging("ClaimValue");
+                _ClaimValue = StructuralObject.SetValidValue(value, true, "ClaimValue");
+                ReportPropertyChanged("ClaimValue");
+                OnClaimValueChanged();
+            }
+        }
+        private global::System.String _ClaimValue;
+        partial void OnClaimValueChanging(global::System.String value);
+        partial void OnClaimValueChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser")]
+        public AspNetUser AspNetUser
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AspNetUser> AspNetUserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId", "AspNetUser", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="AspNetUserLogin")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AspNetUserLogin : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AspNetUserLogin object.
+        /// </summary>
+        /// <param name="loginProvider">Initial value of the LoginProvider property.</param>
+        /// <param name="providerKey">Initial value of the ProviderKey property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        public static AspNetUserLogin CreateAspNetUserLogin(global::System.String loginProvider, global::System.String providerKey, global::System.String userId)
+        {
+            AspNetUserLogin aspNetUserLogin = new AspNetUserLogin();
+            aspNetUserLogin.LoginProvider = loginProvider;
+            aspNetUserLogin.ProviderKey = providerKey;
+            aspNetUserLogin.UserId = userId;
+            return aspNetUserLogin;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LoginProvider
+        {
+            get
+            {
+                return _LoginProvider;
+            }
+            set
+            {
+                if (_LoginProvider != value)
+                {
+                    OnLoginProviderChanging(value);
+                    ReportPropertyChanging("LoginProvider");
+                    _LoginProvider = StructuralObject.SetValidValue(value, false, "LoginProvider");
+                    ReportPropertyChanged("LoginProvider");
+                    OnLoginProviderChanged();
+                }
+            }
+        }
+        private global::System.String _LoginProvider;
+        partial void OnLoginProviderChanging(global::System.String value);
+        partial void OnLoginProviderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ProviderKey
+        {
+            get
+            {
+                return _ProviderKey;
+            }
+            set
+            {
+                if (_ProviderKey != value)
+                {
+                    OnProviderKeyChanging(value);
+                    ReportPropertyChanging("ProviderKey");
+                    _ProviderKey = StructuralObject.SetValidValue(value, false, "ProviderKey");
+                    ReportPropertyChanged("ProviderKey");
+                    OnProviderKeyChanged();
+                }
+            }
+        }
+        private global::System.String _ProviderKey;
+        partial void OnProviderKeyChanging(global::System.String value);
+        partial void OnProviderKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                if (_UserId != value)
+                {
+                    OnUserIdChanging(value);
+                    ReportPropertyChanging("UserId");
+                    _UserId = StructuralObject.SetValidValue(value, false, "UserId");
+                    ReportPropertyChanged("UserId");
+                    OnUserIdChanged();
+                }
+            }
+        }
+        private global::System.String _UserId;
+        partial void OnUserIdChanging(global::System.String value);
+        partial void OnUserIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser")]
+        public AspNetUser AspNetUser
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<AspNetUser> AspNetUserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AspNetUser>("HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId", "AspNetUser", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -2129,6 +2722,363 @@ namespace HRACCPortal.Edmx
         private global::System.String _UpdatedBy;
         partial void OnUpdatedByChanging(global::System.String value);
         partial void OnUpdatedByChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="C__MigrationHistory")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class C__MigrationHistory : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new C__MigrationHistory object.
+        /// </summary>
+        /// <param name="migrationId">Initial value of the MigrationId property.</param>
+        /// <param name="contextKey">Initial value of the ContextKey property.</param>
+        /// <param name="model">Initial value of the Model property.</param>
+        /// <param name="productVersion">Initial value of the ProductVersion property.</param>
+        public static C__MigrationHistory CreateC__MigrationHistory(global::System.String migrationId, global::System.String contextKey, global::System.Byte[] model, global::System.String productVersion)
+        {
+            C__MigrationHistory c__MigrationHistory = new C__MigrationHistory();
+            c__MigrationHistory.MigrationId = migrationId;
+            c__MigrationHistory.ContextKey = contextKey;
+            c__MigrationHistory.Model = model;
+            c__MigrationHistory.ProductVersion = productVersion;
+            return c__MigrationHistory;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MigrationId
+        {
+            get
+            {
+                return _MigrationId;
+            }
+            set
+            {
+                if (_MigrationId != value)
+                {
+                    OnMigrationIdChanging(value);
+                    ReportPropertyChanging("MigrationId");
+                    _MigrationId = StructuralObject.SetValidValue(value, false, "MigrationId");
+                    ReportPropertyChanged("MigrationId");
+                    OnMigrationIdChanged();
+                }
+            }
+        }
+        private global::System.String _MigrationId;
+        partial void OnMigrationIdChanging(global::System.String value);
+        partial void OnMigrationIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ContextKey
+        {
+            get
+            {
+                return _ContextKey;
+            }
+            set
+            {
+                if (_ContextKey != value)
+                {
+                    OnContextKeyChanging(value);
+                    ReportPropertyChanging("ContextKey");
+                    _ContextKey = StructuralObject.SetValidValue(value, false, "ContextKey");
+                    ReportPropertyChanged("ContextKey");
+                    OnContextKeyChanged();
+                }
+            }
+        }
+        private global::System.String _ContextKey;
+        partial void OnContextKeyChanging(global::System.String value);
+        partial void OnContextKeyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Byte[] Model
+        {
+            get
+            {
+                return StructuralObject.GetValidValue(_Model);
+            }
+            set
+            {
+                OnModelChanging(value);
+                ReportPropertyChanging("Model");
+                _Model = StructuralObject.SetValidValue(value, false, "Model");
+                ReportPropertyChanged("Model");
+                OnModelChanged();
+            }
+        }
+        private global::System.Byte[] _Model;
+        partial void OnModelChanging(global::System.Byte[] value);
+        partial void OnModelChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ProductVersion
+        {
+            get
+            {
+                return _ProductVersion;
+            }
+            set
+            {
+                OnProductVersionChanging(value);
+                ReportPropertyChanging("ProductVersion");
+                _ProductVersion = StructuralObject.SetValidValue(value, false, "ProductVersion");
+                ReportPropertyChanged("ProductVersion");
+                OnProductVersionChanged();
+            }
+        }
+        private global::System.String _ProductVersion;
+        partial void OnProductVersionChanging(global::System.String value);
+        partial void OnProductVersionChanged();
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="ChequeDetail")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ChequeDetail : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ChequeDetail object.
+        /// </summary>
+        /// <param name="chequeId">Initial value of the ChequeId property.</param>
+        /// <param name="paymentsReceivedId">Initial value of the PaymentsReceivedId property.</param>
+        public static ChequeDetail CreateChequeDetail(global::System.Int32 chequeId, global::System.Int32 paymentsReceivedId)
+        {
+            ChequeDetail chequeDetail = new ChequeDetail();
+            chequeDetail.ChequeId = chequeId;
+            chequeDetail.PaymentsReceivedId = paymentsReceivedId;
+            return chequeDetail;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ChequeId
+        {
+            get
+            {
+                return _ChequeId;
+            }
+            set
+            {
+                if (_ChequeId != value)
+                {
+                    OnChequeIdChanging(value);
+                    ReportPropertyChanging("ChequeId");
+                    _ChequeId = StructuralObject.SetValidValue(value, "ChequeId");
+                    ReportPropertyChanged("ChequeId");
+                    OnChequeIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ChequeId;
+        partial void OnChequeIdChanging(global::System.Int32 value);
+        partial void OnChequeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PaymentsReceivedId
+        {
+            get
+            {
+                return _PaymentsReceivedId;
+            }
+            set
+            {
+                OnPaymentsReceivedIdChanging(value);
+                ReportPropertyChanging("PaymentsReceivedId");
+                _PaymentsReceivedId = StructuralObject.SetValidValue(value, "PaymentsReceivedId");
+                ReportPropertyChanged("PaymentsReceivedId");
+                OnPaymentsReceivedIdChanged();
+            }
+        }
+        private global::System.Int32 _PaymentsReceivedId;
+        partial void OnPaymentsReceivedIdChanging(global::System.Int32 value);
+        partial void OnPaymentsReceivedIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ChequeNumber
+        {
+            get
+            {
+                return _ChequeNumber;
+            }
+            set
+            {
+                OnChequeNumberChanging(value);
+                ReportPropertyChanging("ChequeNumber");
+                _ChequeNumber = StructuralObject.SetValidValue(value, true, "ChequeNumber");
+                ReportPropertyChanged("ChequeNumber");
+                OnChequeNumberChanged();
+            }
+        }
+        private global::System.String _ChequeNumber;
+        partial void OnChequeNumberChanging(global::System.String value);
+        partial void OnChequeNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ChequeAmount
+        {
+            get
+            {
+                return _ChequeAmount;
+            }
+            set
+            {
+                OnChequeAmountChanging(value);
+                ReportPropertyChanging("ChequeAmount");
+                _ChequeAmount = StructuralObject.SetValidValue(value, "ChequeAmount");
+                ReportPropertyChanged("ChequeAmount");
+                OnChequeAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ChequeAmount;
+        partial void OnChequeAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnChequeAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateReceived
+        {
+            get
+            {
+                return _DateReceived;
+            }
+            set
+            {
+                OnDateReceivedChanging(value);
+                ReportPropertyChanging("DateReceived");
+                _DateReceived = StructuralObject.SetValidValue(value, "DateReceived");
+                ReportPropertyChanged("DateReceived");
+                OnDateReceivedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateReceived;
+        partial void OnDateReceivedChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateReceivedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CNumber
+        {
+            get
+            {
+                return _CNumber;
+            }
+            set
+            {
+                OnCNumberChanging(value);
+                ReportPropertyChanging("CNumber");
+                _CNumber = StructuralObject.SetValidValue(value, "CNumber");
+                ReportPropertyChanged("CNumber");
+                OnCNumberChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CNumber;
+        partial void OnCNumberChanging(Nullable<global::System.Int32> value);
+        partial void OnCNumberChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived")]
+        public PaymentsReceived PaymentsReceived
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PaymentsReceived>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PaymentsReceived>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PaymentsReceived> PaymentsReceivedReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PaymentsReceived>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PaymentsReceived>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -3152,6 +4102,28 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ConsultantCustomer>("HRACCDBModel.FK__Consultan__Consu__67DE6983", "ConsultantCustomer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Consu__0E04126B", "Timesheet")]
+        public EntityCollection<Timesheet> Timesheets
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Timesheet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Timesheet", value);
                 }
             }
         }
@@ -4789,6 +5761,28 @@ namespace HRACCPortal.Edmx
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Custo__2022C2A6", "Timesheet")]
+        public EntityCollection<Timesheet> Timesheets
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Timesheet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Timesheet", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -5162,6 +6156,182 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employer>("HRACCDBModel.FK__CustomerE__Emplo__467D75B8", "Employer", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="Deliverable")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Deliverable : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Deliverable object.
+        /// </summary>
+        /// <param name="deliverableId">Initial value of the DeliverableId property.</param>
+        /// <param name="positionId">Initial value of the PositionId property.</param>
+        /// <param name="deliverableNumber">Initial value of the DeliverableNumber property.</param>
+        /// <param name="deliverableDescription">Initial value of the DeliverableDescription property.</param>
+        public static Deliverable CreateDeliverable(global::System.Int32 deliverableId, global::System.Int32 positionId, global::System.String deliverableNumber, global::System.String deliverableDescription)
+        {
+            Deliverable deliverable = new Deliverable();
+            deliverable.DeliverableId = deliverableId;
+            deliverable.PositionId = positionId;
+            deliverable.DeliverableNumber = deliverableNumber;
+            deliverable.DeliverableDescription = deliverableDescription;
+            return deliverable;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DeliverableId
+        {
+            get
+            {
+                return _DeliverableId;
+            }
+            set
+            {
+                if (_DeliverableId != value)
+                {
+                    OnDeliverableIdChanging(value);
+                    ReportPropertyChanging("DeliverableId");
+                    _DeliverableId = StructuralObject.SetValidValue(value, "DeliverableId");
+                    ReportPropertyChanged("DeliverableId");
+                    OnDeliverableIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DeliverableId;
+        partial void OnDeliverableIdChanging(global::System.Int32 value);
+        partial void OnDeliverableIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PositionId
+        {
+            get
+            {
+                return _PositionId;
+            }
+            set
+            {
+                OnPositionIdChanging(value);
+                ReportPropertyChanging("PositionId");
+                _PositionId = StructuralObject.SetValidValue(value, "PositionId");
+                ReportPropertyChanged("PositionId");
+                OnPositionIdChanged();
+            }
+        }
+        private global::System.Int32 _PositionId;
+        partial void OnPositionIdChanging(global::System.Int32 value);
+        partial void OnPositionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DeliverableNumber
+        {
+            get
+            {
+                return _DeliverableNumber;
+            }
+            set
+            {
+                OnDeliverableNumberChanging(value);
+                ReportPropertyChanging("DeliverableNumber");
+                _DeliverableNumber = StructuralObject.SetValidValue(value, false, "DeliverableNumber");
+                ReportPropertyChanged("DeliverableNumber");
+                OnDeliverableNumberChanged();
+            }
+        }
+        private global::System.String _DeliverableNumber;
+        partial void OnDeliverableNumberChanging(global::System.String value);
+        partial void OnDeliverableNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DeliverableDescription
+        {
+            get
+            {
+                return _DeliverableDescription;
+            }
+            set
+            {
+                OnDeliverableDescriptionChanging(value);
+                ReportPropertyChanging("DeliverableDescription");
+                _DeliverableDescription = StructuralObject.SetValidValue(value, false, "DeliverableDescription");
+                ReportPropertyChanged("DeliverableDescription");
+                OnDeliverableDescriptionChanged();
+            }
+        }
+        private global::System.String _DeliverableDescription;
+        partial void OnDeliverableDescriptionChanging(global::System.String value);
+        partial void OnDeliverableDescriptionChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Deliverab__Posit__3429BB53", "Position")]
+        public Position Position
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Position>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Position").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Position>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Position").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Position> PositionReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Position>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Position");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Position>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Position", value);
                 }
             }
         }
@@ -6609,6 +7779,28 @@ namespace HRACCPortal.Edmx
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Emplo__2116E6DF", "Timesheet")]
+        public EntityCollection<Timesheet> Timesheets
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Timesheet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Timesheet>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Timesheet", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -7001,6 +8193,54 @@ namespace HRACCPortal.Edmx
         private global::System.String _UpdatedBy;
         partial void OnUpdatedByChanging(global::System.String value);
         partial void OnUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, true, "Status");
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.String _Status;
+        partial void OnStatusChanging(global::System.String value);
+        partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CustomerId
+        {
+            get
+            {
+                return _CustomerId;
+            }
+            set
+            {
+                OnCustomerIdChanging(value);
+                ReportPropertyChanging("CustomerId");
+                _CustomerId = StructuralObject.SetValidValue(value, "CustomerId");
+                ReportPropertyChanged("CustomerId");
+                OnCustomerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CustomerId;
+        partial void OnCustomerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnCustomerIdChanged();
 
         #endregion
 
@@ -8033,6 +9273,104 @@ namespace HRACCPortal.Edmx
         private global::System.String _UpdatedBy;
         partial void OnUpdatedByChanging(global::System.String value);
         partial void OnUpdatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AmountPaid
+        {
+            get
+            {
+                return _AmountPaid;
+            }
+            set
+            {
+                OnAmountPaidChanging(value);
+                ReportPropertyChanging("AmountPaid");
+                _AmountPaid = StructuralObject.SetValidValue(value, "AmountPaid");
+                ReportPropertyChanged("AmountPaid");
+                OnAmountPaidChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AmountPaid;
+        partial void OnAmountPaidChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountPaidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> BalanceAmount
+        {
+            get
+            {
+                return _BalanceAmount;
+            }
+            set
+            {
+                OnBalanceAmountChanging(value);
+                ReportPropertyChanging("BalanceAmount");
+                _BalanceAmount = StructuralObject.SetValidValue(value, "BalanceAmount");
+                ReportPropertyChanged("BalanceAmount");
+                OnBalanceAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _BalanceAmount;
+        partial void OnBalanceAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnBalanceAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value, true, "Status");
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.String _Status;
+        partial void OnStatusChanging(global::System.String value);
+        partial void OnStatusChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__ChequeDet__Payme__473C8FC7", "ChequeDetail")]
+        public EntityCollection<ChequeDetail> ChequeDetails
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ChequeDetail>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "ChequeDetail");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ChequeDetail>("HRACCDBModel.FK__ChequeDet__Payme__473C8FC7", "ChequeDetail", value);
+                }
+            }
+        }
 
         #endregion
 
@@ -8504,6 +9842,28 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Position>("HRACCDBModel.FK_Position_Customer", "Position", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Deliverab__Posit__3429BB53", "Deliverable")]
+        public EntityCollection<Deliverable> Deliverables
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Deliverable>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Deliverable");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Deliverable>("HRACCDBModel.FK__Deliverab__Posit__3429BB53", "Deliverable", value);
                 }
             }
         }
@@ -10204,6 +11564,636 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubContractor>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubContractor", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="Timesheet")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Timesheet : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Timesheet object.
+        /// </summary>
+        /// <param name="timesheetId">Initial value of the TimesheetId property.</param>
+        public static Timesheet CreateTimesheet(global::System.Int32 timesheetId)
+        {
+            Timesheet timesheet = new Timesheet();
+            timesheet.TimesheetId = timesheetId;
+            return timesheet;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TimesheetId
+        {
+            get
+            {
+                return _TimesheetId;
+            }
+            set
+            {
+                if (_TimesheetId != value)
+                {
+                    OnTimesheetIdChanging(value);
+                    ReportPropertyChanging("TimesheetId");
+                    _TimesheetId = StructuralObject.SetValidValue(value, "TimesheetId");
+                    ReportPropertyChanged("TimesheetId");
+                    OnTimesheetIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TimesheetId;
+        partial void OnTimesheetIdChanging(global::System.Int32 value);
+        partial void OnTimesheetIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ConsultantId
+        {
+            get
+            {
+                return _ConsultantId;
+            }
+            set
+            {
+                OnConsultantIdChanging(value);
+                ReportPropertyChanging("ConsultantId");
+                _ConsultantId = StructuralObject.SetValidValue(value, "ConsultantId");
+                ReportPropertyChanged("ConsultantId");
+                OnConsultantIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ConsultantId;
+        partial void OnConsultantIdChanging(Nullable<global::System.Int32> value);
+        partial void OnConsultantIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Month
+        {
+            get
+            {
+                return _Month;
+            }
+            set
+            {
+                OnMonthChanging(value);
+                ReportPropertyChanging("Month");
+                _Month = StructuralObject.SetValidValue(value, "Month");
+                ReportPropertyChanged("Month");
+                OnMonthChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Month;
+        partial void OnMonthChanging(Nullable<global::System.Int32> value);
+        partial void OnMonthChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Year
+        {
+            get
+            {
+                return _Year;
+            }
+            set
+            {
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value, "Year");
+                ReportPropertyChanged("Year");
+                OnYearChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Year;
+        partial void OnYearChanging(Nullable<global::System.Int32> value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> TotalHours
+        {
+            get
+            {
+                return _TotalHours;
+            }
+            set
+            {
+                OnTotalHoursChanging(value);
+                ReportPropertyChanging("TotalHours");
+                _TotalHours = StructuralObject.SetValidValue(value, "TotalHours");
+                ReportPropertyChanged("TotalHours");
+                OnTotalHoursChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _TotalHours;
+        partial void OnTotalHoursChanging(Nullable<global::System.Decimal> value);
+        partial void OnTotalHoursChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Approval
+        {
+            get
+            {
+                return _Approval;
+            }
+            set
+            {
+                OnApprovalChanging(value);
+                ReportPropertyChanging("Approval");
+                _Approval = StructuralObject.SetValidValue(value, true, "Approval");
+                ReportPropertyChanged("Approval");
+                OnApprovalChanged();
+            }
+        }
+        private global::System.String _Approval;
+        partial void OnApprovalChanging(global::System.String value);
+        partial void OnApprovalChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CreatedAt
+        {
+            get
+            {
+                return _CreatedAt;
+            }
+            set
+            {
+                OnCreatedAtChanging(value);
+                ReportPropertyChanging("CreatedAt");
+                _CreatedAt = StructuralObject.SetValidValue(value, "CreatedAt");
+                ReportPropertyChanged("CreatedAt");
+                OnCreatedAtChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CreatedAt;
+        partial void OnCreatedAtChanging(Nullable<global::System.DateTime> value);
+        partial void OnCreatedAtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CustomerId
+        {
+            get
+            {
+                return _CustomerId;
+            }
+            set
+            {
+                OnCustomerIdChanging(value);
+                ReportPropertyChanging("CustomerId");
+                _CustomerId = StructuralObject.SetValidValue(value, "CustomerId");
+                ReportPropertyChanged("CustomerId");
+                OnCustomerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CustomerId;
+        partial void OnCustomerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnCustomerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> EmployerId
+        {
+            get
+            {
+                return _EmployerId;
+            }
+            set
+            {
+                OnEmployerIdChanging(value);
+                ReportPropertyChanging("EmployerId");
+                _EmployerId = StructuralObject.SetValidValue(value, "EmployerId");
+                ReportPropertyChanged("EmployerId");
+                OnEmployerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _EmployerId;
+        partial void OnEmployerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEmployerIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Consu__0E04126B", "Consultant")]
+        public Consultant Consultant
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Consultant>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Consultant").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Consultant>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Consultant").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Consultant> ConsultantReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Consultant>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Consultant");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Consultant>("HRACCDBModel.FK__Timesheet__Consu__0E04126B", "Consultant", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Times__13BCEBC1", "TimesheetDetail")]
+        public EntityCollection<TimesheetDetail> TimesheetDetails
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TimesheetDetail>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "TimesheetDetail");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TimesheetDetail>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "TimesheetDetail", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Custo__2022C2A6", "Customer")]
+        public Customer Customer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Customer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Customer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Customer> CustomerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Customer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("HRACCDBModel.FK__Timesheet__Custo__2022C2A6", "Customer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Emplo__2116E6DF", "Employer")]
+        public Employer Employer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Employer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Employer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Employer> EmployerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employer>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Employer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employer>("HRACCDBModel.FK__Timesheet__Emplo__2116E6DF", "Employer", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="TimesheetDetail")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class TimesheetDetail : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new TimesheetDetail object.
+        /// </summary>
+        /// <param name="detailId">Initial value of the DetailId property.</param>
+        public static TimesheetDetail CreateTimesheetDetail(global::System.Int32 detailId)
+        {
+            TimesheetDetail timesheetDetail = new TimesheetDetail();
+            timesheetDetail.DetailId = detailId;
+            return timesheetDetail;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DetailId
+        {
+            get
+            {
+                return _DetailId;
+            }
+            set
+            {
+                if (_DetailId != value)
+                {
+                    OnDetailIdChanging(value);
+                    ReportPropertyChanging("DetailId");
+                    _DetailId = StructuralObject.SetValidValue(value, "DetailId");
+                    ReportPropertyChanged("DetailId");
+                    OnDetailIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DetailId;
+        partial void OnDetailIdChanging(global::System.Int32 value);
+        partial void OnDetailIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> TimesheetId
+        {
+            get
+            {
+                return _TimesheetId;
+            }
+            set
+            {
+                OnTimesheetIdChanging(value);
+                ReportPropertyChanging("TimesheetId");
+                _TimesheetId = StructuralObject.SetValidValue(value, "TimesheetId");
+                ReportPropertyChanged("TimesheetId");
+                OnTimesheetIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _TimesheetId;
+        partial void OnTimesheetIdChanging(Nullable<global::System.Int32> value);
+        partial void OnTimesheetIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> WorkDate
+        {
+            get
+            {
+                return _WorkDate;
+            }
+            set
+            {
+                OnWorkDateChanging(value);
+                ReportPropertyChanging("WorkDate");
+                _WorkDate = StructuralObject.SetValidValue(value, "WorkDate");
+                ReportPropertyChanged("WorkDate");
+                OnWorkDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _WorkDate;
+        partial void OnWorkDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnWorkDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true, "Description");
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Hours
+        {
+            get
+            {
+                return _Hours;
+            }
+            set
+            {
+                OnHoursChanging(value);
+                ReportPropertyChanging("Hours");
+                _Hours = StructuralObject.SetValidValue(value, "Hours");
+                ReportPropertyChanged("Hours");
+                OnHoursChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Hours;
+        partial void OnHoursChanging(Nullable<global::System.Decimal> value);
+        partial void OnHoursChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SOWDeliverableNumber
+        {
+            get
+            {
+                return _SOWDeliverableNumber;
+            }
+            set
+            {
+                OnSOWDeliverableNumberChanging(value);
+                ReportPropertyChanging("SOWDeliverableNumber");
+                _SOWDeliverableNumber = StructuralObject.SetValidValue(value, true, "SOWDeliverableNumber");
+                ReportPropertyChanged("SOWDeliverableNumber");
+                OnSOWDeliverableNumberChanged();
+            }
+        }
+        private global::System.String _SOWDeliverableNumber;
+        partial void OnSOWDeliverableNumberChanging(global::System.String value);
+        partial void OnSOWDeliverableNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> OTHours
+        {
+            get
+            {
+                return _OTHours;
+            }
+            set
+            {
+                OnOTHoursChanging(value);
+                ReportPropertyChanging("OTHours");
+                _OTHours = StructuralObject.SetValidValue(value, "OTHours");
+                ReportPropertyChanged("OTHours");
+                OnOTHoursChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _OTHours;
+        partial void OnOTHoursChanging(Nullable<global::System.Decimal> value);
+        partial void OnOTHoursChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__Timesheet__Times__13BCEBC1", "Timesheet")]
+        public Timesheet Timesheet
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Timesheet>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "Timesheet").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Timesheet>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "Timesheet").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Timesheet> TimesheetReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Timesheet>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "Timesheet");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Timesheet>("HRACCDBModel.FK__Timesheet__Times__13BCEBC1", "Timesheet", value);
                 }
             }
         }

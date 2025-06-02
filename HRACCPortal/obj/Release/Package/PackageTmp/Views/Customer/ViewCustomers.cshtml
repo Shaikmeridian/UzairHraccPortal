@@ -64,7 +64,7 @@
                             <th class="min-w-125px">Last Updated Date</th>
 
                             <th class="min-w-125px">Status</th>
-                            <th class="text-end min-w-125px">Actions</th>
+                            <th class="min-w-125px" style="text-align:center">Actions</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -76,62 +76,62 @@
                             {
                                 foreach (var item in Model.CustomerList)
                                 {
-                                                <tr>
-                                                    <td>
-                                                        @item.CustomerIdPK
-                                                    </td>
-                                                    <!--begin::Name=-->
-                                                    <td>
-                                                        <a href="../../demo1/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1">@item.CustomerName</a>
-                                                    </td>
-                                                    <!--end::Name=-->
-                                                    <!--begin::Email=-->
-                                                    <td>
-                                                        <a href="#" class="text-gray-600 text-hover-primary mb-1">@item.CustomerContactEmail</a>
-                                                    </td>
-                                                    <!--end::Email=-->
-                                                    <td>@item.CustomerContactPhone</td>
-                                                    <!--end::Payment method=-->
-                                                    <td>@item.CustomerFEID</td>
-                                                    <!--begin::Date=-->
-                                                    <td>@item.DateUpdated</td>
-                                                    <td>
-                                                        @if (item.isActive)
-                                                        {
-                                                            <span class="badge badge-light-success fs-7 fw-bold">Active</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="badge badge-light-danger fs-7 fw-bold">In-Active</span>
-                                                        }
-                                                    </td>
-                                                    <!--end::Date=-->
-                                                    <!--begin::Action=-->
-                                                    <td class="text-end">
-                                                        @*<button type="button" class="btn btn-primary btnEdit" id="@item.ConsultantIdPK" onClick="GFG_click(this.id)">Edit</button>*@
-                                                        <div class="d-flex gap-2">
-                                                            <a href="/Contact/AssignContact?customerId=@item.CustomerIdPK" class="btn btn-primary">Add Contacts</a>
+                                    <tr>
+                                        <td>
+                                            @item.CustomerIdPK
+                                        </td>
+                                        <!--begin::Name=-->
+                                        <td>
+                                            <a class="text-gray-800 text-hover-primary mb-1">@item.CustomerName</a>
+                                        </td>
+                                        <!--end::Name=-->
+                                        <!--begin::Email=-->
+                                        <td>
+                                            <span class="text-gray-600 text-hover-primary mb-1">@item.CustomerContactEmail</span>
+                                        </td>
+                                        <!--end::Email=-->
+                                        <td>@item.CustomerContactPhone</td>
+                                        <!--end::Payment method=-->
+                                        <td>@item.CustomerFEID</td>
+                                        <!--begin::Date=-->
+                                        <td>@item.DateUpdated</td>
+                                        <td>
+                                            @if (item.isActive)
+                                            {
+                                                <span class="badge badge-light-success fs-7 fw-bold">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-light-danger fs-7 fw-bold">In-Active</span>
+                                            }
+                                        </td>
+                                        <!--end::Date=-->
+                                        <!--begin::Action=-->
+                                        <td class="text-end">
+                                            @*<button type="button" class="btn btn-primary btnEdit" id="@item.ConsultantIdPK" onClick="GFG_click(this.id)">Edit</button>*@
+                                            <div class="d-flex gap-2">
+                                                <a href="/Contact/AssignContact?customerId=@item.CustomerIdPK" class="btn btn-primary">Add Contacts</a>
 
-                                                            <a href="/Contact/ViewAssignedContact?customerId=@item.CustomerIdPK" class="btn btn-primary">View Contacts</a>
+                                                <a href="/Contact/ViewAssignedContact?customerId=@item.CustomerIdPK" class="btn btn-primary">View Contacts</a>
 
-                                                            <a href="/Customer/AssignCustomerEmployers?customerId=@item.CustomerIdPK" class="btn btn-primary">Add Employers</a>
+                                                <a href="/Customer/AssignCustomerEmployers?customerId=@item.CustomerIdPK" class="btn btn-primary">Add Employers</a>
 
-                                                            <a href="/Customer/ViewCustomerEmployers?customerId=@item.CustomerIdPK" class="btn btn-primary">View Employers</a>
+                                                <a href="/Customer/ViewCustomerEmployers?customerId=@item.CustomerIdPK" class="btn btn-primary">View Employers</a>
 
-                                                            <a href="javascript:void(0)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="@item.CustomerIdPK" onClick="GFG_click(this.id)">
-                                                                @*begin::Svg Icon | path: icons/duotune/art/art005.svg*@
-                                                                <span class="svg-icon svg-icon-3">
-                                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
-                                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
-                                                                    </svg>
-                                                                </span>
-                                                                @*end::Svg Icon*@
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <!--end::Action=-->
-                                                </tr>
+                                                <a href="javascript:void(0)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="@item.CustomerIdPK" onClick="GFG_click(this.id)">
+                                                    @*begin::Svg Icon | path: icons/duotune/art/art005.svg*@
+                                                    <span class="svg-icon svg-icon-3">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
+                                                            <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    @*end::Svg Icon*@
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <!--end::Action=-->
+                                    </tr>
                                 }
                             }
                         }
@@ -174,12 +174,7 @@
                         <!--end::Modal header-->
                         <!--begin::Card body-->
                         <div class="modal-body py-10 px-lg-17">
-                            <div class="text-center mb-3">
-                                <h6> Click on eye icon to view fields </h6>
-                                <button id="toggleVisibilityBtn" type="button" class="btn btn-light-primary">
-                                    <i class="fas fa-eye" id="eyeIcon"></i>
-                                </button>
-                            </div>
+
                             <!--begin::Scroll-->
                             <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
                                 <!--begin::Input group-->
@@ -190,7 +185,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">Name</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Full Name" name="CustomerName" value="" type="password" />
+                                        <input class="form-control form-control-solid" placeholder="Full Name" name="CustomerName" value="" type="text" maxlength="60" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -206,7 +201,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
 
-                                        <input type="password" class="form-control form-control-solid PNumber" placeholder="Phone" name="CustomerContactPhone" id="CustomerContactPhone" type="password" />
+                                        <input type="text" class="form-control form-control-solid PNumber" placeholder="Phone" name="CustomerContactPhone" id="CustomerContactPhone" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -216,7 +211,8 @@
                                         <label class="required fs-6 fw-semibold mb-2">Email</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Email" name="CustomerContactEmail" value="" type="password" />
+                                        <input class="form-control form-control-solid" placeholder="Email" name="CustomerContactEmail" value="" type="text" id="CustomerContactEmail" maxlength="40" />
+                                        <span id="emailError" style="color:red; display:none;">Please enter a valid email.</span>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -230,7 +226,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="Address1" name="CustomerContactAddress1" value="" type="password" />
+                                    <input class="form-control form-control-solid" placeholder="Address1" name="CustomerContactAddress1" value="" type="text" maxlength="100" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -243,7 +239,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="Address2" name="CustomerContactAddress2" value="" type="password" />
+                                    <input class="form-control form-control-solid" placeholder="Address2" name="CustomerContactAddress2" value="" type="text" maxlength="30" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -255,7 +251,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">City</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="City" name="CustomerContactCity" value="" type="password" />
+                                        <input class="form-control form-control-solid" placeholder="City" name="CustomerContactCity" value="" type="text" maxlength="50" id="CustomerContactCity" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -267,7 +263,7 @@
                                         <!--begin::Input-->
                                         @*     <input class="form-control form-control-solid" placeholder="State" name="CustomerContactState" value="" />*@
 
-                                        <select class="form-control form-control-solid" name="CustomerContactState">
+                                        <select class="form-control form-control-solid" id="CustomerContactState" name="CustomerContactState">
                                             <option value="">Select State</option>
                                             <option value="Alabama">Alabama</option>
                                             <option value="Alaska">Alaska</option>
@@ -336,8 +332,9 @@
                                         <label class="required fs-6 fw-semibold mb-2">Zip</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Zip" name="CustomerContactZip" value="" type="password" />
+                                        <input class="form-control form-control-solid" id="zip" placeholder="Zip" name="CustomerContactZip" inputmode="numeric" value="" type="text" maxlength="5" pattern="\d{5}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
                                         <!--end::Input-->
+                                        <div id="zipError" style="color:red; display:none;">Invalid ZIP Code or City/State combination.</div>
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Col-->
@@ -346,7 +343,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">FEID</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="FEID" name="CustomerFEID" value="" type="password" />
+                                        <input class="form-control form-control-solid" placeholder="FEID" name="CustomerFEID" value="" type="text" maxlength="9" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -356,7 +353,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">Term</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Term" name="CustomerTerm" value="" type="password" />
+                                        <input class="form-control form-control-solid" placeholder="Term" name="CustomerTerm" value="" type="text" maxlength="20" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -400,32 +397,16 @@
                         <!--end::Modal footer-->
                         <!--begin::Actions-->
                         <!--<div class="card-footer d-flex justify-content-end py-6 px-9">
-            <button type="submit" class="btn btn-light btn-active-light-primary me-2" id="btnReset">Discard</button>
+                            <button type="submit" class="btn btn-light btn-active-light-primary me-2" id="btnReset">Discard</button>
 
-            <button type="submit" class="btn btn-primary" id="btnSave">Save Changes</button>
-        </div>-->
+                            <button type="submit" class="btn btn-primary" id="btnSave">Save Changes</button>
+                        </div>-->
                         <!--end::Actions-->
                         <input type="hidden">
                         <input type="hidden" id="pk">
                     </form>
 
-                    <div id="passwordModal" class="modal fade" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-primary">Enter Password</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="text-muted mb-3">Please enter your password to decrypt the values.</p>
-                                    <input type="password" id="decryptPassword" class="form-control" placeholder="Enter your password" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" id="confirmPassword" class="btn btn-primary">Confirm</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <!--end::Form-->
                 </div>
             </div>
@@ -444,6 +425,9 @@
 
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Vendors Javascript-->
+
+    <script src="~/Content/assets/js/customerEmail.js"></script>
+    <script src="~/Content/assets/customerEmail.js"></script>
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/list/list.js"></script>
@@ -452,77 +436,100 @@
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <!--end::Custom Javascript-->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const PASSWORD = "your-password"; // Secure password
-            const toggleVisibilityBtn = document.getElementById("toggleVisibilityBtn");
-            const eyeIcon = document.getElementById("eyeIcon");
-            const passwordModal = new bootstrap.Modal(document.getElementById("passwordModal"));
-            const decryptPasswordInput = document.getElementById("decryptPassword");
-            const confirmPasswordButton = document.getElementById("confirmPassword");
 
-            let isDecrypted = false;
+           document.addEventListener('DOMContentLoaded', function () {
+       const zipInput = document.getElementById('zip');
+       const cityInput = document.getElementById('CustomerContactCity');
+       const stateSelect = document.getElementById('CustomerContactState');
+       const zipError = document.getElementById('zipError');
 
-            // Toggle input fields' visibility
-            const toggleInputFields = (type) => {
-                document.querySelectorAll("#kt_modal_add_customer_form input").forEach((input) => {
-                    if (input.type !== "hidden" && input.type !== "checkbox") {
-                        input.type = type;
-                    }
-                });
-            };
+       zipError.style.display = 'none'; // Hide initially
 
-            const convertToPasswordField = (selectElement) => {
-                const selectedValue = selectElement.value;
+       const stateAbbreviations = {
+           "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+           "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+           "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+           "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS", // fixed 'Lowa' to 'Iowa'
+           "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+           "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+           "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+           "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+           "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+           "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+           "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+           "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+           "Wisconsin": "WI", "Wyoming": "WY"
+       };
 
-                if (selectedValue) {
-                    // Create a new input element of type password
-                    const passwordInput = document.createElement("input");
-                    passwordInput.type = "password";
-                    passwordInput.className = "form-control form-control-solid";
-                    passwordInput.value = selectedValue;
-                    passwordInput.name = selectElement.name;
-                    passwordInput.readOnly = true; // Make it readonly if required
+       // 🔹 Convert abbreviation back to full state name
+       function getFullStateName(abbr) {
+           for (const [full, short] of Object.entries(stateAbbreviations)) {
+               if (short === abbr) return full;
+           }
+           return null;
+       }
 
-                    // Replace the select element with the new password input
-                    selectElement.parentNode.replaceChild(passwordInput, selectElement);
-                    passwordFieldConverted = true;  // Flag to indicate conversion
-                }
-            };
+       // ZIP to City/State
+       $('#zip').on('change', function () {
+           const zip = $(this).val().trim();
 
-            // Convert password back to select dropdown
+           if (zip.length > 0) {
+               $.ajax({
+                   url: `https://api.zippopotam.us/us/${zip}`,
+                   method: 'GET',
+                   success: function (data) {
+                       const place = data.places[0];
+                       console.log(place)
+                       $('#CustomerContactCity').val(place['place name'] || '');
+                       $('#CustomerContactState').val(place['state'] || '');
+                       $('#ZipCode').val(zip).trigger('change').trigger('blur');
+
+                   },
+                   error: function () {
+                       $('#CustomerContactCity').val('');
+                       $('#CustomerContactState').val('');
+                       $('#Country').val('');
+                       alert('Invalid Zip Code or no data found.');
+                   }
+               });
+           }
+       });
 
 
-            // Handle eye icon click
-            toggleVisibilityBtn.addEventListener("click", function () {
-                if (isDecrypted) {
-                    // Mask fields without asking for password
-                    toggleInputFields("password");
+       // City + State to ZIP
+       cityInput.addEventListener('blur', function () {
+           const city = cityInput.value.trim().toLowerCase().replace(/\s+/g, '-');
+           const fullState = stateSelect.value;
 
-                    isDecrypted = false;
-                    eyeIcon.classList.remove("fa-eye-slash");
-                    eyeIcon.classList.add("fa-eye");
-                } else {
-                    // Open password modal for decryption
-                    passwordModal.show();
-                }
-            });
+           if (city && fullState && stateAbbreviations[fullState]) {
+               const stateAbbr = stateAbbreviations[fullState];
+               const url = `https://api.zippopotam.us/us/${stateAbbr}/${city}`;
 
-            // Confirm password in modal
-            confirmPasswordButton.addEventListener("click", function () {
-                if (decryptPasswordInput.value === PASSWORD) {
-                    // Show text fields
-                    toggleInputFields("text");
+               fetch(url)
+                   .then(res => {
+                       if (!res.ok) throw new Error("City/State not found");
+                       return res.json();
+                   })
+                   .then(data => {
+                       zipInput.value = data.places[0]['post code'];
+                       $('#ZipCode').val(zip).trigger('change').trigger('blur');
 
-                    isDecrypted = true;
-                    passwordModal.hide();
-                    eyeIcon.classList.remove("fa-eye");
-                    eyeIcon.classList.add("fa-eye-slash");
-                } else {
-                    alert("Incorrect password!");
-                }
+                       zipError.style.display = 'none';
+                   })
+                   .catch(() => {
+                       zipInput.value = '';
+                       zipError.innerText = 'City and State combination not found';
+                       zipError.style.display = 'inline';
+                   });
+           }
+       });
 
-            });
-        });
+       // Hide error on user focus
+       [zipInput, cityInput, stateSelect].forEach(el => {
+           el.addEventListener('focus', () => zipError.style.display = 'none');
+       });
+   });
+
 
         new tempusDominus.TempusDominus(document.getElementById("StartDate"), {
             display: {
@@ -568,7 +575,7 @@
                     $("input[name='CustomerContactAddress2']").val(response.cl.CustomerContactAddress2);
                     $("input[name='CustomerContactCity']").val(response.cl.CustomerContactCity);
                 //    $("input[name='CustomerContactState']").val(response.cl.CustomerContactState);
-                   
+
                     $("select[name='CustomerContactState']").val(response.cl.CustomerContactState);
                     $("input[name='CustomerContactZip']").val(response.cl.CustomerContactZip);
                     $("input[name='CustomerContactPhone']").val(response.cl.CustomerContactPhone);

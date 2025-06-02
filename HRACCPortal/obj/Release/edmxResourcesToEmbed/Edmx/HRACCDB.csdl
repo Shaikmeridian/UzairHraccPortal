@@ -49,6 +49,7 @@
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="Consultant" ToRole="ConsultantEmployer" />
     <NavigationProperty Name="ConsultantCustomers" Relationship="HRACCDBModel.FK__Consultan__Consu__67DE6983" FromRole="Consultant" ToRole="ConsultantCustomer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Consu__0E04126B" FromRole="Consultant" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="EmployeeRole">
     <Key>
@@ -159,6 +160,24 @@
     <AssociationSet Name="FK__Subcontra__Subco__7AF13DF7" Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7">
       <End Role="SubContractor" EntitySet="SubContractors" />
       <End Role="SubcontractorEmployer" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <EntitySet Name="TimesheetDetails" EntityType="HRACCDBModel.TimesheetDetail" />
+    <EntitySet Name="Timesheets" EntityType="HRACCDBModel.Timesheet" />
+    <AssociationSet Name="FK__Timesheet__Consu__0E04126B" Association="HRACCDBModel.FK__Timesheet__Consu__0E04126B">
+      <End Role="Consultant" EntitySet="Consultants" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Times__13BCEBC1" Association="HRACCDBModel.FK__Timesheet__Times__13BCEBC1">
+      <End Role="Timesheet" EntitySet="Timesheets" />
+      <End Role="TimesheetDetail" EntitySet="TimesheetDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Custo__2022C2A6" Association="HRACCDBModel.FK__Timesheet__Custo__2022C2A6">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Emplo__2116E6DF" Association="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
@@ -397,6 +416,7 @@
     <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="Employer" ToRole="CustomerEmployer" />
     <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="Employer" ToRole="ConsultantEmployer" />
     <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" FromRole="Employer" ToRole="SubcontractorEmployer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" FromRole="Employer" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -421,6 +441,7 @@
     <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="Customer" ToRole="CustomerContact" />
     <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="Customer" ToRole="CustomerEmployer" />
     <NavigationProperty Name="ConsultantCustomers" Relationship="HRACCDBModel.FK__Consultan__Custo__68D28DBC" FromRole="Customer" ToRole="ConsultantCustomer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" FromRole="Customer" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -800,6 +821,87 @@
       </Principal>
       <Dependent Role="SubcontractorEmployer">
         <PropertyRef Name="SubcontractorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TimesheetDetail">
+    <Key>
+      <PropertyRef Name="DetailId" />
+    </Key>
+    <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TimesheetId" Type="Int32" />
+    <Property Name="WorkDate" Type="DateTime" Precision="0" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Hours" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="Timesheet" Relationship="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" FromRole="TimesheetDetail" ToRole="Timesheet" />
+    <Property Name="SOWDeliverableNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OTHours" Type="Decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="Timesheet">
+    <Key>
+      <PropertyRef Name="TimesheetId" />
+    </Key>
+    <Property Name="TimesheetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConsultantId" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="TotalHours" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Approval" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Consultant" Relationship="HRACCDBModel.FK__Timesheet__Consu__0E04126B" FromRole="Timesheet" ToRole="Consultant" />
+    <NavigationProperty Name="TimesheetDetails" Relationship="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" FromRole="Timesheet" ToRole="TimesheetDetail" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="EmployerId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" FromRole="Timesheet" ToRole="Customer" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" FromRole="Timesheet" ToRole="Employer" />
+  </EntityType>
+  <Association Name="FK__Timesheet__Consu__0E04126B">
+    <End Type="HRACCDBModel.Consultant" Role="Consultant" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultant">
+        <PropertyRef Name="ConsultantIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="ConsultantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Times__13BCEBC1">
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HRACCDBModel.TimesheetDetail" Role="TimesheetDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timesheet">
+        <PropertyRef Name="TimesheetId" />
+      </Principal>
+      <Dependent Role="TimesheetDetail">
+        <PropertyRef Name="TimesheetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Custo__2022C2A6">
+    <End Type="HRACCDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Emplo__2116E6DF">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="EmployerId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

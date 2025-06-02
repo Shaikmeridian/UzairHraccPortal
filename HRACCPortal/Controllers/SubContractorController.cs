@@ -136,10 +136,7 @@ namespace HRACCPortal.Controllers
         {
             // Fetch consultant information
             var consultant = entities.SubcontractorEmployers.FirstOrDefault(cc => cc.SubcontractorId == subcontractorId);
-            if (consultant == null)
-            {
-                return HttpNotFound();
-            }
+           
 
             // Fetch assigned customers' details for the consultant
             var assignedEmployers = entities.SubcontractorEmployers

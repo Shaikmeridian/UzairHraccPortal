@@ -107,7 +107,7 @@ var KTModalCustomersAdd = function () {
 		// Action buttons
 		submitButton.addEventListener('click', function (e) {
 			e.preventDefault();
-            /*debugger;*/
+            debugger
 			// Validate form before submit
 			if (validator) {
 				validator.validate().then(function (status) {
@@ -195,7 +195,7 @@ var KTModalCustomersAdd = function () {
                         });
 					} else {
 						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
+							text: "Sorry, looks like there are some errors detected,Check if all mandatory fields are filled , please try again.",
 							icon: "error",
 							buttonsStyling: false,
 							confirmButtonText: "Ok, got it!",

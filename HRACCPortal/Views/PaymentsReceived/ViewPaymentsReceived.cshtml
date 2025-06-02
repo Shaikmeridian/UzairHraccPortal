@@ -63,16 +63,17 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                          @*  <th class="min-w-100px">Invoice Number</th>
-                            <th class="min-w-100px">Invoice Amount</th> *@
+                            @*  <th class="min-w-100px">Invoice Number</th>
+                                <th class="min-w-100px">Invoice Amount</th> *@
                             <th class="min-w-100px">Invoice #</th>
                             <th class="min-w-100px">Invoice Number</th>
                             <th>Invoice Amount</th>
-                           
+
                             <th>Invoice DueDate</th>
                             <th>Customer Name</th>
                             <th>Last Updated Date</th>
-                            <th>&nbsp;</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -86,15 +87,46 @@
                                 {
                                     <tr>
                                         <td>@paymentsreceivedItem.PaymentsReceivedId</td>
-                                        
+
                                         <td>@paymentsreceivedItem.InvoiceNumber</td>
                                         <td>@paymentsreceivedItem.InvoiceAmount</td>
                                         <td>@paymentsreceivedItem.InvoiceDueDate</td>
-                                       
+
                                         <td>@paymentsreceivedItem.CustomerName</td>
                                         <td>@paymentsreceivedItem.DateUpdated</td>
+                                        <td>@paymentsreceivedItem.Status</td>
+
+
+
                                         <!--begin::Action=-->
                                         <td class="pe-0 text-end">
+
+                                            @if (paymentsreceivedItem.Status == "Pending" || paymentsreceivedItem.Status == "Partially Received")
+                                            {
+
+                                                @*<a class="btn btn-primary" href="@Url.Action("ManageCheques", "PaymentsReceived",
+                                                               new { paymentId = paymentsreceivedItem.PaymentsReceivedId })">
+                                                            Manage Cheques
+                                                        </a>*@
+                                                <a href="@Url.Action("ManageCheques", "PaymentsReceived", new { paymentId = paymentsreceivedItem.PaymentsReceivedId })"
+                                                   class="btn btn-outline-primary d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm"
+                                                   style="font-size: 14px; font-weight: 500;">
+                                                    <i class="bi bi-pencil-square me-2" style="font-size: 16px;"></i>
+                                                    Manage Cheques
+                                                </a>
+
+                                            }
+                                            else if (paymentsreceivedItem.Status == "Received")
+                                            {
+                                                <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill bg-success text-white" style="font-size: 14px;">
+                                                    <i class="bi bi-check-circle-fill me-2" style="font-size: 16px;"></i>
+                                                    Payment Completed
+                                                </div>
+
+                                            }
+
+                                            <a class="btn btn-primary" href="@Url.Action("ChequeReport", "PaymentsReceived", new { paymentId = paymentsreceivedItem.PaymentsReceivedId })">View Payment</a>
+
                                             <a href="javascript:void(0)" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3"
                                                id="@paymentsreceivedItem.PaymentsReceivedId" onClick="EditPaymentsReceived_Click(this.id)">
                                                 <span class="svg-icon svg-icon-3">
@@ -207,46 +239,65 @@
                                         <input type="text" class="form-control form-control-solid" placeholder="" name="InvoiceDueDate" />
 
                                         <!--end::Input-->
-                                    </div> 
+                                    </div>
 
-                                   @* <div class="col-md-6 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="required fs-6 fw-semibold mb-2">Invoice DueDate</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                            <input id="InvoiceDueDate" name="InvoiceDueDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
-                                            <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
-                                                <i class="fas fa-calendar"></i>
-                                            </span>
-                                        </div>
-                                        <!--end::Input-->
-                                    </div> *@
+                                    @* <div class="col-md-6 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="required fs-6 fw-semibold mb-2">Invoice DueDate</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                <input id="InvoiceDueDate" name="InvoiceDueDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
+                                                <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
+                                                    <i class="fas fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <!--end::Input-->
+                                        </div> *@
 
 
                                 </div>
+
+                                <div class="row g-9 mb-7">
+                                    <div class="col-md-4 fv-row">
+                                        <label class="fs-6 fw-semibold mb-2">Cheque Number</label>
+                                        <input type="text" class="form-control form-control-solid" name="ChequeNumber" />
+                                    </div>
+
+                                    <div class="col-md-4 fv-row">
+                                        <label class="fs-6 fw-semibold mb-2">Cheque Amount</label>
+                                        <input type="number" class="form-control form-control-solid" name="ChequeAmount" />
+                                    </div>
+
+                                    <div class="col-md-4 fv-row">
+                                        <label class="fs-6 fw-semibold mb-2">Date Received</label>
+                                        <input type="date" class="form-control form-control-solid" name="DateReceived" />
+                                    </div>
                                 </div>
                             </div>
-                                    <!--end::Card body-->
-                                    <!--begin::Modal footer-->
-                                    <div class="modal-footer flex-center">
-                                        <!--begin::Button-->
-                                        <button type="reset" id="kt_modal_add_paymentsreceived_cancel" class="btn btn-danger me-3">Discard</button>
-                                        <!--end::Button-->
-                                        <!--begin::Button-->
-                                        <button type="submit" id="kt_modal_add_paymentsreceived_submit" class="btn btn-primary">
-                                            <span class="indicator-label">Submit</span>
-                                            <span class="indicator-progress">
-                                                Please wait...
-                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                            </span>
-                                        </button>
-                                        <!--end::Button-->
-                                    </div>
-                                    <!--end::Modal footer-->
+                        </div>
+                        <!--end::Card body-->
+                        <!--begin::Modal footer-->
+                        <div class="modal-footer flex-center">
+                            <!--begin::Button-->
+                            <button type="reset" id="kt_modal_add_paymentsreceived_cancel" class="btn btn-danger me-3">Discard</button>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button type="submit" id="kt_modal_add_paymentsreceived_submit" class="btn btn-primary">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                            <!--end::Button-->
+                        </div>
+                        <!--end::Modal footer-->
                     </form>
                     <!--end::Form-->
                 </div>
+
+
             </div>
         </div>
         <!--end::Modal - Customers - Add-->
@@ -254,6 +305,40 @@
     </div>
     <!--end::Content container-->
 </div>
+
+<div class="modal fade" id="chequeModal" tabindex="-1" aria-labelledby="chequeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="addChequeForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Cheque</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="PaymentId" name="PaymentId" />
+
+                    <div class="mb-3">
+                        <label>Cheque Number</label>
+                        <input type="text" class="form-control" name="ChequeNumber" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Cheque Amount</label>
+                        <input type="number" class="form-control" name="ChequeAmount" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Date Received</label>
+                        <input type="date" class="form-control" name="DateReceived" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save Cheque</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--end::Content-->
 
 @section scripts{
@@ -271,6 +356,10 @@
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <!--end::Custom Javascript-->
     <script>
+
+
+
+
         new tempusDominus.TempusDominus(document.getElementById("InactiveDate"), {
             display: {
                 viewMode: "calendar",
@@ -317,9 +406,13 @@
                     $("input[name='InvoiceNumber']").val(response.paymentsreceivedData.InvoiceNumber).attr("disabled", "disabled");
                     $("input[name='InvoiceAmount']").val(response.paymentsreceivedData.InvoiceAmount);
                     $("input[name='InvoiceDueDate']").val(response.paymentsreceivedData.InvoiceDueDate);
-                   // $("input[name='PositionScopeVariant']").val(response.positionData.PositionScopeVariant);
-                   // $("input[name='PurchaseOrderNo']").val(response.positionData.PurchaseOrderNo).addClass('input-disabled');
-                   // $("input[name='PurchaseRequisitionNo']").val(response.positionData.PurchaseRequisitionNo);
+                    // $("input[name='PositionScopeVariant']").val(response.positionData.PositionScopeVariant);
+                    // $("input[name='PurchaseOrderNo']").val(response.positionData.PurchaseOrderNo).addClass('input-disabled');
+                    // $("input[name='PurchaseRequisitionNo']").val(response.positionData.PurchaseRequisitionNo);
+                    $("input[name='ChequeNumber']").val(response.paymentsreceivedData.ChequeNumber);
+                    $("input[name='ChequeAmount']").val(response.paymentsreceivedData.ChequeAmount);
+                    $("input[name='DateReceived']").val(response.paymentsreceivedData.DateReceived);
+
 
                     if (response.paymentsreceivedData.Status == true) {
                         $("#Status").prop('checked', true);
@@ -332,7 +425,7 @@
 
                     $("input[name='InactiveDate']").val(response.paymentsreceivedData.InactiveDate);
                     $("input[name='InactiveReason']").val(response.paymentsreceivedData.InactiveReason);
-                    
+
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     submitButton.removeAttribute('data-kt-indicator');

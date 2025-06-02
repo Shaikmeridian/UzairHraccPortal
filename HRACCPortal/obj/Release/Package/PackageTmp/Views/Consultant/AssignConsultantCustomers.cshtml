@@ -57,7 +57,7 @@
                                 <!-- Added a row separator -->
                                 <td>
                                     <!-- Check if the customer ID is in the assigned IDs set -->
-                                    <input type="checkbox" name="SelectedCustomerIds" value="@customer.CustomerIdPK"
+                                    <input class="form-check-input" type="checkbox" name="SelectedCustomerIds" value="@customer.CustomerIdPK"
                                            @(assignedCustomerIds.Contains(customer.CustomerIdPK) ? "checked" : "") />
 
                                 </td>
@@ -95,26 +95,66 @@
     <script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/list/list.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/Employee.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/Content/assets/js/widgets.bundle.js"></script>
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    $("#saveEmployersBtn").click(function () {
+        //$("#saveEmployersBtn").click(function () {
+        //        const consultantId = $("#hiddenEmployeeId").val();
+        //        const selectedCustomerIds = [];
+        //        $("input[name='SelectedCustomerIds']:checked").each(function () {
+        //            selectedCustomerIds.push($(this).val());
+        //        });
+        //        console.log(selectedCustomerIds);
+        //        $.post(`/Consultant/SaveConsultantCustomers`, { consultantId, selectedCustomerIds }, function (response) {
+        //            if (response.success) {
+        //                alert(response.message);
+        //                window.location.href = "/Consultant/ViewConsultants"; // Redirect to employee list or another page
+        //            } else {
+        //                alert(response.message);
+        //            }
+        //        });
+        //});
+
+        // Search filter logic
+        $('#searchInput').on('keyup', function () {
+            var value = $(this).val().toLowerCase();
+            $('#table tbody tr').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+
+        $("#saveEmployersBtn").click(function () {
             const consultantId = $("#hiddenEmployeeId").val();
             const selectedCustomerIds = [];
             $("input[name='SelectedCustomerIds']:checked").each(function () {
                 selectedCustomerIds.push($(this).val());
             });
-            console.log(selectedCustomerIds);
+
             $.post(`/Consultant/SaveConsultantCustomers`, { consultantId, selectedCustomerIds }, function (response) {
                 if (response.success) {
-                    alert(response.message);
-                    window.location.href = "/Consultant/ViewConsultants"; // Redirect to employee list or another page
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Customers Assigned!',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.href = "/Consultant/ViewConsultants";
+                    });
                 } else {
-                    alert(response.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: response.message,
+                        confirmButtonText: 'Okay'
+                    });
                 }
             });
-        });</script>
+        });
+
+    </script>
 }
 

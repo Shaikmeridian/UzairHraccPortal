@@ -86,12 +86,12 @@
                                         </td>
                                         <!--begin::Name=-->
                                         <td>
-                                            <a href="../../demo1/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1">@item.EmployeeName</a>
+                                            <a href="../../Customer/ViewCustomers" class="text-gray-800 text-hover-primary mb-1">@item.EmployeeName</a>
                                         </td>
                                         <!--end::Name=-->
                                         <!--begin::Email=-->
                                         <td>
-                                            <a href="#" class="text-gray-600 text-hover-primary mb-1">@item.EmployeeEmail</a>
+                                            <span href="#" class="text-gray-600 text-hover-primary mb-1">@item.EmployeeEmail</span>
                                         </td>
                                         <!--end::Email=-->
                                         <td>@item.EmployeePhone</td>
@@ -177,12 +177,7 @@
                         <!--end::Modal header-->
                         <!--begin::Card body-->
                         <div class="modal-body py-10 px-lg-17">
-                            <div class="text-center mb-3">
-                                <h6> Click on eye icon to view fields </h6>
-                                <button id="toggleVisibilityBtn" type="button" class="btn btn-light-primary">
-                                    <i class="fas fa-eye" id="eyeIcon"></i>
-                                </button>
-                            </div>
+                            
                             <!--begin::Scroll-->
                             <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
                                 <!--begin::Input group-->
@@ -194,7 +189,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
                                         <div class="input-group">
-                                            <input class="form-control form-control-solid" placeholder="Full Name" name="EmployeeName" id="EmployeeName" type="password" value="" />
+                                            <input class="form-control form-control-solid" placeholder="Full Name" name="EmployeeName" id="EmployeeName" type="text" value="" maxlength="60"/>
                                             <!-- Eye icon will be inside the input field -->
 
                                         </div>
@@ -215,7 +210,7 @@
                                         <!--end::Label-->
                                         <!--begin::Input-->
 
-                                        <input type="password" class="form-control form-control-solid" placeholder="Phone" name="EmployeePhone" id="EmployeePhone" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="Phone" name="EmployeePhone" id="EmployeePhone" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -225,7 +220,9 @@
                                         <label class="required fs-6 fw-semibold mb-2">Email</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="password" class="form-control form-control-solid" placeholder="Email" name="EmployeeEmail" value="" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="Email" name="EmployeeEmail" id="EmployeeEmail" value="" maxlength="40" />
+
+                                        <span id="emailError" style="color:red; display:none;">Please enter a valid email.</span>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -239,7 +236,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="password" class="form-control form-control-solid" placeholder="Address1" name="EmployeeAddress1" value="" />
+                                    <input type="text" class="form-control form-control-solid" placeholder="Address1" name="EmployeeAddress1" value="" maxlength="100" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -252,7 +249,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="password" class="form-control form-control-solid" placeholder="Address2" name="EmployeeAddress2" value="" />
+                                    <input type="text" class="form-control form-control-solid" placeholder="Address2" name="EmployeeAddress2" value="" maxlength="30"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -264,7 +261,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">City</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="password" class="form-control form-control-solid" placeholder="City" name="EmployeeCity" value="" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="City" name="EmployeeCity" value="" maxlength="50" id="city"/>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -276,7 +273,7 @@
                                         <!--begin::Input-->
                                         @*     <input class="form-control form-control-solid" placeholder="State" name="CustomerContactState" value="" />*@
 
-                                        <select class="form-control form-control-solid" name="EmployeeState" id="EmployeeState">
+                                        <select class="form-control form-control-solid" name="EmployeeState" id="EmployeeState" placeholder="Select State">
                                             <option value="">Select State</option>
                                             <option value="Alabama">Alabama</option>
                                             <option value="Alaska">Alaska</option>
@@ -345,8 +342,9 @@
                                         <label class="required fs-6 fw-semibold mb-2">Zip</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="password" class="form-control form-control-solid" placeholder="Zip" name="EmployeeZip" value="" />
+                                        <input type="text" class="form-control form-control-solid" placeholder="Zip" inputmode="numeric" name="EmployeeZip" value="" maxlength="5" pattern="\d{5}" id="zip" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                         <!--end::Input-->
+                                        <div id="zipError" style="color:red; display:none;">Invalid ZIP Code or City/State combination.</div>
                                     </div>
                                     <!--end::Col-->
                                     <!--begin::Col-->
@@ -374,7 +372,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">Title</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Title" name="EmployeeTitle" value="" />
+                                        <input class="form-control form-control-solid" placeholder="Title" name="EmployeeTitle" value="" maxlength="20"/>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -429,24 +427,7 @@
                     </form>
                     <!--end::Form-->
                     <!-- Password Modal -->
-                    <div id="passwordModal" class="modal fade" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-primary">Enter Password</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="text-muted mb-3">Please enter your password to decrypt the values.</p>
-                                    <input type="password" id="decryptPassword" class="form-control" placeholder="Enter your password" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" id="confirmPassword" class="btn btn-primary">Confirm</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                    
                     
 
@@ -476,82 +457,103 @@
     <script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/list/list.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/Employee.js"></script>
-
+    <script src="~/Content/assets/js/validateEmployeeEmail.js"></script>
     <script src="~/Content/assets/js/widgets.bundle.js"></script>
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <!--end::Custom Javascript-->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const PASSWORD = "your-password"; // Secure password
-            const toggleVisibilityBtn = document.getElementById("toggleVisibilityBtn");
-            const eyeIcon = document.getElementById("eyeIcon");
-            const passwordModal = new bootstrap.Modal(document.getElementById("passwordModal"));
-            const decryptPasswordInput = document.getElementById("decryptPassword");
-            const confirmPasswordButton = document.getElementById("confirmPassword");
-            const addEmployermodal = document.getElementById("assignEmployerModal");
 
-            let isDecrypted = false;
+        document.addEventListener('DOMContentLoaded', function () {
+            const zipInput = document.getElementById('zip');
+            const cityInput = document.getElementById('city');
+            const stateSelect = document.getElementById('EmployeeState');
+            const zipError = document.getElementById('zipError');
 
-            // Toggle input fields' visibility
-            const toggleInputFields = (type) => {
-                document.querySelectorAll("#kt_modal_add_employee_form input").forEach((input) => {
-                    if (input.type !== "hidden" && input.type !== "checkbox") {
-                        input.type = type;
-                    }
-                });
+            zipError.style.display = 'none'; // Hide initially
+
+            const stateAbbreviations = {
+                "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+                "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+                "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+                "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS", // fixed 'Lowa' to 'Iowa'
+                "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+                "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+                "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+                "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+                "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+                "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+                "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+                "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+                "Wisconsin": "WI", "Wyoming": "WY"
             };
 
-
-            const convertToPasswordField = (selectElement) => {
-                const selectedValue = selectElement.value;
-
-                if (selectedValue) {
-                    // Create a new input element of type password
-                    const passwordInput = document.createElement("input");
-                    passwordInput.type = "password";
-                    passwordInput.className = "form-control form-control-solid";
-                    passwordInput.value = selectedValue;
-                    passwordInput.name = selectElement.name;
-                    passwordInput.readOnly = true; // Make it readonly if required
-
-                    // Replace the select element with the new password input
-                    selectElement.parentNode.replaceChild(passwordInput, selectElement);
-                    passwordFieldConverted = true;  // Flag to indicate conversion
+            // 🔹 Convert abbreviation back to full state name
+            function getFullStateName(abbr) {
+                for (const [full, short] of Object.entries(stateAbbreviations)) {
+                    if (short === abbr) return full;
                 }
-            };
+                return null;
+            }
 
-            // Convert password back to select dropdown
+            // ZIP to City/State
+            $('#zip').on('change', function () {
+                const zip = $(this).val().trim();
 
+                if (zip.length > 0) {
+                    $.ajax({
+                        url: `https://api.zippopotam.us/us/${zip}`,
+                        method: 'GET',
+                        success: function (data) {
+                            const place = data.places[0];
+                            console.log(place)
+                            $('#city').val(place['place name'] || '');
+                            $('#EmployeeState').val(place['state'] || '');
+                            $('#Country').val(data['country'] || '');
+                            $('#ZipCode').val(zip).trigger('change').trigger('blur');
 
-            // Handle eye icon click
-            toggleVisibilityBtn.addEventListener("click", function () {
-                if (isDecrypted) {
-                    // Mask fields without asking for password
-                    toggleInputFields("password");
-
-                    isDecrypted = false;
-                    eyeIcon.classList.remove("fa-eye-slash");
-                    eyeIcon.classList.add("fa-eye");
-                } else {
-                    // Open password modal for decryption
-                    passwordModal.show();
+                        },
+                        error: function () {
+                            $('#City').val('');
+                            $('#State').val('');
+                            $('#Country').val('');
+                            alert('Invalid Zip Code or no data found.');
+                        }
+                    });
                 }
             });
 
-            // Confirm password in modal
-            confirmPasswordButton.addEventListener("click", function () {
-                if (decryptPasswordInput.value === PASSWORD) {
-                    // Show text fields
-                    toggleInputFields("text");
 
-                    isDecrypted = true;
-                    passwordModal.hide();
-                    eyeIcon.classList.remove("fa-eye");
-                    eyeIcon.classList.add("fa-eye-slash");
-                } else {
-                    alert("Incorrect password!");
+            // City + State to ZIP
+            cityInput.addEventListener('blur', function () {
+                const city = cityInput.value.trim().toLowerCase().replace(/\s+/g, '-');
+                const fullState = stateSelect.value;
+
+                if (city && fullState && stateAbbreviations[fullState]) {
+                    const stateAbbr = stateAbbreviations[fullState];
+                    const url = `https://api.zippopotam.us/us/${stateAbbr}/${city}`;
+
+                    fetch(url)
+                        .then(res => {
+                            if (!res.ok) throw new Error("City/State not found");
+                            return res.json();
+                        })
+                        .then(data => {
+                            zipInput.value = data.places[0]['post code'];
+                            $('#ZipCode').val(zip).trigger('change').trigger('blur');
+
+                            zipError.style.display = 'none';
+                        })
+                        .catch(() => {
+                            zipInput.value = '';
+                            zipError.innerText = 'City and State combination not found';
+                            zipError.style.display = 'inline';
+                        });
                 }
+            });
 
+            // Hide error on user focus
+            [zipInput, cityInput, stateSelect].forEach(el => {
+                el.addEventListener('focus', () => zipError.style.display = 'none');
             });
         });
 

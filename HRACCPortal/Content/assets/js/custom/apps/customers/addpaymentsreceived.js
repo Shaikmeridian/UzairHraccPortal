@@ -83,7 +83,7 @@ var KTModalPaymentsReceivedsAdd = function () {
         // Action buttons
         submitButton.addEventListener('click', function (e) {
             e.preventDefault();
-            /*debugger;*/
+            debugger
             // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
@@ -99,6 +99,12 @@ var KTModalPaymentsReceivedsAdd = function () {
                         paymentsreceivedData.InvoiceAmount = form.InvoiceAmount.value;
                         paymentsreceivedData.InvoiceDueDate = form.InvoiceDueDate.value;
                         paymentsreceivedData.PaymentsReceivedId = form.PaymentsReceivedId.value;
+                        paymentsreceivedData.ChequeNumber = form.ChequeNumber.value;
+                        paymentsreceivedData.ChequeAmount = form.ChequeAmount.value;
+                        paymentsreceivedData.DateReceived = form.DateReceived.value;
+
+                        console.log(paymentsreceivedData);
+
                         var actv = $('input#Status').prop('checked');
                         debugger;
                         if (actv == false && form.InactiveReason.value == "") {
@@ -115,14 +121,14 @@ var KTModalPaymentsReceivedsAdd = function () {
                         } else {
                             $("#divdate").hide();
                         }
-                        
+
                         console.log("ConsultantObj:" + JSON.stringify(paymentsreceivedData));
 
                         $.ajax({
                             type: "POST",
-                            //url: '@Url.Action("AddConsultant", "Consultant")',
                             url: '/PaymentsReceived/AddPaymentsReceived',
-                            data: '{prmodel: ' + JSON.stringify(paymentsreceivedData) + '}',
+                            data: JSON.stringify({ prvm: paymentsreceivedData }), // wrap it here
+                            //data: JSON.stringify(paymentsreceivedData),|Uzair 
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
@@ -182,7 +188,7 @@ var KTModalPaymentsReceivedsAdd = function () {
                         });
                     } else {
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "Sorry, looks like there are some errors detected,Check if all mandatory fields are filled, please try again.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",

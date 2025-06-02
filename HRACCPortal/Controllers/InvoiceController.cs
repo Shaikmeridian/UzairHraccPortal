@@ -1,4 +1,5 @@
-﻿using HRACCPortal.Models;
+﻿using HRACCPortal.Edmx;
+using HRACCPortal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace HRACCPortal.Controllers
     {
         private readonly InvoiceModel model;
         private readonly clsCrud cls;
+        private readonly HRACCDBEntities entities = new HRACCDBEntities();
 
         public InvoiceController()
         {
@@ -36,8 +38,13 @@ namespace HRACCPortal.Controllers
         {
             try
             {
+
                 string status = model.AddEditInvoice(model);
-                return Json(new { message = status, JsonRequestBehavior.AllowGet });
+                var savedInvoice = entities.Invoices
+                         .FirstOrDefault(x => x.InvoiceNumber == model.InvoiceNumber);
+
+                int invoiceIdPk = savedInvoice != null ? savedInvoice.InvoiceIdPK : 0;
+                return Json(new { message = status, invoiceId = invoiceIdPk, JsonRequestBehavior.AllowGet });
             }
             catch (Exception e)
             {
@@ -60,5 +67,34 @@ namespace HRACCPortal.Controllers
             }
 
         }
+
+
+        [HttpPost]
+        public JsonResult AcceptInvoice(int id)
+        {
+            var invoice = entities.Invoices.FirstOrDefault(x => x.InvoiceIdPK == id);
+            if (invoice != null)
+            {
+                invoice.Status = "Accepted";
+                entities.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public JsonResult RejectInvoice(int id)
+        {
+            var invoice = entities.Invoices.FirstOrDefault(x => x.InvoiceIdPK == id);
+            if (invoice != null)
+            {
+                entities.Invoices.DeleteObject(invoice);
+                entities.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+
     }
 }

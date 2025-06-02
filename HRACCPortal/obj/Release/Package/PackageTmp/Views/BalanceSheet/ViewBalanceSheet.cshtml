@@ -448,24 +448,32 @@
 
 
         }
-        $(document).ready(function () {
-            $("#Status").click(function () {
-                if ($(this).is(":checked")) {
+        function handleBalanceSheetStatusUI() {
+            if ($("#Status").is(":checked")) {
+                $("#hide_inactivedetails").hide();
+                $("#divreason").hide();
+                $("#divdate").hide();
+            } else {
+                $("#hide_inactivedetails").show();
 
-                    $("#hide_inactivedetails").hide();
+                if ($("#InactiveReason").val() === "") {
+                    $("#divreason").show();
+                } else {
                     $("#divreason").hide();
+                }
+
+                if ($("#InactiveDate").val() === "") {
+                    $("#divdate").show();
+                } else {
                     $("#divdate").hide();
                 }
-                else {
+            }
+        }
 
-                    $("#hide_inactivedetails").show();
-                    $("#divreason").show();
-                    $("#divdate").show();
-                }
-            });
-        });
-         $("#InactiveReason").blur(function () {
-                if ($(this).val() == "") {
+        $(document).ready(function () {
+            // Blur validation
+            $("#InactiveReason").blur(function () {
+                if ($(this).val() === "") {
                     $("#divreason").show();
                 } else {
                     $("#divreason").hide();
@@ -473,12 +481,32 @@
             });
 
             $("#InactiveDate").blur(function () {
-                if ($(this).val() == "") {
+                if ($(this).val() === "") {
                     $("#divdate").show();
                 } else {
                     $("#divdate").hide();
                 }
             });
+
+            // Toggle checkbox
+            $("#Status").click(function () {
+                handleBalanceSheetStatusUI();
+            });
+
+            // Run logic when modal is opened (if you're using a modal for balance sheet too)
+            $('#kt_modal_add_balancesheet').on('shown.bs.modal', function () {
+                // Reset values if needed
+                $("#Status").prop("checked", true);
+                $("#InactiveReason").val('');
+                $("#InactiveDate").val('');
+
+                handleBalanceSheetStatusUI(); // Apply rules on open
+            });
+
+            // Trigger the UI handler on page load just in case
+            handleBalanceSheetStatusUI();
+        });
+
     </script>
 }
 

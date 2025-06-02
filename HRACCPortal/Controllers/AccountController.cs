@@ -20,7 +20,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace HRACCPortal.Controllers
 {
-    //[Authorize]
+    [Authorize]
 
     public class AccountController : Controller
     {

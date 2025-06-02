@@ -113,3 +113,9 @@ C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\obj\Release\HRACCP
 C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\obj\Release\HRACCPor.3FA7CE77.Up2Date
 C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\obj\Release\HRACCPortal.dll
 C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\obj\Release\HRACCPortal.pdb
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\BouncyCastle.Crypto.dll
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\BouncyCastle.Cryptography.dll
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\itextsharp.dll
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\BouncyCastle.Crypto.pdb
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\BouncyCastle.Cryptography.xml
+C:\Users\Admin\Desktop\New HRACC\UzairHraccPortal\HRACCPortal\bin\itextsharp.xml

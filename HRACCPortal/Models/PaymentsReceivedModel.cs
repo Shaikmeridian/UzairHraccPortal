@@ -104,6 +104,7 @@ namespace HRACCPortal.Models
                                     prLts.DateUpdated,
                                     prLts.AddedBy,
                                     prLts.UpdatedBy,
+                                    prLts.Status,
                                     custLts.CustomerName
 
                                 }).AsEnumerable().Select(i => new PaymentsReceivedObjectModel
@@ -121,7 +122,8 @@ namespace HRACCPortal.Models
                                     ? dateUpdated.ToString("MMM, dd, yyyy")
                                     : "N/A",
                                     AddedBy = i.AddedBy,
-                                    UpdatedBy = i.UpdatedBy
+                                    UpdatedBy = i.UpdatedBy,
+                                    Status = i.Status
 
                                 }).ToList();
         }

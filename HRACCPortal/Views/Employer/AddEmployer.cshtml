@@ -254,64 +254,64 @@
 
 @section scripts{
     <script>
-        const originalValues = {};
+        //const originalValues = {};
 
-        // Function to initialize real-time masking for multiple fields
-        function initializeMasking(fieldIds) {
-            fieldIds.forEach(fieldId => {
-                const inputField = document.getElementById(fieldId);
-                originalValues[fieldId] = ""; // Initialize the original value
+        //// Function to initialize real-time masking for multiple fields
+        //function initializeMasking(fieldIds) {
+        //    fieldIds.forEach(fieldId => {
+        //        const inputField = document.getElementById(fieldId);
+        //        originalValues[fieldId] = ""; // Initialize the original value
 
-                inputField.addEventListener("input", (e) => {
-                    const currentValue = originalValues[fieldId] || "";
-                    const inputValue = e.data || ""; // The last typed character
+        //        inputField.addEventListener("input", (e) => {
+        //            const currentValue = originalValues[fieldId] || "";
+        //            const inputValue = e.data || ""; // The last typed character
 
-                    // Update the original value
-                    if (inputValue) {
-                        originalValues[fieldId] = currentValue + inputValue;
-                    } else {
-                        // Handle backspace or delete
-                        originalValues[fieldId] = currentValue.slice(0, -1);
-                    }
+        //            // Update the original value
+        //            if (inputValue) {
+        //                originalValues[fieldId] = currentValue + inputValue;
+        //            } else {
+        //                // Handle backspace or delete
+        //                originalValues[fieldId] = currentValue.slice(0, -1);
+        //            }
 
-                    // Mask the input field
-                    inputField.value = "*".repeat(originalValues[fieldId].length);
-                });
-            });
-        }
+        //            // Mask the input field
+        //            inputField.value = "*".repeat(originalValues[fieldId].length);
+        //        });
+        //    });
+        //}
 
-        // Initialize masking for multiple fields
-        initializeMasking([
-            "EmployerName",
-            "EmployerContactEmail",
-            "EmployerContactPhone",
-            "EmployerContactAddress1",
-            "EmployerFEID",
-        ]);
+        //// Initialize masking for multiple fields
+        //initializeMasking([
+        //    "EmployerName",
+        //    "EmployerContactEmail",
+        //    "EmployerContactPhone",
+        //    "EmployerContactAddress1",
+        //    "EmployerFEID",
+        //]);
 
-        // Handle decryption modal
-        document.querySelector(".toggle-decrypt").addEventListener("click", () => {
-            document.getElementById("decryptPassword").value = "";
-        });
+        //// Handle decryption modal
+        //document.querySelector(".toggle-decrypt").addEventListener("click", () => {
+        //    document.getElementById("decryptPassword").value = "";
+        //});
 
-        document.getElementById("decryptBtn").addEventListener("click", () => {
-            const enteredPassword = document.getElementById("decryptPassword").value;
-            const correctPassword = "password123"; // Replace with your actual password logic
+        //document.getElementById("decryptBtn").addEventListener("click", () => {
+        //    const enteredPassword = document.getElementById("decryptPassword").value;
+        //    const correctPassword = "password123"; // Replace with your actual password logic
+        //    console.log(enteredPassword)
+        //    if (enteredPassword === correctPassword) {
+        //        // Show original values for all fields
+        //        Object.keys(originalValues).forEach(fieldId => {
+        //            const field = document.getElementById(fieldId);
+        //            field.value = originalValues[fieldId] || "";
+        //        });
 
-            if (enteredPassword === correctPassword) {
-                // Show original values for all fields
-                Object.keys(originalValues).forEach(fieldId => {
-                    const field = document.getElementById(fieldId);
-                    field.value = originalValues[fieldId] || "";
-                });
-
-                // Hide the modal
-                const modalInstance = bootstrap.Modal.getInstance(document.getElementById("passwordModal"));
-                modalInstance.hide();
-            } else {
-                alert("Incorrect Password!");
-            }
-        });
+        //        // Hide the modal
+        //        const modalInstance = bootstrap.Modal.getInstance(document.getElementById("passwordModal"));
+        //        modalInstance.hide();
+        //    } else {
+        //        alert("Incorrect Password!");
+        //    }
+        //});
 
 
        $(function () {

@@ -12,7 +12,7 @@ namespace HRACCPortal
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapMvcAttributeRoutes();
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -23,9 +23,16 @@ namespace HRACCPortal
             );
 
             routes.MapRoute(
-        name: "EmployerRoute",
-        url: "Employer/{action}/{id}",
-        defaults: new { controller = "Employer", action = "Index", id = UrlParameter.Optional }
+                name: "Timesheet",
+                url: "Timesheet/SaveTimesheet",
+                defaults: new { controller = "Timesheet", action = "SaveTimesheet" }
+            );
+
+
+            routes.MapRoute(
+            name: "EmployerRoute",
+            url: "Employer/{action}/{id}",
+            defaults: new { controller = "Employer", action = "Index", id = UrlParameter.Optional }
          );
         }
     }

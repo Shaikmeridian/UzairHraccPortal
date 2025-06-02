@@ -49,6 +49,15 @@
         <EntityTypeShape EntityType="HRACCDBModel.ConsultantCustomer" Width="1.5" PointX="19.625" PointY="4.625" />
         <AssociationConnector Association="HRACCDBModel.FK__Consultan__Consu__67DE6983" />
         <AssociationConnector Association="HRACCDBModel.FK__Consultan__Custo__68D28DBC" />
+        <EntityTypeShape EntityType="HRACCDBModel.SubcontractorEmployer" Width="1.5" PointX="15.625" PointY="14.5" />
+        <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" />
+        <AssociationConnector Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" />
+        <EntityTypeShape EntityType="HRACCDBModel.TimesheetDetail" Width="1.5" PointX="7.25" PointY="20.625" />
+        <EntityTypeShape EntityType="HRACCDBModel.Timesheet" Width="1.5" PointX="5" PointY="20.375" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Consu__0E04126B" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" />
+        <AssociationConnector Association="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

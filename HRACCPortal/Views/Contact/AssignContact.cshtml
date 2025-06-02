@@ -6,6 +6,45 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    ViewBag.Title = "Assign Contacts";
+    var assignedIds = ViewBag.AssignedContactIds as HashSet<int> ?? new HashSet<int>();
+
+}
+
+<style>
+    /* Beautify table borders */
+    #table th, #table td {
+        border: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+
+    #table tbody tr:hover {
+        background-color: #f1faff;
+    }
+
+    /* Custom checkbox toggle style */
+    .form-check-input[type="checkbox"] {
+        width: 1.4em;
+        height: 1.4em;
+        cursor: pointer;
+    }
+
+    .card-header-custom {
+        background-color: #f5f8fa;
+        border-bottom: 1px solid #e0e0e0;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .form-control::placeholder {
+        color: #b5b5c3;
+    }
+
+    .btn-primary {
+        box-shadow: 0 4px 8px rgba(64, 153, 255, 0.2);
+    }
+</style>
 <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 
@@ -55,7 +94,10 @@
                             <tr>
                                 <!-- Added a row separator -->
                                 <td>
-                                    <input type="checkbox" name="SelectedContactIds" value="@contact.ContactIdPK" />
+                                    @*<input class="form-check-input" type="checkbox" name="SelectedContactIds" value="@contact.ContactIdPK" />*@
+                                    <input class="form-check-input" type="checkbox" name="SelectedContactIds"
+                                           value="@contact.ContactIdPK"
+                                           @(assignedIds.Contains(contact.ContactIdPK) ? "checked" : "") />
                                 </td>
                                 <td>@contact.ContactName</td>
                                 <td>@contact.ContactEmail</td>
@@ -91,25 +133,53 @@
     <script src="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/list/list.js"></script>
     <script src="~/Content/assets/js/custom/apps/customers/Employee.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="~/Content/assets/js/widgets.bundle.js"></script>
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                const searchTerm = $(this).val().toLowerCase();
+
+                $("#table tbody tr").each(function () {
+                    const rowText = $(this).text().toLowerCase();
+                    $(this).toggle(rowText.indexOf(searchTerm) !== -1);
+                });
+            });
+        });
+
         $("#saveContactsBtn").click(function () {
-            console.log("Inside");
             const customerId = $("#hiddenContactId").val();
             const selectedContactIds = [];
+
             $("input[name='SelectedContactIds']:checked").each(function () {
                 selectedContactIds.push($(this).val());
             });
 
-            $.post('/Contact/SaveCustomerContacts', { customerId, selectedContactIds }, function (response) {
+            $.post('/Contact/SaveCustomerContacts', {
+                customerId,
+                selectedContactIds
+            }, function (response) {
                 if (response.success) {
-                    alert(response.message);
-                    window.history.back();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Contacts Assigned!',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.href = "/Customer/ViewCustomers";
+                    });
                 } else {
-                    alert(response.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: response.message,
+                        confirmButtonText: 'Okay'
+                    });
                 }
             });
         });

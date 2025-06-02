@@ -49,6 +49,7 @@
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Consu__59904A2C" FromRole="Consultant" ToRole="ConsultantEmployer" />
     <NavigationProperty Name="ConsultantCustomers" Relationship="HRACCDBModel.FK__Consultan__Consu__67DE6983" FromRole="Consultant" ToRole="ConsultantCustomer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Consu__0E04126B" FromRole="Consultant" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="EmployeeRole">
     <Key>
@@ -151,6 +152,58 @@
       <End Role="Customer" EntitySet="Customers" />
       <End Role="ConsultantCustomer" EntitySet="ConsultantCustomers" />
     </AssociationSet>
+    <EntitySet Name="SubcontractorEmployers" EntityType="HRACCDBModel.SubcontractorEmployer" />
+    <AssociationSet Name="FK__Subcontra__Emplo__7BE56230" Association="HRACCDBModel.FK__Subcontra__Emplo__7BE56230">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="SubcontractorEmployer" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Subcontra__Subco__7AF13DF7" Association="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7">
+      <End Role="SubContractor" EntitySet="SubContractors" />
+      <End Role="SubcontractorEmployer" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <EntitySet Name="TimesheetDetails" EntityType="HRACCDBModel.TimesheetDetail" />
+    <EntitySet Name="Timesheets" EntityType="HRACCDBModel.Timesheet" />
+    <AssociationSet Name="FK__Timesheet__Consu__0E04126B" Association="HRACCDBModel.FK__Timesheet__Consu__0E04126B">
+      <End Role="Consultant" EntitySet="Consultants" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Times__13BCEBC1" Association="HRACCDBModel.FK__Timesheet__Times__13BCEBC1">
+      <End Role="Timesheet" EntitySet="Timesheets" />
+      <End Role="TimesheetDetail" EntitySet="TimesheetDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Custo__2022C2A6" Association="HRACCDBModel.FK__Timesheet__Custo__2022C2A6">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Emplo__2116E6DF" Association="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF">
+      <End Role="Employer" EntitySet="Employers" />
+      <End Role="Timesheet" EntitySet="Timesheets" />
+    </AssociationSet>
+    <EntitySet Name="C__MigrationHistory" EntityType="HRACCDBModel.C__MigrationHistory" />
+    <EntitySet Name="AspNetUserClaims" EntityType="HRACCDBModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="HRACCDBModel.AspNetUserLogin" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="HRACCDBModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="ChequeDetails" EntityType="HRACCDBModel.ChequeDetail" />
+    <EntitySet Name="Deliverables" EntityType="HRACCDBModel.Deliverable" />
+    <AssociationSet Name="FK__ChequeDet__Payme__473C8FC7" Association="HRACCDBModel.FK__ChequeDet__Payme__473C8FC7">
+      <End Role="PaymentsReceived" EntitySet="PaymentsReceiveds" />
+      <End Role="ChequeDetail" EntitySet="ChequeDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Deliverab__Posit__3429BB53" Association="HRACCDBModel.FK__Deliverab__Posit__3429BB53">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Deliverable" EntitySet="Deliverables" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
     <Key>
@@ -173,6 +226,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Position1" Relationship="HRACCDBModel.FK_Position_Customer" FromRole="Position" ToRole="Position1" />
     <NavigationProperty Name="Position2" Relationship="HRACCDBModel.FK_Position_Customer" FromRole="Position1" ToRole="Position" />
+    <NavigationProperty Name="Deliverables" Relationship="HRACCDBModel.FK__Deliverab__Posit__3429BB53" FromRole="Position" ToRole="Deliverable" />
   </EntityType>
   <Association Name="FK_Position_Customer">
     <End Type="HRACCDBModel.Position" Role="Position" Multiplicity="1" />
@@ -224,6 +278,8 @@
     <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerId" Type="Int32" />
   </EntityType>
   <EntityType Name="InvoiceReconcile">
     <Key>
@@ -364,6 +420,10 @@
     <Property Name="DateUpdated" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="AddedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AmountPaid" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ChequeDetails" Relationship="HRACCDBModel.FK__ChequeDet__Payme__473C8FC7" FromRole="PaymentsReceived" ToRole="ChequeDetail" />
   </EntityType>
   <EntityType Name="Employer">
     <Key>
@@ -387,6 +447,8 @@
     <NavigationProperty Name="EmployeeEmployers" Relationship="HRACCDBModel.FK__EmployeeE__Emplo__3552E9B6" FromRole="Employer" ToRole="EmployeeEmployer" />
     <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Emplo__467D75B8" FromRole="Employer" ToRole="CustomerEmployer" />
     <NavigationProperty Name="ConsultantEmployers" Relationship="HRACCDBModel.FK__Consultan__Emplo__5A846E65" FromRole="Employer" ToRole="ConsultantEmployer" />
+    <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" FromRole="Employer" ToRole="SubcontractorEmployer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" FromRole="Employer" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -411,6 +473,7 @@
     <NavigationProperty Name="CustomerContacts" Relationship="HRACCDBModel.FK__CustomerC__Custo__208CD6FA" FromRole="Customer" ToRole="CustomerContact" />
     <NavigationProperty Name="CustomerEmployers" Relationship="HRACCDBModel.FK__CustomerE__Custo__4589517F" FromRole="Customer" ToRole="CustomerEmployer" />
     <NavigationProperty Name="ConsultantCustomers" Relationship="HRACCDBModel.FK__Consultan__Custo__68D28DBC" FromRole="Customer" ToRole="ConsultantCustomer" />
+    <NavigationProperty Name="Timesheets" Relationship="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" FromRole="Customer" ToRole="Timesheet" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -477,6 +540,7 @@
     <Property Name="UpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="SubContractorFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubContractor" ToRole="SubcontractorEmployer" />
   </EntityType>
   <EntityType Name="BalanceSheet">
     <Key>
@@ -553,6 +617,9 @@
     <NavigationProperty Name="SecurityQuestions" Relationship="HRACCDBModel.FK__SecurityQ__UserI__1F63A897" FromRole="AspNetUser" ToRole="SecurityQuestion" />
     <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetRole" Relationship="HRACCDBModel.FK_AspNetUsers_AspNetRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="AspNetRoles" Relationship="HRACCDBModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
   </EntityType>
   <Association Name="FK__SecurityQ__UserI__1F63A897">
     <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -573,6 +640,7 @@
     <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUsers" Relationship="HRACCDBModel.FK_AspNetUsers_AspNetRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+    <NavigationProperty Name="AspNetUsers1" Relationship="HRACCDBModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
   </EntityType>
   <Association Name="FK_AspNetUsers_AspNetRoles">
     <End Type="HRACCDBModel.AspNetRole" Role="AspNetRole" Multiplicity="0..1" />
@@ -755,6 +823,230 @@
       </Principal>
       <Dependent Role="ConsultantCustomer">
         <PropertyRef Name="CustomerIdFK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SubcontractorEmployer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubcontractorId" Type="Int32" Nullable="false" />
+    <Property Name="EmployerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Subcontra__Emplo__7BE56230" FromRole="SubcontractorEmployer" ToRole="Employer" />
+    <NavigationProperty Name="SubContractor" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubcontractorEmployer" ToRole="SubContractor" />
+  </EntityType>
+  <Association Name="FK__Subcontra__Emplo__7BE56230">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="1" />
+    <End Type="HRACCDBModel.SubcontractorEmployer" Role="SubcontractorEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployer">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Subcontra__Subco__7AF13DF7">
+    <End Type="HRACCDBModel.SubContractor" Role="SubContractor" Multiplicity="1" />
+    <End Type="HRACCDBModel.SubcontractorEmployer" Role="SubcontractorEmployer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubContractor">
+        <PropertyRef Name="SubContractorIdPK" />
+      </Principal>
+      <Dependent Role="SubcontractorEmployer">
+        <PropertyRef Name="SubcontractorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TimesheetDetail">
+    <Key>
+      <PropertyRef Name="DetailId" />
+    </Key>
+    <Property Name="DetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TimesheetId" Type="Int32" />
+    <Property Name="WorkDate" Type="DateTime" Precision="0" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Hours" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="Timesheet" Relationship="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" FromRole="TimesheetDetail" ToRole="Timesheet" />
+    <Property Name="SOWDeliverableNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="OTHours" Type="Decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="Timesheet">
+    <Key>
+      <PropertyRef Name="TimesheetId" />
+    </Key>
+    <Property Name="TimesheetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConsultantId" Type="Int32" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="TotalHours" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Approval" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Consultant" Relationship="HRACCDBModel.FK__Timesheet__Consu__0E04126B" FromRole="Timesheet" ToRole="Consultant" />
+    <NavigationProperty Name="TimesheetDetails" Relationship="HRACCDBModel.FK__Timesheet__Times__13BCEBC1" FromRole="Timesheet" ToRole="TimesheetDetail" />
+    <Property Name="CustomerId" Type="Int32" />
+    <Property Name="EmployerId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="HRACCDBModel.FK__Timesheet__Custo__2022C2A6" FromRole="Timesheet" ToRole="Customer" />
+    <NavigationProperty Name="Employer" Relationship="HRACCDBModel.FK__Timesheet__Emplo__2116E6DF" FromRole="Timesheet" ToRole="Employer" />
+  </EntityType>
+  <Association Name="FK__Timesheet__Consu__0E04126B">
+    <End Type="HRACCDBModel.Consultant" Role="Consultant" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultant">
+        <PropertyRef Name="ConsultantIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="ConsultantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Times__13BCEBC1">
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HRACCDBModel.TimesheetDetail" Role="TimesheetDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timesheet">
+        <PropertyRef Name="TimesheetId" />
+      </Principal>
+      <Dependent Role="TimesheetDetail">
+        <PropertyRef Name="TimesheetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Custo__2022C2A6">
+    <End Type="HRACCDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Emplo__2116E6DF">
+    <End Type="HRACCDBModel.Employer" Role="Employer" Multiplicity="0..1" />
+    <End Type="HRACCDBModel.Timesheet" Role="Timesheet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheet">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="HRACCDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="HRACCDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HRACCDBModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HRACCDBModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="HRACCDBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="HRACCDBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="ChequeDetail">
+    <Key>
+      <PropertyRef Name="ChequeId" />
+    </Key>
+    <Property Name="ChequeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentsReceivedId" Type="Int32" Nullable="false" />
+    <Property Name="ChequeNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ChequeAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DateReceived" Type="DateTime" Precision="0" />
+    <Property Name="CNumber" Type="Int32" />
+    <NavigationProperty Name="PaymentsReceived" Relationship="HRACCDBModel.FK__ChequeDet__Payme__473C8FC7" FromRole="ChequeDetail" ToRole="PaymentsReceived" />
+  </EntityType>
+  <EntityType Name="Deliverable">
+    <Key>
+      <PropertyRef Name="DeliverableId" />
+    </Key>
+    <Property Name="DeliverableId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PositionId" Type="Int32" Nullable="false" />
+    <Property Name="DeliverableNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DeliverableDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Position" Relationship="HRACCDBModel.FK__Deliverab__Posit__3429BB53" FromRole="Deliverable" ToRole="Position" />
+  </EntityType>
+  <Association Name="FK__ChequeDet__Payme__473C8FC7">
+    <End Type="HRACCDBModel.PaymentsReceived" Role="PaymentsReceived" Multiplicity="1" />
+    <End Type="HRACCDBModel.ChequeDetail" Role="ChequeDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentsReceived">
+        <PropertyRef Name="PaymentsReceivedId" />
+      </Principal>
+      <Dependent Role="ChequeDetail">
+        <PropertyRef Name="PaymentsReceivedId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Deliverab__Posit__3429BB53">
+    <End Type="HRACCDBModel.Position" Role="Position" Multiplicity="1" />
+    <End Type="HRACCDBModel.Deliverable" Role="Deliverable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PositionIdPK" />
+      </Principal>
+      <Dependent Role="Deliverable">
+        <PropertyRef Name="PositionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

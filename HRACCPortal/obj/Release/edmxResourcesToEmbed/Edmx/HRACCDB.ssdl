@@ -449,6 +449,32 @@
     <Property Name="SubcontractorId" Type="int" Nullable="false" />
     <Property Name="EmployerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="TimesheetDetails">
+    <Key>
+      <PropertyRef Name="DetailId" />
+    </Key>
+    <Property Name="DetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TimesheetId" Type="int" />
+    <Property Name="WorkDate" Type="date" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="Hours" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="SOWDeliverableNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="OTHours" Type="decimal" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="Timesheets">
+    <Key>
+      <PropertyRef Name="TimesheetId" />
+    </Key>
+    <Property Name="TimesheetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultantId" Type="int" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="TotalHours" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="Approval" Type="varchar" MaxLength="10" />
+    <Property Name="CreatedAt" Type="datetime" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="EmployerId" Type="int" />
+  </EntityType>
   <EntityType Name="UserDetails">
     <Key>
       <PropertyRef Name="UserId" />
@@ -638,6 +664,56 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Timesheet__Consu__0E04126B">
+    <End Role="Consultant" Type="Self.Consultant" Multiplicity="0..1" />
+    <End Role="Timesheets" Type="Self.Timesheets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consultant">
+        <PropertyRef Name="ConsultantIdPK" />
+      </Principal>
+      <Dependent Role="Timesheets">
+        <PropertyRef Name="ConsultantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Custo__2022C2A6">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Timesheets" Type="Self.Timesheets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheets">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Emplo__2116E6DF">
+    <End Role="Employer" Type="Self.Employer" Multiplicity="0..1" />
+    <End Role="Timesheets" Type="Self.Timesheets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employer">
+        <PropertyRef Name="EmployerIdPK" />
+      </Principal>
+      <Dependent Role="Timesheets">
+        <PropertyRef Name="EmployerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Timesheet__Times__13BCEBC1">
+    <End Role="Timesheets" Type="Self.Timesheets" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TimesheetDetails" Type="Self.TimesheetDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Timesheets">
+        <PropertyRef Name="TimesheetId" />
+      </Principal>
+      <Dependent Role="TimesheetDetails">
+        <PropertyRef Name="TimesheetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AspNetUsers_AspNetRoles">
     <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
@@ -680,6 +756,8 @@
     <EntitySet Name="SecurityQuestions" EntityType="Self.SecurityQuestions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubContractor" EntityType="Self.SubContractor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubcontractorEmployers" EntityType="Self.SubcontractorEmployers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TimesheetDetails" EntityType="Self.TimesheetDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Timesheets" EntityType="Self.Timesheets" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Consultan__Consu__59904A2C" Association="Self.FK__Consultan__Consu__59904A2C">
@@ -733,6 +811,22 @@
     <AssociationSet Name="FK__Subcontra__Subco__7AF13DF7" Association="Self.FK__Subcontra__Subco__7AF13DF7">
       <End Role="SubContractor" EntitySet="SubContractor" />
       <End Role="SubcontractorEmployers" EntitySet="SubcontractorEmployers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Consu__0E04126B" Association="Self.FK__Timesheet__Consu__0E04126B">
+      <End Role="Consultant" EntitySet="Consultant" />
+      <End Role="Timesheets" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Custo__2022C2A6" Association="Self.FK__Timesheet__Custo__2022C2A6">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Timesheets" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Emplo__2116E6DF" Association="Self.FK__Timesheet__Emplo__2116E6DF">
+      <End Role="Employer" EntitySet="Employer" />
+      <End Role="Timesheets" EntitySet="Timesheets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Timesheet__Times__13BCEBC1" Association="Self.FK__Timesheet__Times__13BCEBC1">
+      <End Role="Timesheets" EntitySet="Timesheets" />
+      <End Role="TimesheetDetails" EntitySet="TimesheetDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_AspNetUsers_AspNetRoles" Association="Self.FK_AspNetUsers_AspNetRoles">
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />

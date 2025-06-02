@@ -13,6 +13,7 @@ var KTModalEmployersAdd = function () {
     // Init form inputs
     var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+        debugger;
         validator = FormValidation.formValidation(
             form,
             {
@@ -38,8 +39,17 @@ var KTModalEmployersAdd = function () {
                     },
                     'EmployerContactEmail': {
                         validators: {
-                            emailAddress: {
-                                message: 'The value is not a valid email address'
+                            //emailAddress: {
+                            //    message: 'The value is not a valid email address'
+                            //},
+                            //notEmpty: {
+                            //    message: 'Email is required'
+                            //}
+                            
+
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|org|net|edu|gov|mil|biz|info)$/,
+                                message: 'Please enter a valid email address (e.g., example@gmail.com)'
                             },
                             notEmpty: {
                                 message: 'Email is required'
@@ -203,7 +213,7 @@ var KTModalEmployersAdd = function () {
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 submitButton.removeAttribute('data-kt-indicator');
-
+    
                                 console.log("Custom error : " + jqXHR.responseText + " Status: " + textStatus + " Http error:" + errorThrown);
 
                                 Swal.fire({
@@ -222,7 +232,7 @@ var KTModalEmployersAdd = function () {
                     } else {
 
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "Sorry, looks like there are some errors detected,Check if all Mandatory fields are present , please try again.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",

@@ -47,15 +47,15 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th class="w-10px pe-2">#</th>
+                            <th class="w-10px pe-2">S No</th>
                             <th class="min-w-125px">Employer Name</th>
-                            <th class="min-w-125px">Contact Email</th>
-                            <th class="min-w-125px">Date Assigned</th>
+                            <th class="min-w-125px">Employer Contact Email</th>
+                            <th class="min-w-125px">Employer Phone</th>
                         </tr>
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
-                    <tbody class="fw-semibold text-gray-600">
+                    <tbody id="employerTableBody" class="fw-semibold text-gray-600">
                         @if (Model.Any())
                         {
                             int index = 1;
@@ -65,15 +65,21 @@
                                     <td>@index</td>
                                     <td>@employer.EmployerName</td>
                                     <td>@employer.EmployerContactEmail</td>
-                                    <td>1</td>
+                                    <td>@employer.EmployerContactPhone</td>
                                 </tr>
                                 index++;
                             }
                         }
                         else
                         {
+
                             <tr>
-                                <td colspan="4" class="text-center">No employers assigned.</td>
+                                <td colspan="4" class="text-center text-muted py-10">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-user-times fa-2x mb-3 text-danger"></i>
+                                        <span class="fs-5 fw-semibold">No employers assigned to this customer yet.</span>
+                                    </div>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -106,8 +112,9 @@
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+      
+
         document.getElementById('searchInput').addEventListener('input', function () {
-            console.log("Inside");
             let searchTerm = this.value.toLowerCase();
             let tableRows = document.querySelectorAll('#employerTableBody tr');
 
@@ -115,7 +122,6 @@
                 let employerName = row.cells[1].textContent.toLowerCase();
                 let employerEmail = row.cells[2].textContent.toLowerCase();
 
-                // Show row if search term matches either Employer Name or Email
                 if (employerName.includes(searchTerm) || employerEmail.includes(searchTerm)) {
                     row.style.display = '';
                 } else {

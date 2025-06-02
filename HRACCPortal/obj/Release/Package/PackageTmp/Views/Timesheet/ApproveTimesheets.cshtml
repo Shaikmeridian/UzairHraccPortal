@@ -1,0 +1,192 @@
+﻿@model HRACCPortal.Models.ApproveTimesheetsViewModel
+@{
+    ViewBag.Title = "Manage Timesheets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center fw-bold text-dark mb-4">Manage Timesheets</h2>
+
+    <!-- 🔹 Beautiful Navigation Tabs -->
+    <ul class="nav nav-tabs justify-content-center shadow-sm rounded p-2" id="timesheetTabs">
+        <li class="nav-item">
+            <a class="nav-link active fw-bold text-dark" data-bs-toggle="tab" href="#pending">
+                <i class="fas fa-hourglass-half text-warning"></i> Pending
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-bold text-dark" data-bs-toggle="tab" href="#approved">
+                <i class="fas fa-check-double text-success"></i> Approved
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link fw-bold text-dark" data-bs-toggle="tab" href="#rejected">
+                <i class="fas fa-times-circle text-danger"></i> Rejected
+            </a>
+        </li>
+    </ul>
+
+    <!-- 🔹 Tab Content -->
+    <div class="tab-content mt-4">
+
+        <!-- ✅ Pending Timesheets -->
+        <div id="pending" class="tab-pane fade show active">
+            <div class="card shadow-lg border-0 rounded-lg p-4">
+                <h4 class="fw-bold mb-3 text-warning"><i class="fas fa-clock"></i> Pending Approval</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="bg-info text-white rounded">
+                            <tr>
+                                <th>ID</th>
+                               
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Total Hours</th>
+                                <th>Customer</th>
+                                <th>Employer</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PendingTimesheets)
+                            {
+                                <tr class="border-bottom">
+                                    <td><span class="badge bg-secondary">@item.TimesheetId</span></td>
+                                    
+                                    <td>@item.Month</td>
+                                    <td>@item.Year</td>
+                                    <td>@item.TotalHours</td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.EmployerName</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm rounded-pill px-3 approve-btn" data-id="@item.TimesheetId">
+                                            <i class="fas fa-thumbs-up"></i> Approve
+                                        </button>
+                                        <button class="btn btn-danger btn-sm rounded-pill px-3 reject-btn" data-id="@item.TimesheetId">
+                                            <i class="fas fa-ban"></i> Reject
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ✅ Approved Timesheets -->
+        <div id="approved" class="tab-pane fade">
+            <div class="card shadow-lg border-0 rounded-lg p-4">
+                <h4 class="fw-bold mb-3 text-success"><i class="fas fa-check-circle"></i> Approved</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="bg-success text-white rounded">
+                            <tr>
+                                <th>ID</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Total Hours</th>
+                                <th>Customer</th>
+                                <th>Employer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ApprovedTimesheets)
+                            {
+                                <tr class="border-bottom">
+                                    <td><span class="badge bg-secondary">@item.TimesheetId</span></td>
+                                    
+                                    <td>@item.Month</td>
+                                    <td>@item.Year</td>
+                                    <td><span class="badge bg-primary">@item.TotalHours</span></td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.EmployerName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ❌ Rejected Timesheets -->
+        <div id="rejected" class="tab-pane fade">
+            <div class="card shadow-lg border-0 rounded-lg p-4">
+                <h4 class="fw-bold mb-3 text-danger"><i class="fas fa-times-circle"></i> Rejected</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle text-center">
+                        <thead class="bg-danger text-white rounded">
+                            <tr>
+                                <th>ID</th>
+                                <th>Consultant</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Total Hours</th>
+                                <th>Customer</th>
+                                <th>Employer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.RejectedTimesheets)
+                            {
+                                <tr class="border-bottom">
+                                    <td><span class="badge bg-secondary">@item.TimesheetId</span></td>
+                                   
+                                    <td>@item.Month</td>
+                                    <td>@item.Year</td>
+                                    <td><span class="badge bg-primary">@item.TotalHours</span></td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.EmployerName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 🔹 Approve/Reject AJAX Logic -->
+<script>
+    $(document).ready(function () {
+        $(".approve-btn").click(function () {
+            var id = $(this).data("id");
+            Swal.fire({
+                title: "Approve Timesheet?",
+                text: "This action cannot be undone!",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Approve",
+                cancelButtonText: "Cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/Timesheet/Approve", { timesheetId: id }, function () {
+                        Swal.fire("Approved!", "The timesheet has been approved.", "success");
+                        setTimeout(() => location.reload(), 1200);
+                    });
+                }
+            });
+        });
+
+        $(".reject-btn").click(function () {
+            var id = $(this).data("id");
+            Swal.fire({
+                title: "Reject Timesheet?",
+                text: "Are you sure you want to reject this timesheet?",
+                icon: "error",
+                showCancelButton: true,
+                confirmButtonText: "Yes, Reject",
+                cancelButtonText: "Cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("/Timesheet/Reject", { timesheetId: id }, function () {
+                        Swal.fire("Rejected!", "The timesheet has been rejected.", "error");
+                        setTimeout(() => location.reload(), 1200);
+                    });
+                }
+            });
+        });
+    });
+</script>

@@ -99,6 +99,7 @@ namespace HRACCPortal.Controllers
             {
                 message = cls.AddConsultant(consultant);
                 string randomPassword = GenerateRandomPassword();
+               
 
                 if (message == "success")
                 {
@@ -277,97 +278,105 @@ namespace HRACCPortal.Controllers
         }
 
 
-        //[HttpGet]
-        //public ActionResult AssignConsultantEmployers(int consultantId)
-        //{
-        //    // Call the existing GetEmployers method
-        //    cls.GetEmployers();
+        [HttpGet]
+        
+        public ActionResult AssignConsultantEmployers(int consultantId)
+        {
+            // Call the existing GetEmployers method
+            cls.GetEmployers();
 
-        //    // Get the EmployerList populated by GetEmployers
-        //    var employers = cls.EmployerList.Select(employer => new EmployerModel
-        //    {
-        //        EmployerIdPK = employer.EmployerIdPK,
-        //        EmployerName = employer.EmployerName,
-        //        EmployerContactEmail = employer.EmployerContactEmail
-        //    }).ToList();
-        //    ViewBag.ConsultantIdPK = consultantId;
-        //    // Return as JSON to be used in the modal
-        //    return View(employers);
-        //}
+    
+            var employers = cls.EmployerList.Select(employer => new EmployerModel
+            {
+                EmployerIdPK = employer.EmployerIdPK,
+                EmployerName = employer.EmployerName,
+                EmployerContactEmail = employer.EmployerContactEmail,
+                EmployerContactPhone = employer.EmployerContactPhone
+            }).ToList();
+
+            var assignedEmployerIds = entities.ConsultantEmployers
+                .Where(ce => ce.ConsultantIdFK == consultantId)
+                .Select(ce => ce.EmployerIdFK)
+                .ToHashSet(); 
+
+            ViewBag.AssignedEmployerIds = assignedEmployerIds ?? new HashSet<int>();
+
+            ViewBag.ConsultantIdPK = consultantId;
+            return View(employers);
+        }
 
 
-        //[HttpPost]
-        //public ActionResult SaveConsultantEmployers(int consultantId, List<int> selectedEmployerIds)
-        //{
-        //    if (selectedEmployerIds == null || !selectedEmployerIds.Any())
-        //    {
-        //        return Json(new { success = false, message = "No employers selected!" });
-        //    }
 
-        //    try
-        //    {
-        //        // Remove existing assignments for the consultant
-        //        var existingAssignments = entities.ConsultantEmployers
-        //            .Where(ce => ce.ConsultantIdFK == consultantId)
-        //            .ToList();
+        [HttpPost]
+        public ActionResult SaveConsultantEmployers(int consultantId, List<int> selectedEmployerIds)
+        {
+            if (selectedEmployerIds == null || !selectedEmployerIds.Any())
+            {
+                return Json(new { success = false, message = "No employers selected!" });
+            }
 
-        //        if (existingAssignments.Count > 0)
-        //        {
-        //            // Remove existing contacts
-        //            foreach (var consultant in existingAssignments)
-        //            {
-        //                entities.ConsultantEmployers.DeleteObject(consultant);
-        //            }
-        //        }
+            try
+            {
+                // Remove existing assignments for the consultant
+                var existingAssignments = entities.ConsultantEmployers
+                    .Where(ce => ce.ConsultantIdFK == consultantId)
+                    .ToList();
 
-        //        // Add new assignments
-        //        foreach (var employerId in selectedEmployerIds)
-        //        {
-        //            entities.ConsultantEmployers.AddObject(new ConsultantEmployer
-        //            {
-        //                ConsultantIdFK = consultantId,
-        //                EmployerIdFK = employerId
-        //            });
-        //        }
+                if (existingAssignments.Count > 0)
+                {
+                    // Remove existing contacts
+                    foreach (var consultant in existingAssignments)
+                    {
+                        entities.ConsultantEmployers.DeleteObject(consultant);
+                    }
+                }
 
-        //        entities.SaveChanges();
+                // Add new assignments
+                foreach (var employerId in selectedEmployerIds)
+                {
+                    entities.ConsultantEmployers.AddObject(new ConsultantEmployer
+                    {
+                        ConsultantIdFK = consultantId,
+                        EmployerIdFK = employerId
+                    });
+                }
 
-        //        return Json(new { success = true, message = "Employers assigned successfully!" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "Error occurred: " + ex.Message });
-        //    }
-        //}
+                entities.SaveChanges();
 
-        //[HttpGet]
-        //public ActionResult ViewAssignedConsultantEmployers(int consultantId)
-        //{
-        //    // Fetch consultant information
-        //    var consultant = entities.ConsultantEmployers.FirstOrDefault(ce => ce.ConsultantIdFK == consultantId);
-        //    if (consultant == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+                return Json(new { success = true, message = "Employers assigned successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error occurred: " + ex.Message });
+            }
+        }
 
-        //    // Fetch assigned employers' details for the consultant
-        //    var assignedEmployers = entities.ConsultantEmployers
-        //        .Where(ce => ce.ConsultantIdFK == consultantId)
-        //        .Join(entities.Employers,
-        //            ce => ce.EmployerIdFK,
-        //            employer => employer.EmployerIdPK,
-        //            (ce, employer) => new EmployerModel
-        //            {
-        //                EmployerIdPK = employer.EmployerIdPK,
-        //                EmployerName = employer.EmployerName,
-        //                EmployerContactEmail = employer.EmployerContactEmail,
-        //            })
-        //        .ToList();
+        [HttpGet]
+        public ActionResult ViewAssignedConsultantEmployers(int consultantId)
+        {
+            // Fetch consultant information
+            var consultant = entities.ConsultantEmployers.FirstOrDefault(ce => ce.ConsultantIdFK == consultantId);
+         
 
-        //    ViewBag.ConsultantId = consultantId;
+            // Fetch assigned employers' details for the consultant
+            var assignedEmployers = entities.ConsultantEmployers
+                .Where(ce => ce.ConsultantIdFK == consultantId)
+                .Join(entities.Employers,
+                    ce => ce.EmployerIdFK,
+                    employer => employer.EmployerIdPK,
+                    (ce, employer) => new EmployerModel
+                    {
+                        EmployerIdPK = employer.EmployerIdPK,
+                        EmployerName = employer.EmployerName,
+                        EmployerContactEmail = employer.EmployerContactEmail,
+                        EmployerContactPhone = employer.EmployerContactPhone
+                    })
+                .ToList();
 
-        //    return View(assignedEmployers); // Return to View with the assigned employers
-        //}
+            ViewBag.ConsultantId = consultantId;
+
+            return View(assignedEmployers); // Return to View with the assigned employers
+        }
 
 
         [HttpGet]
@@ -445,10 +454,7 @@ namespace HRACCPortal.Controllers
         {
             // Fetch consultant information
             var consultant = entities.ConsultantCustomers.FirstOrDefault(cc => cc.ConsultantIdFK == consultantId);
-            if (consultant == null)
-            {
-                return HttpNotFound();
-            }
+           
 
             // Fetch assigned customers' details for the consultant
             var assignedCustomers = entities.ConsultantCustomers

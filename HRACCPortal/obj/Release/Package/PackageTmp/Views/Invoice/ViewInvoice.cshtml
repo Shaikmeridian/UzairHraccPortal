@@ -8,6 +8,8 @@
 <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 
+
+
 <!--end::Vendor Stylesheets-->
 <!--begin::Content-->
 <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -162,7 +164,7 @@
                                         <input type="hidden" class="form-control form-control-solid" name="InvoiceIdPK" value="0" />
                                         <input type="hidden" class="form-control form-control-solid" name="ConsultantIdFK" value="0" />
                                         <input type="hidden" class="form-control form-control-solid" name="ConsultantPositionIdFK" value="0" />
-                                        <input type="text" class="form-control form-control-solid " placeholder="" name="InvoiceNumber" value=""/>
+                                        <input type="text" class="form-control form-control-solid " placeholder="" name="InvoiceNumber" value="" />
                                         <!--end::Input-->
                                     </div>
                                 </div>
@@ -175,7 +177,7 @@
                                         </label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                       @* <input type="text" class="form-control form-control-solid" placeholder="" name="Year" value="" />*@
+                                        @* <input type="text" class="form-control form-control-solid" placeholder="" name="Year" value="" />*@
                                         <select class="form-control form-control-solid" name="Year">
                                             <option value="">Select Year</option>
                                             <option value="2024">2024</option>
@@ -190,8 +192,8 @@
                                             <option value="2033">2033</option>
                                             <option value="2034">2034</option>
                                             <option value="2035">2035</option>
-                                            </select>
-                                            <!--end::Input-->
+                                        </select>
+                                        <!--end::Input-->
                                     </div>
                                     <!--end::Input group-->
                                     <div class="col-md-6 fv-row">
@@ -344,8 +346,9 @@
 @section scripts{
 
     <!--begin::Vendors Javascript(used for this page only)-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <script src="~/Content/assets/js/custom/apps/calendar/calendar.js"></script>
-
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
@@ -356,6 +359,22 @@
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <!--end::Custom Javascript-->
     <script>
+        $(document).ready(function () {
+            if (!$.fn.DataTable.isDataTable('#kt_customers_table')) {
+                $('#kt_customers_table').DataTable({
+                    "pageLength": 10,
+                    "lengthChange": true, // enable dropdown, but it's now placed below
+                    "searching": false,   // removes default search bar
+                    "ordering": true,
+                    "pagingType": "simple_numbers",
+                    "language": {
+                        "emptyTable": "No data available in table"
+                    },
+                    "dom": 't<"datatable-footer"lip>' // dropdown + info + pagination below
+                });
+            }
+        });
+
         new tempusDominus.TempusDominus(document.getElementById("InvoiceDate"), {
             display: {
                 viewMode: "calendar",
@@ -396,7 +415,7 @@
                 success: function (response) {
                     $("#btnpopup").click();
                     //$("input[name='CustomerName']").val(response.invoiceData.CustomerName);
-                    
+
                     $("input[name='InvoiceIdPK']").val(response.invoiceData.InvoiceIdPK);
                     //$("input[name='ConsultantIdFK']").val(response.invoiceData.ConsultantIdFK);
                     //$("input[name='ConsultantPositionIdFK']").val(response.invoiceData.ConsultantPositionIdFK);
@@ -431,5 +450,9 @@
                 }
             });
         }
+
+       
+
+
     </script>
 }

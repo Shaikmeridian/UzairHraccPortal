@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Assigned Contact";
+    int customerId = ViewBag.CustomerId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,7 +31,7 @@
 
                     <div class="d-flex justify-content-end gap-3" data-kt-contact-table-toolbar="base">
                         <a href="/Customer/ViewCustomers" class="btn btn-secondary mb-3 ">Back to Customers</a>
-                        <a href="/Employer/AssignEmployers?employeeId=@ViewBag.Contact" class="btn btn-success mb-3">Add Contacts</a>
+                        <a href="/Contact/AssignContact?customerId=@ViewBag.CustomerId" class="btn btn-success mb-3">Add Contacts</a>
                     </div>
                     <!--end::Toolbar-->
                 </div>
@@ -42,7 +43,7 @@
 
 
                 <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" >
+                <table class="table align-middle table-row-dashed fs-6 gy-5">
                     <!--begin::Table head-->
                     <thead>
                         <!--begin::Table row-->
@@ -55,7 +56,7 @@
                     </thead>
                     <!--end::Table head-->
                     <!--begin::Table body-->
-                    <tbody class="fw-semibold text-gray-600">
+                    <tbody  id="contactTableBody" class="fw-semibold text-gray-600">
                         @if (Model.Any())
                         {
                             int index = 1;
@@ -73,8 +74,14 @@
                         }
                         else
                         {
+
                             <tr>
-                                <td colspan="4" class="text-center">No Contacts Assigned.</td>
+                                <td colspan="4" class="text-center text-muted py-10">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-user-times fa-2x mb-3 text-danger"></i>
+                                        <span class="fs-5 fw-semibold">No contact assigned to this customer.</span>
+                                    </div>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -106,6 +113,16 @@
     <script src="~/Content/assets/js/widgets.bundle.js"></script>
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+    <script>
+    $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('table tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
 }
 

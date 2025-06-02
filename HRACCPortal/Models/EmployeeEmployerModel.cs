@@ -21,7 +21,7 @@ namespace HRACCPortal.Models
         [ForeignKey("Employer")] // Foreign Key to Employer table
         public int EmployerIdFK { get; set; }
 
-        public DateTime DateAdded { get; set; } // Date when the record was added
+        public string DateAdded { get; set; } // Date when the record was added
 
         // Navigation properties (optional, for relationships)
         public virtual Employee Employee { get; set; } // Navigation property for Employee

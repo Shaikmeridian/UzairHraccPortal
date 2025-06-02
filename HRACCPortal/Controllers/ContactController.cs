@@ -64,21 +64,28 @@ namespace HRACCPortal.Controllers
         [HttpGet]
         public ActionResult AssignContact(int customerId)
         {
-            ViewBag.CustomerId = customerId;
-
             var contacts = entities.Contacts
-                             .Select(c => new ContactModel
-                             {
-                                 ContactIdPK = c.ContactIdPK,
-                                 ContactName = c.ContactName,
-                                 ContactEmail = c.ContactEmail,
-                                 ContactPhone = c.ContactPhone,
+                .Select(c => new ContactModel
+                {
+                    ContactIdPK = c.ContactIdPK,
+                    ContactName = c.ContactName,
+                    ContactEmail = c.ContactEmail,
+                    ContactPhone = c.ContactPhone
+                })
+                .ToList();
 
-                             })
-                             .ToList();
+            var assignedContactIds = entities.CustomerContacts
+                .Where(cc => cc.CustomerId == customerId) // <-- updated
+                .Select(cc => cc.ContactId)               // <-- updated
+                .ToHashSet();
+
+            ViewBag.AssignedContactIds = assignedContactIds ?? new HashSet<int>();
+            ViewBag.CustomerId = customerId;
 
             return View(contacts);
         }
+
+
 
         [HttpPost]
         public JsonResult SaveCustomerContacts(int customerId, List<int> selectedContactIds)
@@ -137,6 +144,7 @@ namespace HRACCPortal.Controllers
                                             })
                                             .ToList();
 
+            ViewBag.CustomerId = customerId;
             // Step 3: Return the result to the view
             return View(assignedContacts);
         }

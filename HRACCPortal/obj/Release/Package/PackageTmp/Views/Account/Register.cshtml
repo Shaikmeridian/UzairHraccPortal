@@ -215,6 +215,29 @@
             z-index: 2;
         }
 
+        @@media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack elements vertically */
+            }
+
+            .left-content {
+                margin-bottom: 20px; /* Add margin for spacing */
+            }
+
+            .form-container {
+                padding: 20px; /* Reduce padding on smaller screens */
+            }
+
+            .form-header h2 {
+                font-size: 28px; /* Adjust font size */
+            }
+
+            .form-header p {
+                font-size: 16px; /* Adjust font size */
+            }
+        }
+
+
     </style>
 </head>
 <body>

@@ -25,6 +25,8 @@ namespace HRACCPortal.ObjectModel
         public string DateUpdated { get; set; }
         public string AddedBy { get; set; }
         public string UpdatedBy { get; set; }
+
+        public int? CustomerId { get; set; }
         public List<InvoiceObjectModel> InvoiceList { get; set; }
     }
 }

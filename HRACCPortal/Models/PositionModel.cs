@@ -127,7 +127,8 @@ namespace HRACCPortal.Models
                                 psLts.DateUpdated,
                                 psLts.AddedBy,
                                 psLts.UpdatedBy,
-                                custLts.CustomerName
+                                custLts.CustomerName,
+                                
 
                             }).AsEnumerable().Select(i => new PositionObjectModel
                             {
@@ -143,12 +144,14 @@ namespace HRACCPortal.Models
                                 InactiveDate = i.InactiveDate,
                                 InactiveReason = i.InactiveReason,
                                 DateAdded = i.DateAdded,
+
                                 //DateUpdated = Convert.ToDateTime(i.DateUpdated).ToString("MMM,dd, yyyy"),
                                 //Changed by Uzair 
                                 DateUpdated = !string.IsNullOrWhiteSpace(i.DateUpdated) && DateTime.TryParse(i.DateUpdated, out var dateUpdated)
                                 ? dateUpdated.ToString("MMM, dd, yyyy")
                                 : "N/A",
                                 AddedBy = i.AddedBy,
+                               
                                 UpdatedBy = i.UpdatedBy
 
                             }).ToList();

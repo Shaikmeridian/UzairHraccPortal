@@ -10,6 +10,7 @@
 <!--begin::Vendor Stylesheets(used for this page only)-->
 <link href="~/Content/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <link href="~/Content/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 
 <!--end::Vendor Stylesheets-->
 <!--begin::Content-->
@@ -32,7 +33,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Consultant Positions" />
+                        <input type="text" id="searchInput" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Consultant Positions" />
                     </div>
                     <!--end::Search-->
                 </div>
@@ -76,54 +77,54 @@
                             {
                                 foreach (var item in Model.ConsultantPositionDetailsList)
                                 {
-                                                <tr>
-                                                    <td>
-                                                        @item.ConsultantPositionIdPK
-                                                    </td>
-                                                    <!--begin::Name=-->
-                                                    <td>
-                                                        @item.PositionStartDate
-                                                    </td>
-                                                    <!--end::Name=-->
-                                                    <!--begin::Email=-->
-                                                    <td>
-                                                        @item.PositionEndDate
-                                                    </td>
-                                                    <!--end::Email=-->
-                                                    <td>@item.DateUpdated</td>
-                                                    <!--end::Payment method=-->
-                                                    <!--begin::Date=-->
-                                                    <td>
-                                                        @if (bool.Parse(item.PositionActive) == true)
-                                                        {
-                                                            <span class="badge badge-light-success fs-7 fw-bold">Active</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="badge badge-light-danger fs-7 fw-bold">In-Active</span>
-                                                        }
-                                                    </td>
-                                                    <!--end::Date=-->
-                                                    <!--begin::Action=-->
-                                                    <td class="text-end">
-                                                        @*<button type="button" class="btn btn-primary btnEdit" id="@item.ConsultantIdPK" onClick="GFG_click(this.id)">Edit</button>*@
+                                    <tr>
+                                        <td>
+                                            @item.ConsultantPositionIdPK
+                                        </td>
+                                        <!--begin::Name=-->
+                                        <td>
+                                            @item.PositionStartDate
+                                        </td>
+                                        <!--end::Name=-->
+                                        <!--begin::Email=-->
+                                        <td>
+                                            @item.PositionEndDate
+                                        </td>
+                                        <!--end::Email=-->
+                                        <td>@item.DateUpdated</td>
+                                        <!--end::Payment method=-->
+                                        <!--begin::Date=-->
+                                        <td>
+                                            @if (bool.Parse(item.PositionActive) == true)
+                                            {
+                                                <span class="badge badge-light-success fs-7 fw-bold">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-light-danger fs-7 fw-bold">In-Active</span>
+                                            }
+                                        </td>
+                                        <!--end::Date=-->
+                                        <!--begin::Action=-->
+                                        <td class="text-end">
+                                            @*<button type="button" class="btn btn-primary btnEdit" id="@item.ConsultantIdPK" onClick="GFG_click(this.id)">Edit</button>*@
 
 
 
-                                                        <a href="javascript:void(0)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="@item.ConsultantPositionIdPK" onClick="GFG_click(this.id)">
-                                                            @*begin::Svg Icon | path: icons/duotune/art/art005.svg*@
-                                                            <span class="svg-icon svg-icon-3">
-                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
-                                                                    <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            @*end::Svg Icon*@
-                                                        </a>
-                                                    </td>
-                                                    <!--end::Action=-->
-                                                   <td></td>
-                                                </tr>
+                                            <a href="javascript:void(0)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" id="@item.ConsultantPositionIdPK" onClick="GFG_click(this.id)">
+                                                @*begin::Svg Icon | path: icons/duotune/art/art005.svg*@
+                                                <span class="svg-icon svg-icon-3">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor" />
+                                                        <path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                @*end::Svg Icon*@
+                                            </a>
+                                        </td>
+                                        <!--end::Action=-->
+                                        <td></td>
+                                    </tr>
                                 }
                             }
                         }
@@ -161,10 +162,13 @@
                                 </span>
                                 <!--end::Svg Icon-->
                             </div>
-                            <!--end::Close-->                          
+                            <!--end::Close-->
                         </div>
                         <!--end::Modal header-->
                         <!--begin::Card body-->
+                        <div class="modal-body py-10 px-lg-17">
+                            <!--begin::Scroll-->
+                            <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
                                 <div class="row g-9 mb-7">
                                     <div class="col-md-6 fv-row">
                                         <!--begin::Input group-->
@@ -216,7 +220,7 @@
                                                 <span class="required">Select Position Rate</span>
                                             </label>
                                             <!--end::Label
-            <!--begin::Input-->
+                                            <!--begin::Input-->
                                             <select name="PositionRateIdFK" aria-label="Select a Position Rate" data-control="select2" data-placeholder="Select a Position Rate..." data-dropdown-parent="#kt_modal_add_customer" class="form-select form-select-solid fw-bold PositionRateIdFK">
                                                 <option value="">Select a Consultant...</option>
                                                 @foreach (var item in Model.ddlPositionsRateList)
@@ -228,85 +232,82 @@
                                         </div>
                                         <!--end::Input group-->
                                     </div>
-                                    <div class="modal-body py-10 px-lg-17">
-                                        <!--begin::Scroll-->
-                                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_customer_header" data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
-                                            <!--begin::Input group-->
-                                            <div class="row g-9 mb-7">
-                                                <!--begin::Col-->
-                                                <div class="col-md-6 fv-row">
-                                                    <!--begin::Label-->
-                                                    <label class="required fs-6 fw-semibold mb-2">Position Start Date</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                        <input id="PositionStartDate" name="PositionStartDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
-                                                        <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
-                                                            <i class="fas fa-calendar"></i>
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Col-->
-                                                <!--begin::Col-->
-                                                <div class="col-md-6 fv-row">
-                                                    <!--begin::Label-->
-                                                    <label class="required fs-6 fw-semibold mb-2">Position End Date</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
-                                                        <input id="PositionEndDate" name="PositionEndDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
-                                                        <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
-                                                            <i class="fas fa-calendar"></i>
-                                                        </span>
-                                                    </div>
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--begin::Col-->
-                                            <div class="col-md-6 fv-row">
-                                                <!--begin::Label-->
-                                                <label class=" fs-6 fw-semibold mb-2">Active</label>
-                                                <!--end::Label-->
-                                                <div class="form-check form-check-solid form-switch form-check-custom fv-row">
-                                                    <input class="form-check-input w-45px h-30px" type="checkbox" id="PositionActive" name="PositionActive" checked>
-                                                    <label class="form-check-label" for="PositionActive"></label>
-                                                </div>
-                                            </div>
-                                            <!--end::Col-->
 
-                                        </div>
-
-
-                                    </div>
-                                    <!--end::Card body-->
-                                    <!--begin::Modal footer-->
-                                    <div class="modal-footer flex-center">
-                                        <!--begin::Button-->
-                                        <button type="reset" id="kt_modal_add_customer_cancel" class="btn btn-danger me-3">Discard</button>
-                                        <!--end::Button-->
-                                        <!--begin::Button-->
-                                        <button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">
-                                            <span class="indicator-label">Submit</span>
-                                            <span class="indicator-progress">
-                                                Please wait...
-                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Position Start Date</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                            <input id="PositionStartDate" name="PositionStartDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
+                                            <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
+                                                <i class="fas fa-calendar"></i>
                                             </span>
-                                        </button>
-                                        <!--end::Button-->
+                                        </div>
+                                        <!--end::Input-->
                                     </div>
-                                    <!--end::Modal footer-->
-                                    <!--begin::Actions-->
-                                    <!--<div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button type="submit" class="btn btn-light btn-active-light-primary me-2" id="btnReset">Discard</button>
-
-        <button type="submit" class="btn btn-primary" id="btnSave">Save Changes</button>
-    </div>-->
-                                    <!--end::Actions-->
-                                    <input type="hidden">
-                                    <input type="hidden" id="pk">
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Label-->
+                                        <label class="required fs-6 fw-semibold mb-2">Position End Date</label>
+                                        <!--end::Label-->
+                                        <!--begin::Input-->
+                                        <div class="input-group" id="kt_td_picker_date_only" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                            <input id="PositionEndDate" name="PositionEndDate" type="text" class="form-control form-control-solid" data-td-target="#kt_td_picker_date_only" readonly="readonly" />
+                                            <span class="input-group-text" data-td-target="#kt_td_picker_date_only" data-td-toggle="datetimepicker">
+                                                <i class="fas fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                        <!--end::Input-->
+                                    </div>
+                                    <!--end::Col-->
                                 </div>
+                                <!--begin::Col-->
+                                <div class="col-md-6 fv-row">
+                                    <!--begin::Label-->
+                                    <label class=" fs-6 fw-semibold mb-2">Active</label>
+                                    <!--end::Label-->
+                                    <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                                        <input class="form-check-input w-45px h-30px" type="checkbox" id="PositionActive" name="PositionActive" checked>
+                                        <label class="form-check-label" for="PositionActive"></label>
+                                    </div>
+                                </div>
+                                <!--end::Col-->
+
+
+
+
+
+                            </div>
+                            <!--end::Card body-->
+                            <!--begin::Modal footer-->
+                            <div class="modal-footer flex-center">
+                                <!--begin::Button-->
+                                <button type="reset" id="kt_modal_add_customer_cancel" class="btn btn-danger me-3">Discard</button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_modal_add_customer_submit" class="btn btn-primary">
+                                    <span class="indicator-label">Submit</span>
+                                    <span class="indicator-progress">
+                                        Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Modal footer-->
+                            <!--begin::Actions-->
+                            <!--<div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button type="submit" class="btn btn-light btn-active-light-primary me-2" id="btnReset">Discard</button>
+
+                                <button type="submit" class="btn btn-primary" id="btnSave">Save Changes</button>
+                            </div>-->
+                            <!--end::Actions-->
+                            <input type="hidden">
+                            <input type="hidden" id="pk">
+                        </div>
                     </form>
                     <!--end::Form-->
                 </div>
@@ -321,7 +322,7 @@
 
 @section scripts{
 
-    <!--begin::Vendors Javascript(used for this page only)-->
+    <
     <script src="~/Content/assets/js/custom/apps/calendar/calendar.js"></script>
 
     <script src="~/Content/assets/plugins/custom/datatables/datatables.bundle.js"></script>
@@ -335,6 +336,23 @@
     <script src="~/Content/assets/js/custom/widgets.js"></script>
     <!--end::Custom Javascript-->
     <script>
+
+        //$(document).ready(function () {
+        //    console.log("Inside");
+        //    // Check if DataTable is already initialized
+        //    if ($.fn.dataTable.isDataTable('#kt_customers_table')) {
+        //        // Destroy the existing DataTable instance
+        //        $('#kt_customers_table').DataTable().destroy();
+        //    }
+
+        //    // Initialize DataTable
+        //    $('#kt_customers_table').DataTable({
+        //        pageLength: 10,
+        //        lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]]
+        //    });
+        //});
+  
+
         new tempusDominus.TempusDominus(document.getElementById("PositionStartDate"), {
             display: {
                 viewMode: "calendar",
@@ -364,6 +382,21 @@
             }
         });
 
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("searchInput").addEventListener("keyup", function () {
+                let filter = this.value.toLowerCase();
+                let rows = document.querySelectorAll("#kt_customers_table tbody tr");
+
+                rows.forEach(row => {
+                    let text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(filter) ? "" : "none";
+                });
+            });
+        });
+
+
+
         function GFG_click(clicked) {
             $.ajax({
                 type: "POST",
@@ -382,7 +415,7 @@
                     $("input[name='PositionStartDate']").val(response.cl.PositionStartDate);
                     $("input[name='PositionEndDate']").val(response.cl.PositionEndDate);
                     $("input[name='ConsultantPositionIdPK']").val(response.cl.ConsultantPositionIdPK);
-                    if (response.cl.PositionActive == 'True' ) {
+                    if (response.cl.PositionActive == 'True') {
                         $("#PositionActive").prop('checked', true);
                     }
                     if (response.cl.PositionActive == false) {

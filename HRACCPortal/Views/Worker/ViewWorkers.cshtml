@@ -53,7 +53,7 @@
                     <thead>
                         <!--begin::Table row-->
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                            <th class="w-10px pe-2">#</th>
+                            <th class="w-10px pe-2">S No</th>
                             <th class="min-w-125px">Name</th>
                             <th class="min-w-125px">Email</th>
                             <th class="min-w-125px">Phone</th>
@@ -78,12 +78,12 @@
                                         </td>
                                         <!--begin::Name=-->
                                         <td>
-                                            <a href="../../demo1/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1">@item.WorkerName</a>
+                                            <span  class="text-gray-800 text-hover-primary mb-1">@item.WorkerName</span>
                                         </td>
                                         <!--end::Name=-->
                                         <!--begin::Email=-->
                                         <td>
-                                            <a href="#" class="text-gray-600 text-hover-primary mb-1">@item.WorkerEmail</a>
+                                            <span class="text-gray-600 text-hover-primary mb-1">@item.WorkerEmail</span>
                                         </td>
                                         <!--end::Email=-->
                                         <td>@item.WorkerPhone</td>
@@ -158,7 +158,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                            </div>
+                            </div>  
                             <!--end::Close-->
                         </div>
                         <!--end::Modal header-->
@@ -174,7 +174,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">Name</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Full Name" name="WorkerName" value="" />
+                                        <input class="form-control form-control-solid" placeholder="Full Name" name="WorkerName" value=""  type="text" maxlength="60"/>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -197,7 +197,8 @@
                                         <label class="required fs-6 fw-semibold mb-2">Email</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Email" name="WorkerEmail" value="" />
+                                        <input class="form-control form-control-solid" placeholder="Email" name="WorkerEmail" id="WorkerEmail" value="" type="text" maxlength="40" />
+                                        <span id="emailError" style="color:red; display:none;">Please enter a valid email.</span>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -210,7 +211,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">Title</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input type="text" class="form-control form-control-solid PNumber" placeholder="Title" name="WorkerTitle" id="WorkerTitle" />
+                                        <input type="text" class="form-control form-control-solid PNumber" placeholder="Title" name="WorkerTitle" id="WorkerTitle" maxlength="30" />
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -241,7 +242,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="Address1" name="WorkerAddress1" value="" />
+                                    <input class="form-control form-control-solid" placeholder="Address1" name="WorkerAddress1" value=""  type="text" maxlength="100"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -254,7 +255,7 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="Address2" name="WorkerAddress2" value="" />
+                                    <input class="form-control form-control-solid" placeholder="Address2" name="WorkerAddress2" value=""  type="text" maxlength="40"/>
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -266,7 +267,7 @@
                                         <label class="required fs-6 fw-semibold mb-2">City</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="City" name="WorkerCity" value="" />
+                                        <input class="form-control form-control-solid" placeholder="City" name="WorkerCity" value="" type="text" id="city" maxlength="50"/>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->
@@ -278,7 +279,7 @@
                                         <!--begin::Input-->
                                         @*     <input class="form-control form-control-solid" placeholder="State" name="CustomerContactState" value="" />*@
 
-                                        <select class="form-control form-control-solid" name="WorkerState">
+                                        <select class="form-control form-control-solid" name="WorkerState" id="state">
                                             <option value="">Select State</option>
                                             <option value="Alabama">Alabama</option>
                                             <option value="Alaska">Alaska</option>
@@ -344,7 +345,8 @@
                                         <label class="required fs-6 fw-semibold mb-2">Zip</label>
                                         <!--end::Label-->
                                         <!--begin::Input-->
-                                        <input class="form-control form-control-solid" placeholder="Zip" name="WorkerZip" value="" />
+                                        <input class="form-control form-control-solid" placeholder="Zip" name="WorkerZip" value="" type="text" id="zip" maxlength="5" pattern="\d{5}" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                                        <div id="zipError" style="color:red; display:none;">Invalid ZIP Code or City/State combination.</div>
                                         <!--end::Input-->
                                     </div>
                                     <!--end::Col-->

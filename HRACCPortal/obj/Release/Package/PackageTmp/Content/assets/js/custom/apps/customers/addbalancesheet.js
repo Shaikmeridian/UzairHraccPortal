@@ -207,7 +207,7 @@ var KTModalBalanceSheetsAdd = function () {
                         });
                     } else {
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "Sorry, looks like there are some errors detected,Check if all mandatory fields are filled, please try again.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",

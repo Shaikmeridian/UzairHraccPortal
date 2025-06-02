@@ -2,6 +2,33 @@
 @{
     ViewBag.Title = "Test";
 }
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+    // Check if current section is related to Position
+    var isPositionSection = currentController == "Position" && (currentAction == "ViewPosition" || currentAction == "ViewPositionRate" || currentAction == "ViewPositionRate");
+    var isConsultantSection =
+        (currentController == "Consultant" &&
+         new[] { "ViewConsultants", "AddConsultant", "EditConsultant", "ConsultantDetails", "AssignConsultantCustomers", "ConsultantPositionDetails" }.Contains(currentAction))
+        ||
+        (currentController == "Timesheet" &&
+         new[] { "Index", "Create", "ApproveTimesheets" }.Contains(currentAction));
+
+
+
+    var isInvoiceSection =
+    (currentController == "Invoice" &&
+     new[] { "ViewInvoice", "AddInvoice", "AddEditInvoice" }.Contains(currentAction))
+    ||
+    (currentController == "InvoiceSubmission" &&
+     new[] { "ViewInvoiceSubmission" }.Contains(currentAction))
+     ||
+ (currentController == "InvoiceGeneration" &&
+  new[] { "ViewInvoiceGeneration" }.Contains(currentAction));
+
+}
+
 <!DOCTYPE html>
 <!--
 Author: Keenthemes
@@ -31,6 +58,725 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="~/Content/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    @*<style>
+        :root {
+            --primary-color: #1F177F;
+            --accent-color: #FFC107;
+            --bg-light: #F4F6FA;
+            --text-dark: #333333;
+            --text-muted: #555555;
+            --border-radius: 0.5rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-muted);
+        }
+
+        .app-header {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .app-header .app-navbar .menu,
+        .menu-sub-dropdown {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .menu-link {
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .menu-link:hover {
+            background-color: var(--primary-color);
+            color: white !important;
+        }
+
+        .btn {
+            border-radius: var(--border-radius);
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #170f6c;
+        }
+
+        .card, .container, .content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .symbol img {
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+        }
+
+            /* Sidebar base styling */
+            #kt_app_sidebar {
+                background-color: #1f1f2e; /* deep elegant navy */
+                border-top-right-radius: 12px;
+                border-bottom-right-radius: 12px;
+                box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+                transition: width 0.3s ease;
+                color: #ffffff;
+            }
+
+            /* Logo styling */
+            .app-sidebar-logo a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem 0;
+            }
+
+            .app-sidebar-logo img {
+                max-height: 60px;
+                transition: transform 0.3s ease;
+            }
+
+            .app-sidebar-logo:hover img {
+                transform: scale(1.05);
+            }
+
+            /* Sidebar toggle button */
+            .app-sidebar-toggle {
+                background-color: #ffffff0a;
+                border-radius: 50%;
+                transition: background-color 0.2s ease;
+            }
+
+                .app-sidebar-toggle:hover {
+                    background-color: #ffffff1f;
+                }
+
+            /* Menu styling */
+            .app-sidebar-menu .menu {
+                padding-top: 1rem;
+            }
+
+            .app-sidebar-menu .menu-item {
+                margin-bottom: 0.5rem;
+            }
+
+            .menu-link {
+                border-radius: 8px;
+                padding: 0.75rem 1rem;
+                color: #ccc;
+                font-weight: 500;
+                transition: background-color 0.2s, color 0.2s;
+            }
+
+                .menu-link:hover {
+                    background-color: #2a2a3d;
+                    color: #fff;
+                }
+
+                .menu-link.active {
+                    background-color: #393964;
+                    color: #ffffff;
+                }
+
+            .menu-icon {
+                margin-right: 0.75rem;
+                color: #999;
+            }
+
+                .menu-icon.text-primary {
+                    color: #4c9aff !important;
+                }
+
+        /* Mobile responsiveness improvements */
+        @@media (max-width: 768px) {
+            .app-header {
+                padding: 0.5rem;
+            }
+            .btn {
+                font-size: 0.9rem;
+            }
+        }
+        </style>*@
+
+<style>
+        :root {
+            --primary-color: #26263A;
+            --accent-color: #FFC107;
+            --bg-light: #F4F6FA;
+            --text-dark: #1e1e2d;
+            --text-muted: #d1d1e0;
+            --border-radius: 0.75rem;
+            --sidebar-bg: #1f1f2e; /* universal elegant dark */
+        }
+
+        /* Body and Typography */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        /* ============================ */
+        /* ✅ NAVBAR STYLES START HERE */
+        /* Changed navbar background to match sidebar */
+        .app-header {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+        .modal label {
+            color: var(--text-dark); /* #1e1e2d which is your defined dark text color */
+        }
+
+        label {
+            color: var(--text-dark);
+        }
+
+        .modal-content {
+            color: var(--text-dark);
+        }
+
+            /* ============================ */
+
+            .app-header .app-navbar .menu,
+            .menu-sub-dropdown {
+                background-color: white;
+                border-radius: var(--border-radius);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            }
+
+        /* Menu Link Enhancements */
+        .menu-link {
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .menu-link:hover {
+                background-color: var(--accent-color);
+                color: black !important;
+                transform: translateX(5px);
+            }
+
+            .menu-link::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 2px;
+                width: 0;
+                background: var(--accent-color);
+                transition: width 0.3s ease;
+            }
+
+            .menu-link:hover::after {
+                width: 100%;
+            }
+
+        .btn {
+            border-radius: var(--border-radius);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: #170f6c;
+                transform: scale(1.02);
+            }
+
+
+        .card, .container, .content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Avatar Styling */
+        .symbol img {
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+        }
+
+        /* ============================ */
+        /* ✅ SIDEBAR STYLES */
+        #kt_app_sidebar {
+            background-color: var(--sidebar-bg);
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+            backdrop-filter: blur(8px); /* adds glass effect */
+            transition: width 0.3s ease;
+        }
+
+        /* Sidebar Logo */
+        .app-sidebar-logo a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 0;
+            transition: transform 0.3s ease;
+        }
+
+        .app-sidebar-logo img {
+            max-height: 60px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .app-sidebar-logo:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Sidebar Toggle Button */
+        .app-sidebar-toggle {
+            background-color: #ffffff0a;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+            .app-sidebar-toggle:hover {
+                background-color: #ffffff1f;
+                transform: rotate(90deg);
+            }
+
+        /* Sidebar Menu */
+        .app-sidebar-menu .menu {
+            padding-top: 1.2rem;
+        }
+
+        .app-sidebar-menu .menu-item {
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .menu-link {
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s, transform 0.2s;
+        }
+
+            .menu-link:hover {
+                background-color: #2a2a3d;
+                color: #fff;
+                transform: scale(1.03);
+            }
+
+            .menu-link.active {
+                background-color: #393964;
+                color: #ffffff;
+                font-weight: 600;
+            }
+
+        .menu-icon {
+            margin-right: 0.75rem;
+            color: #b0b0cc;
+        }
+
+            .menu-icon.text-primary {
+                color: var(--accent-color) !important;
+            }
+
+
+
+        /* ============================ */
+        /* ✅ RESPONSIVE STYLES */
+        @@media (max-width: 768px) {
+            .app-header {
+                padding: 0.5rem;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+            }
+
+            #kt_app_sidebar {
+                border-radius: 0; /* simplify for mobile */
+                box-shadow: none;
+            }
+        }
+
+
+        /*For card uzair shaik*/
+
+         /* ✨ General Beautification */
+    .card {
+        border-radius: 1rem; /* 📌 Rounded card edges */
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* 📌 Soft shadow */
+
+    }
+
+        .card:hover {
+            border: 1px solid rgba(31, 23, 127, 0.1);
+            box-shadow: 0 20px 40px rgba(31, 23, 127, 0.12);
+        }
+
+
+    /* ✨ Fancy Header */
+    .card-header {
+        background: linear-gradient(to right, #1f177f, #6c63ff); /* 💜 H3U vibrant gradient */
+        color: #fff;
+        padding: 1.5rem 2rem;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        font-weight: 600;
+        font-size: 1.3rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        letter-spacing: 0.5px;
+
+    }
+
+
+    .card-title {
+        color: white !important;
+        font-weight: 600;
+        font-size: 1.3rem;
+    }
+
+    /* ✨ Glowing Add Button */
+    .btn-primary {
+        background-color: #4e4eff;
+        border: none;
+        border-radius: 2rem;
+        font-weight: 600;
+        padding: 0.6rem 1.5rem;
+        box-shadow: 0 4px 12px rgba(78, 78, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(31, 23, 127, 0.6);
+            background-color: #3737e2;
+            box-shadow: 0 8px 20px rgba(78, 78, 255, 0.4);
+            transform: scale(1.03); /* 📌 Glow on hover */
+        }
+
+    /* ✨ Input field */
+
+
+
+    /* ✨ Table animation */
+
+
+    /* Card Styling */
+    /* Make the card stretch full width */
+    /* Full-width, rounded, beautiful card */
+    .card.full-width {
+        width: auto;
+        background-color: #ffffff;
+        border-radius: 1.25rem;
+        box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+        .card.full-width:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Bolder Header with Gradient and better contrast */
+
+    .card {
+        border-radius: 1.25rem;
+        background: #ffffff;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+
+    }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+        }
+
+
+    /* Body: soft background for contrast */
+    .card-body {
+        background-color: #f7f8fd;
+        padding: 2rem;
+        font-size: 1rem;
+        color: #2e2e3e;
+        line-height: 1.6; /* Soft off-white-blue for contrast */
+        overflow-x: auto;
+    }
+
+    /* Table Styling */
+    #kt_customers_table {
+        margin-top: 1rem;
+        width: 100%;
+        margin-top: 1rem;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+        #kt_customers_table thead {
+            background-color: #e0e3f5;
+        }
+
+            #kt_customers_table thead th {
+                color: #2c2f5d;
+                font-weight: 700;
+                font-size: 0.875rem;
+                padding: 1rem 1.25rem;
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+        #kt_customers_table tbody td {
+            padding: 1rem 1.25rem;
+            vertical-align: middle;
+            border-top: 1px solid #e4e6ef;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #3a3b45;
+        }
+
+    .card.full-width,
+    .card {
+        overflow: hidden;
+    }
+
+
+    /* Button Icon Hover */
+    .btn-icon:hover {
+        background-color: #e6e8ff;
+        transition: background-color 0.3s;
+    }
+
+    /* Optional: Smooth input style */
+    /* Highlight actions */
+    .btn-icon:hover {
+        background-color: #e0e0f8;
+        transition: background-color 0.3s;
+    }
+
+
+    .card-title .form-control {
+        border-radius: 12px;
+        box-shadow: none;
+        border: none;
+        padding-left: 2.5rem;
+    }
+
+    .card-title .svg-icon {
+        color: #8d8dff;
+    }
+
+    .card-toolbar .btn {
+        border-radius: 12px;
+        background-color: #ffffff;
+        color: #1F177F;
+        border: 2px solid #1F177F;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .card-toolbar .btn:hover {
+            background-color: #1F177F;
+            color: #ffffff;
+        }
+
+    /* Table Styling */
+    .table {
+        background-color: #ffffff;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+        .table thead tr {
+            background-color: #d9defb;;
+            color: #1F177F;
+            font-weight: bold;
+        }
+
+        .table th {
+            padding: 1rem;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .table td {
+            background-color: #fdfdfd;
+            border-top: none;
+            padding: 1rem;
+            vertical-align: middle;
+            transition: background 0.2s ease;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table tbody tr:hover td {
+            background-color: #f5f9ff;
+        }
+
+    /* Status Badge */
+    .badge-light-success {
+        background-color: #e0f7ec;
+        color: #2b8a3e;
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+    }
+
+    .badge-light-danger {
+        background-color: #fdecea;
+        color: #d93025;
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+    }
+
+    /* Action Icon Button */
+    .btn-icon {
+        border-radius: 10px;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+        .btn-icon:hover {
+            background-color: #e9e9ff !important;
+            transform: scale(1.1);
+        }
+
+     .modal-content {
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border: none;
+        background: linear-gradient(to bottom, #ffffff, #f7f9fc);
+        animation: fadeInModal 0.4s ease-in-out;
+    }
+
+    @@keyframes fadeInModal {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* === Modal Header === */
+    .modal-header {
+        background: linear-gradient(to right, #e0e8ff, #ffffff);
+        color: #1f177f;
+        padding: 20px 30px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .modal-header h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .modal-header .btn-icon svg {
+        fill: #1f177f;
+        transition: transform 0.2s ease;
+    }
+
+    .modal-header .btn-icon:hover svg {
+        transform: scale(1.2);
+    }
+
+    /* === Modal Body === */
+    .modal-body {
+        padding: 30px;
+        background-color: #f9fbff;
+    }
+
+    /* === Inputs === */
+    .modal-content .form-control {
+        border-radius: 10px;
+        border: 1px solid #d0d0e0;
+        padding: 12px 15px;
+        background: #fff;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .modal-content .form-control:focus {
+        border-color: #7d7df7;
+        box-shadow: 0 0 0 4px rgba(125, 125, 247, 0.2);
+    }
+
+    /* === Modal Footer === */
+    .modal-footer {
+        background-color: #f4f6fc;
+        padding: 20px 30px;
+        border-top: 1px solid #e2e6ea;
+    }
+
+    /* === Buttons === */
+    .modal-content .btn-primary {
+        background-color: #6d6df7;
+        border-color: #6d6df7;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 20px;
+        transition: background 0.2s ease;
+    }
+
+    .modal-content .btn-primary:hover {
+        background-color: #5353dd;
+        border-color: #5353dd;
+    }
+
+    .modal-content .btn-danger {
+        background-color: #ff6b6b;
+        border-color: #ff6b6b;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+
+    .modal-content .btn-danger:hover {
+        background-color: #e25555;
+        border-color: #e25555;
+    }
+
+    /* === Email Error Text === */
+    #emailError {
+        font-size: 0.9rem;
+        margin-top: 4px;
+    }
+
+</style>
+
+
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -74,11 +820,12 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_app_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="{default: 'append', lg: 'prepend'}" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}">
                             <!--begin::Menu-->
                             <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
-                                 
+
                             </div>
-                             <!--<div class="app-container container-fluid d-flex align-items-center justify-content-between" id="kt_app_header_container">
-                                    <h1 id="header-title"></h1>--> <!-- Placeholder for dynamic title -->
-                              <!--</div>-->
+                            <!--<div class="app-container container-fluid d-flex align-items-center justify-content-between" id="kt_app_header_container">
+                                   <h1 id="header-title"></h1>-->
+                            <!-- Placeholder for dynamic title -->
+                            <!--</div>-->
                             <!--end::Menu-->
                         </div>
                         <!--end::Menu wrapper-->
@@ -184,8 +931,12 @@ License: For each use you must have a valid license purchased only from above li
                             <!--begin::Menu-->
                             <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                                 <div class="menu-item">
-                                    <a class="menu-link" href="@Url.Action("ViewEmployers", "Employer")">
-                                        <span class="menu-icon">
+                                    @*<a class="menu-link active" href="@Url.Action("ViewEmployers", "Employer")">*@
+                                    <a class="menu-link @(ViewContext.RouteData.Values["action"].ToString() == "ViewEmployers" ? "active" : "")"
+                                       href="@Url.Action("ViewEmployers", "Employer")">
+                                        <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "ViewEmployers" ? "text-primary" : "")">
+
+
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -196,9 +947,9 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Svg Icon-->
                                         </span>
                                         <span class="menu-title">Employers</span>
-                                    </a> 
-                                    <a class="menu-link" href="@Url.Action("ViewEmployees", "Employee")">
-                                        <span class="menu-icon">
+                                    </a>
+                                    <a class="menu-link @(ViewContext.RouteData.Values["action"].ToString() == "ViewEmployees" ? "active" : "")" href="@Url.Action("ViewEmployees", "Employee")">
+                                        <span class="menu-icon  @(ViewContext.RouteData.Values["action"].ToString() == "ViewEmployees" ? "text-primary" : "")">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -210,8 +961,8 @@ License: For each use you must have a valid license purchased only from above li
                                         </span>
                                         <span class="menu-title">Employees</span>
                                     </a>
-                                    <a class="menu-link" href="@Url.Action("ViewCustomers", "Customer")">
-                                        <span class="menu-icon">
+                                    <a class="menu-link  @(ViewContext.RouteData.Values["action"].ToString() == "ViewCustomers" ? "active" : "")" href="@Url.Action("ViewCustomers", "Customer")">
+                                        <span class="menu-icon  @(ViewContext.RouteData.Values["action"].ToString() == "ViewCustomers" ? "text-primary" : "")">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,8 +974,8 @@ License: For each use you must have a valid license purchased only from above li
                                         </span>
                                         <span class="menu-title">Customers</span>
                                     </a>
-                                    <a class="menu-link" href="@Url.Action("ViewContact", "Contact")">
-                                        <span class="menu-icon">
+                                    <a class="menu-link  @(ViewContext.RouteData.Values["action"].ToString() == "ViewContact" ? "active" : "")" href="@Url.Action("ViewContact", "Contact")">
+                                        <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "ViewContact" ? "text-primary" : "")">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -250,10 +1001,10 @@ License: For each use you must have a valid license purchased only from above li
                                         <span class="menu-title">Positions</span>
                                         <span class="menu-arrow"></span>
                                     </a>
-                                    <ul class="menu-submenu" id="positionSubmenu" style="display: none;">
-                                        <li class="menu-item">
-                                            <a class="menu-link" href="@Url.Action("ViewPosition", "Position")">
-                                                <span class="menu-icon">
+                                    <ul class="menu-submenu" id="positionSubmenu" style="display:@(isPositionSection ? "block" : "none")">
+                                        <li class="menu-item @(currentAction == "ViewPosition" ? "active" : "") ">
+                                            <a class="menu-link  @(ViewContext.RouteData.Values["action"].ToString() == "ViewPosition" ? "active" : "")" href="@Url.Action("ViewPosition", "Position")">
+                                                <span class="menu-icon  @(ViewContext.RouteData.Values["action"].ToString() == "ViewPosition" ? "text-primary" : "")">
                                                     <span class="svg-icon svg-icon-2">
                                                         <!-- Your SVG icon code here -->
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -265,9 +1016,9 @@ License: For each use you must have a valid license purchased only from above li
                                                 <span class="menu-title">Position Setup</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item">
-                                            <a class="menu-link" href="@Url.Action("ViewPositionRate", "Position")">
-                                                <span class="menu-icon">
+                                        <li class="menu-item  @(currentAction == "ViewPositionRate" ? "active" : "") ">
+                                            <a class="menu-link @(ViewContext.RouteData.Values["action"].ToString() == "ViewPositionRate" ? "active" : "")" href="@Url.Action("ViewPositionRate", "Position")">
+                                                <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "ViewPositionRate" ? "text-primary" : "")">
                                                     <span class="svg-icon svg-icon-2">
                                                         <!-- Your SVG icon code here -->
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,28 +1064,28 @@ License: For each use you must have a valid license purchased only from above li
 
                                     </script>
                                     @*  <a class="menu-link" href="@Url.Action("ViewPosition", "Position")">
-            <span class="menu-icon">
-                <span class="svg-icon svg-icon-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
-                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
-                    </svg>
-                </span>
-            </span>
-            <span class="menu-title">Position Setup</span>
-        </a>
+                                            <span class="menu-icon">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="menu-title">Position Setup</span>
+                                        </a>
 
-        <a class="menu-link" href="@Url.Action("ViewPositionRate", "Position")">
-            <span class="menu-icon">
-                <span class="svg-icon svg-icon-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
-                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
-                    </svg>
-                </span>
-            </span>
-            <span class="menu-title">Position Rate</span>
-        </a> *@
+                                        <a class="menu-link" href="@Url.Action("ViewPositionRate", "Position")">
+                                            <span class="menu-icon">
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="menu-title">Position Rate</span>
+                                        </a> *@
 
                                     <a class="menu-link" href="javascript:void(0);" onclick="toggleSubMenu('consultantSubmenu')">
                                         <span class="menu-icon">
@@ -350,10 +1101,10 @@ License: For each use you must have a valid license purchased only from above li
                                         <span class="menu-title">Consultants</span>
                                         <span class="menu-arrow"></span>
                                     </a>
-                                    <ul class="menu-submenu" id="consultantSubmenu" style="display: none;">
-                                        <li class="menu-item">
-                                            <a class="menu-link" href="@Url.Action("ViewConsultants", "Consultant")">
-                                                <span class="menu-icon">
+                                    <ul class="menu-submenu" id="consultantSubmenu"  style="display:@(isConsultantSection ? "block" : "none")">
+                                        <li class="menu-item  @(currentAction == "ViewConsultants" ? "active" : "") ">
+                                            <a class="menu-link  @(ViewContext.RouteData.Values["action"].ToString() == "ViewConsultants" ? "active" : "")" href="@Url.Action("ViewConsultants", "Consultant")">
+                                                <span class="menu-icon  @(ViewContext.RouteData.Values["action"].ToString() == "ViewConsultants" ? "text-primary" : "")">
                                                     <span class="svg-icon svg-icon-2">
                                                         <!-- Your SVG icon code here -->
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -365,9 +1116,9 @@ License: For each use you must have a valid license purchased only from above li
                                                 <span class="menu-title">Consultant Setup</span>
                                             </a>
                                         </li>
-                                        <li class="menu-item">
-                                            <a class="menu-link" href="@Url.Action("ConsultantPositionDetails", "Consultant")">
-                                                <span class="menu-icon">
+                                        <li class="menu-item @(currentAction == "ConsultantPositionDetails" ? "active" : "")">
+                                            <a class="menu-link  @(ViewContext.RouteData.Values["action"].ToString() == "ConsultantPositionDetails" ? "active" : "")" href="@Url.Action("ConsultantPositionDetails", "Consultant")">
+                                                <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "ConsultantPositionDetails" ? "text-primary" : "")">
                                                     <span class="svg-icon svg-icon-2">
                                                         <!-- Your SVG icon code here -->
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -377,6 +1128,36 @@ License: For each use you must have a valid license purchased only from above li
                                                     </span>
                                                 </span>
                                                 <span class="menu-title">Consultant Position Details</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item @(currentController == "Timesheet" && currentAction == "Index" ? "active" : "")">
+                                            <a class="menu-link  @(currentController == "Timesheet" && currentAction == "Index" ? "active" : "")" href="@Url.Action("Index", "Timesheet")">
+                                                <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "text-primary" : "")">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <!-- Your SVG icon code here -->
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                            <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                                <span class="menu-title">Time Sheet</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="menu-item @(currentController == "Timesheet" && currentAction == "ApproveTimesheets" ? "active" : "")">
+                                            <a class="menu-link @(currentController == "Timesheet" && currentAction == "ApproveTimesheets" ? "active" : "")" href="@Url.Action("ApproveTimesheets", "Timesheet")">
+                                                <span class="menu-icon @(ViewContext.RouteData.Values["action"].ToString() == "ApproveTimesheets" ? "text-primary" : "")">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <!-- Your SVG icon code here -->
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                            <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                                <span class="menu-title">Approve Time Sheet</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -414,31 +1195,31 @@ License: For each use you must have a valid license purchased only from above li
                                     </script>
 
                                     @* <a class="menu-link" href="@Url.Action("ViewConsultants", "Consultant")">
-            <span class="menu-icon">
-                <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
-                <span class="svg-icon svg-icon-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
-                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-            </span>
-            <span class="menu-title">Consultants Setup</span>
-        </a>
-        <a class="menu-link" href="@Url.Action("ConsultantPositionDetails", "Consultant")">
-            <span class="menu-icon">
-                <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
-                <span class="svg-icon svg-icon-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
-                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->
-            </span>
-            <span class="menu-title">Consultant Position Details</span>
-        </a> *@
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">Consultants Setup</span>
+                                        </a>
+                                        <a class="menu-link" href="@Url.Action("ConsultantPositionDetails", "Consultant")">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3" d="M4.05424 15.1982C8.34524 7.76818 13.5782 3.26318 20.9282 2.01418C21.0729 1.98837 21.2216 1.99789 21.3618 2.04193C21.502 2.08597 21.6294 2.16323 21.7333 2.26712C21.8372 2.37101 21.9144 2.49846 21.9585 2.63863C22.0025 2.7788 22.012 2.92754 21.9862 3.07218C20.7372 10.4222 16.2322 15.6552 8.80224 19.9462L4.05424 15.1982ZM3.81924 17.3372L2.63324 20.4482C2.58427 20.5765 2.5735 20.7163 2.6022 20.8507C2.63091 20.9851 2.69788 21.1082 2.79503 21.2054C2.89218 21.3025 3.01536 21.3695 3.14972 21.3982C3.28408 21.4269 3.42387 21.4161 3.55224 21.3672L6.66524 20.1802L3.81924 17.3372ZM16.5002 5.99818C16.2036 5.99818 15.9136 6.08615 15.6669 6.25097C15.4202 6.41579 15.228 6.65006 15.1144 6.92415C15.0009 7.19824 14.9712 7.49984 15.0291 7.79081C15.0869 8.08178 15.2298 8.34906 15.4396 8.55884C15.6494 8.76862 15.9166 8.91148 16.2076 8.96935C16.4986 9.02723 16.8002 8.99753 17.0743 8.884C17.3484 8.77046 17.5826 8.5782 17.7474 8.33153C17.9123 8.08486 18.0002 7.79485 18.0002 7.49818C18.0002 7.10035 17.8422 6.71882 17.5609 6.43752C17.2796 6.15621 16.8981 5.99818 16.5002 5.99818Z" fill="currentColor"></path>
+                                                        <path d="M4.05423 15.1982L2.24723 13.3912C2.15505 13.299 2.08547 13.1867 2.04395 13.0632C2.00243 12.9396 1.9901 12.8081 2.00793 12.679C2.02575 12.5498 2.07325 12.4266 2.14669 12.3189C2.22013 12.2112 2.31752 12.1219 2.43123 12.0582L9.15323 8.28918C7.17353 10.3717 5.4607 12.6926 4.05423 15.1982ZM8.80023 19.9442L10.6072 21.7512C10.6994 21.8434 10.8117 21.9129 10.9352 21.9545C11.0588 21.996 11.1903 22.0083 11.3195 21.9905C11.4486 21.9727 11.5718 21.9252 11.6795 21.8517C11.7872 21.7783 11.8765 21.6809 11.9402 21.5672L15.7092 14.8442C13.6269 16.8245 11.3061 18.5377 8.80023 19.9442ZM7.04023 18.1832L12.5832 12.6402C12.7381 12.4759 12.8228 12.2577 12.8195 12.032C12.8161 11.8063 12.725 11.5907 12.5653 11.4311C12.4057 11.2714 12.1901 11.1803 11.9644 11.1769C11.7387 11.1736 11.5205 11.2583 11.3562 11.4132L5.81323 16.9562L7.04023 18.1832Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">Consultant Position Details</span>
+                                        </a> *@
                                     <!-- Submenu for Invoice -->
                                     <a class="menu-link" href="javascript:void(0);" onclick="toggleSubMenu('invoiceSubmenu')">
                                         <span class="menu-icon">
@@ -455,10 +1236,10 @@ License: For each use you must have a valid license purchased only from above li
                                         <span class="menu-arrow"></span>
                                     </a>
 
-                                    <ul class="menu-submenu" id="invoiceSubmenu" style="display: none;">
-                                        <li class="menu-item">
-                                            <a class="menu-link" href="@Url.Action("ViewInvoice", "Invoice")">
-                                                <span class="menu-icon">
+                                    <ul class="menu-submenu" id="invoiceSubmenu"  style="display:@(isInvoiceSection ? "block" : "none")">
+                                        <li class="menu-item  @(currentController == "Invoice" && currentAction == "ViewInvoice" ? "active" : "")">
+                                            <a class="menu-link  @(currentController == "Invoice" && currentAction == "ViewInvoice" ? "active" : "") " href="@Url.Action("ViewInvoice", "Invoice")">
+                                                <span class="menu-icon  @(ViewContext.RouteData.Values["action"].ToString() == "ViewInvoice" ? "text-primary" : "")">
                                                     <span class="svg-icon svg-icon-2">
                                                         <!-- Your SVG icon code here -->
                                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -618,7 +1399,7 @@ License: For each use you must have a valid license purchased only from above li
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">Quaterly Sales Report</span>
+                                        <span class="menu-title">Quarterly Sales Report</span>
                                     </a>
 
                                     <a class="menu-link" href="javascript:void(0);" onclick="toggleSubMenu('subcontractorSubmenu')">
@@ -734,7 +1515,7 @@ License: For each use you must have a valid license purchased only from above li
                     </div>
                     <!--end::sidebar menu-->
 
-                </div> 
+                </div>
                 <!--end::Sidebar-->
                 <!--begin::Main-->
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -918,27 +1699,95 @@ License: For each use you must have a valid license purchased only from above li
         });
 
         let inactivityTime = function () {
-            let time;
-            // Reset the timer on activity
-            window.onload = resetTimer;
-            document.onmousemove = resetTimer;
-            document.onkeypress = resetTimer;
-            document.onscroll = resetTimer;
-            document.ontouchstart = resetTimer;
+            let logoutTimer;
+            let warningTimer;
+            let countdownInterval;
+            let countdown = 30;
+
+            // Create modal HTML dynamically
+            const modalHTML = `
+                    <div class="modal fade" id="sessionTimeoutModal" tabindex="-1" role="dialog" aria-labelledby="sessionTimeoutLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content shadow rounded">
+                                <div class="modal-header bg-warning text-dark">
+                                    <h5 class="modal-title" id="sessionTimeoutLabel">Session Expiring</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Your session will expire in <strong><span id="timeoutCountdown">30</span> seconds</strong> due to inactivity.</p>
+                                    <p>Click "Stay Logged In" to continue your session.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="stayLoggedInBtn" class="btn btn-success" data-bs-dismiss="modal">Stay Logged In</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+            document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+            function resetTimer() {
+                clearTimeout(logoutTimer);
+                clearTimeout(warningTimer);
+                clearInterval(countdownInterval);
+                $('#sessionTimeoutModal').modal('hide');
+
+                // Warning after 4.5 minutes
+                warningTimer = setTimeout(showWarningModal, 270000);
+
+                // Auto logout after 5 minutes
+                logoutTimer = setTimeout(logout, 300000);
+            }
 
             function logout() {
-                // Redirect to the logout action
                 window.location.href = '/Account/LogOff';
             }
 
-            function resetTimer() {
-                clearTimeout(time);
-                // Set timer for 5 minutes (300000 milliseconds)
-                time = setTimeout(logout, 300000);
+            function showWarningModal() {
+                countdown = 30;
+                document.getElementById("timeoutCountdown").textContent = countdown;
+                $('#sessionTimeoutModal').modal('show');
+
+                countdownInterval = setInterval(() => {
+                    countdown--;
+                    document.getElementById("timeoutCountdown").textContent = countdown;
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
             }
+
+            // Event binding
+            document.addEventListener("mousemove", resetTimer);
+            document.addEventListener("keypress", resetTimer);
+            document.addEventListener("scroll", resetTimer);
+            document.addEventListener("touchstart", resetTimer);
+            window.addEventListener("load", resetTimer);
+
+            // Delegate click handler since button is dynamically added
+            document.addEventListener("click", function (e) {
+                if (e.target && e.target.id === "stayLoggedInBtn") {
+                    resetTimer();
+                }
+            });
+
+            resetTimer();
         };
 
+        function toggleSubMenu(id) {
+            const submenu = document.getElementById(id);
+            if (submenu.style.display === "none" || submenu.style.display === "") {
+                submenu.style.display = "block";
+            } else {
+                submenu.style.display = "none";
+            }
+        }
+
         inactivityTime();
+
+
+
+
+
     </script>
     @RenderSection("scripts", required: false)
     <!--end::Custom Javascript-->

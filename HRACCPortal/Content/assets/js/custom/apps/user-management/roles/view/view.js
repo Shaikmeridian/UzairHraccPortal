@@ -21,7 +21,7 @@ var KTUsersViewRole = function () {
          datatable = $(table).DataTable({
             "info": false,
             'order': [],
-            "pageLength": 5,
+            "pageLength": 10,
             "lengthChange": false,
             'columnDefs': [
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)

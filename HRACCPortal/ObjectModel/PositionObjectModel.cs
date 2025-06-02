@@ -28,6 +28,8 @@ namespace HRACCPortal.ObjectModel
         public string DateUpdated { get; set; }
         public string AddedBy { get; set; }
         public string UpdatedBy { get; set; }
+
+  
         public List<PositionObjectModel> PositionList { get; set; }
 
         //position rate

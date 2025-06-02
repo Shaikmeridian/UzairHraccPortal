@@ -38,8 +38,12 @@ var KTModalContactsAdd = function () {
                     },
                     'ContactEmail': {
                         validators: {
-                            emailAddress: {
-                                message: 'The value is not a valid email address'
+                            //emailAddress: {
+                            //    message: 'The value is not a valid email address'
+                            //},
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.(com|org|net|edu|gov|mil|biz|info)$/,
+                                message: 'Please enter a valid email address (e.g., example@gmail.com)'
                             },
                             notEmpty: {
                                 message: 'Email is required'
@@ -228,7 +232,7 @@ var KTModalContactsAdd = function () {
                     } else {
 
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: "Sorry, looks like there are some errors detected,Check if all Mandatory fields are present , please try again",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",

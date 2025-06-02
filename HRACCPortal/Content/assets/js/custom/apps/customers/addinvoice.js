@@ -104,20 +104,21 @@ var KTModalCustomersAdd = function () {
         //    validator.revalidateField('CustomerName');
         //});
 
-		// Action buttons
-		submitButton.addEventListener('click', function (e) {
-			e.preventDefault();
-            /*debugger;*/
-			// Validate form before submit
-			if (validator) {
-				validator.validate().then(function (status) {
-					console.log('validated!');
+        // Action buttons
 
-					if (status == 'Valid') {
-						submitButton.setAttribute('data-kt-indicator', 'on');
+        submitButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            debugger
+            // Validate form before submit
+            if (validator) {
+                validator.validate().then(function (status) {
+                    console.log('validated!');
+
+                    if (status == 'Valid') {
+                        submitButton.setAttribute('data-kt-indicator', 'on');
                         debugger;
-						// Disable submit button whilst loading
-						var invoiceData = {};
+                        // Disable submit button whilst loading
+                        var invoiceData = {};
                         invoiceData.InvoiceIdPK = form.InvoiceIdPK.value;
                         invoiceData.ConsultantIdFK = form.Consultant.value;
                         invoiceData.ConsultantPositionIdFK = form.ConsultantPosition.value;
@@ -143,6 +144,7 @@ var KTModalCustomersAdd = function () {
                                 console.log(response);
                                 // alert("Data has been added successfully.");
                                 if (response.message == "Success") {
+
                                     Swal.fire({
                                         text: "Form has been successfully submitted!",
                                         icon: "success",
@@ -154,13 +156,14 @@ var KTModalCustomersAdd = function () {
                                     }).then(function (result) {
                                         if (result.isConfirmed) {
                                             // Hide modal
-                                            modal.hide();
 
+                                            modal.hide();
+                                            window.location.href = "/Invoice/GetInvoice?id=" + response.invoiceId;
                                             // Enable submit button after loading
                                             submitButton.disabled = false;
 
                                             // Redirect to customers list page
-                                            window.location = form.getAttribute("data-kt-redirect");
+                                            //window.location = form.getAttribute("data-kt-redirect");
                                         }
                                     });
                                 } else {
@@ -193,20 +196,21 @@ var KTModalCustomersAdd = function () {
 
                             }
                         });
-					} else {
-						Swal.fire({
-							text: "Sorry, looks like there are some errors detected, please try again.",
-							icon: "error",
-							buttonsStyling: false,
-							confirmButtonText: "Ok, got it!",
-							customClass: {
-								confirmButton: "btn btn-primary"
-							}
-						});
-					}
-				});
-			}
-		});
+                    } else {
+                        Swal.fire({
+                            text: "Sorry, looks like there are some errors detected,Check if all mandatory fields are filled , please try again.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
 
         cancelButton.addEventListener('click', function (e) {
             e.preventDefault();

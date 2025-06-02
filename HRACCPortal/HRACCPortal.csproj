@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -53,6 +59,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServerCompact, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.4.4\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -186,10 +195,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActiveConsultantsController.cs" />
+    <Compile Include="Controllers\ApprovalController.cs" />
     <Compile Include="Controllers\BalanceSheetController.cs" />
     <Compile Include="Controllers\ConsultantController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DeliverableController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -201,6 +212,7 @@
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\QuaterlySalesReportController.cs" />
     <Compile Include="Controllers\SubContractorController.cs" />
+    <Compile Include="Controllers\TimesheetController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="Edmx\HRACCDB.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -218,12 +230,19 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApproveTimesheetsViewModel.cs" />
     <Compile Include="Models\BalanceSheetModel.cs" />
+    <Compile Include="Models\ChequeDetailViewModel.cs" />
+    <Compile Include="Models\ChequeHistoryItem.cs" />
+    <Compile Include="Models\ChequeReportViewModel.cs" />
     <Compile Include="Models\clsCrud.cs" />
     <Compile Include="Models\ConsultantModel.cs" />
     <Compile Include="Models\ConsultantPositionDetailsModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\CustomerBalanceViewModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\CustomerQuarterBalanceViewModel.cs" />
+    <Compile Include="Models\DeliverableModel.cs" />
     <Compile Include="Models\EmployeeEmployerModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployerModel.cs" />
@@ -233,15 +252,23 @@
     <Compile Include="Models\InvoicePdfModel.cs" />
     <Compile Include="Models\InvoiceSubmissionModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ManageChequesViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NewPasswordReset.cs" />
+    <Compile Include="Models\PaymentDetailedReportViewModel.cs" />
     <Compile Include="Models\PaymentsReceivedModel.cs" />
+    <Compile Include="Models\PaymentsReceivedViewModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\QuaterlySalesReportModel.cs" />
     <Compile Include="Models\NewPasswordModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\SecurityQuestionModel.cs" />
     <Compile Include="Models\SubContractorModel.cs" />
+    <Compile Include="Models\Timesheet.cs" />
+    <Compile Include="Models\TimesheetDetail.cs" />
+    <Compile Include="Models\TimesheetEntryViewModel.cs" />
+    <Compile Include="Models\TimesheetPdfModel.cs" />
+    <Compile Include="Models\TimesheetViewModel.cs" />
     <Compile Include="Models\WorkerModel.cs" />
     <Compile Include="ObjectModel\BalanceSheetObjectModel.cs" />
     <Compile Include="ObjectModel\ContactObjectModel.cs" />
@@ -265,6 +292,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\assets\css\style.bundle.css" />
+    <Content Include="Content\assets\customerEmail.js" />
+    <Content Include="Content\assets\js\customerContactEmail.js" />
     <Content Include="Content\assets\js\custom\account\api-keys\api-keys.js" />
     <Content Include="Content\assets\js\custom\account\billing\general.js" />
     <Content Include="Content\assets\js\custom\account\orders\classic.js" />
@@ -373,6 +402,7 @@
     <Content Include="Content\assets\js\custom\authentication\sign-up\coming-soon.js" />
     <Content Include="Content\assets\js\custom\authentication\sign-up\free-trial.js" />
     <Content Include="Content\assets\js\custom\authentication\sign-up\general.js" />
+    <Content Include="Content\assets\js\custom\consultantEmail.js" />
     <Content Include="Content\assets\js\custom\landing.js" />
     <Content Include="Content\assets\js\custom\pages\careers\apply.js" />
     <Content Include="Content\assets\js\custom\pages\general\contact.js" />
@@ -411,6 +441,9 @@
     <Content Include="Content\assets\js\custom\widgets.js" />
     <Content Include="Content\assets\js\EmailValidation.js" />
     <Content Include="Content\assets\js\scripts.bundle.js" />
+    <Content Include="Content\assets\js\validateEmail.js" />
+    <Content Include="Content\assets\js\validateEmployeeEmail.js" />
+    <Content Include="Content\assets\js\validateSubEmail.js" />
     <Content Include="Content\assets\js\widgets.bundle.js" />
     <Content Include="Content\assets\media\auth\404-error-dark.png" />
     <Content Include="Content\assets\media\auth\404-error.png" />
@@ -2586,6 +2619,23 @@
     <Content Include="Views\SubContractor\ViewAssignedContractorsEmployers.cshtml" />
     <Content Include="Views\SubContractor\AssignContractorEmployers.cshtml" />
     <Content Include="Views\Account\TryAnotherWay.cshtml" />
+    <Content Include="Views\Timesheet\Index.cshtml" />
+    <Content Include="Views\Timesheet\Create.cshtml" />
+    <Content Include="Views\Timesheet\ViewTimesheet.cshtml" />
+    <Content Include="Views\Timesheet\EditTimesheet.cshtml" />
+    <Content Include="Views\Timesheet\TimesheetPdf.cshtml" />
+    <Content Include="Views\Consultant\AssignConsultantEmployers.cshtml" />
+    <Content Include="Views\Consultant\ViewAssignedConsultantEmployers.cshtml" />
+    <Content Include="Views\Timesheet\PendingTimesheets.cshtml" />
+    <Content Include="Views\Timesheet\ApproveTimesheets.cshtml" />
+    <Content Include="Views\Deliverable\AddDeliverables.cshtml" />
+    <Content Include="Views\Deliverable\ViewDeliverables.cshtml" />
+    <Content Include="Views\PaymentsReceived\AddCheques.cshtml" />
+    <Content Include="Views\PaymentsReceived\ManageCheques.cshtml" />
+    <Content Include="Views\PaymentsReceived\View.cshtml" />
+    <Content Include="Views\PaymentsReceived\ChequeReport.cshtml" />
+    <Content Include="Views\BalanceSheet\Index.cshtml" />
+    <Content Include="Views\QuaterlySalesReport\QuarterlyReport.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

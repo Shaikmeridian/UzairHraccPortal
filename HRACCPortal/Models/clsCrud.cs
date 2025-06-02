@@ -207,7 +207,9 @@ namespace HRACCPortal.Models
                                    CustomerTerm = customer.CustomerTerm,
                                    DateAdded = customer.DateAdded,
                                    // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
-                                   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   DateUpdated = DateTime.TryParse(customer.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                    // DateUpdated = customer.DateUpdated,
                                    UpdatedBy = customer.UpdatedBy,
                                    CustomerIdPK = customer.CustomerIdPK,
@@ -237,7 +239,9 @@ namespace HRACCPortal.Models
                                 CustomerFEID = customer.CustomerFEID,
                                 CustomerTerm = customer.CustomerTerm,
                                 DateAdded = customer.DateAdded,
-                                DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                DateUpdated = DateTime.TryParse(customer.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                 UpdatedBy = customer.UpdatedBy,
                                 CustomerIdPK = customer.CustomerIdPK,
                                 isActive = customer.isActive
@@ -269,7 +273,9 @@ namespace HRACCPortal.Models
                                 CustomerFEID = customer.CustomerFEID,
                                 CustomerTerm = customer.CustomerTerm,
                                 DateAdded = customer.DateAdded,
-                                DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                DateUpdated = DateTime.TryParse(customer.DateUpdated, out var parsedDate)
+                                 ? parsedDate.ToString("MMM,dd,yyyy")
+                                 : string.Empty,
                                 UpdatedBy = customer.UpdatedBy,
                                 CustomerIdPK = customer.CustomerIdPK,
                                 isActive = customer.isActive
@@ -391,7 +397,11 @@ namespace HRACCPortal.Models
                                    EmployerFEID = employer.EmployerFEID,
                                    DateAdded = employer.DateAdded,
                                    // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
-                                   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   //DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   DateUpdated = DateTime.TryParse(employer.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
+
                                    // DateUpdated = customer.DateUpdated,
                                    UpdatedBy = employer.UpdatedBy,
                                    EmployerIdPK = employer.EmployerIdPK,
@@ -440,7 +450,9 @@ namespace HRACCPortal.Models
                 EmployerName = employer.EmployerName,
                 EmployerFEID = employer.EmployerFEID,
                 DateAdded = employer.DateAdded,
-                DateUpdated = employer.DateUpdated,
+                 DateUpdated = DateTime.TryParse(employer.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                 UpdatedBy = employer.UpdatedBy,
                 EmployerIdPK = employer.EmployerIdPK,
                 isActive = employer.isActive
@@ -490,8 +502,12 @@ namespace HRACCPortal.Models
                                         
                                        EmployerFEID = employer.EmployerFEID,
                                        DateAdded = employer.DateAdded,
+                                       DateUpdated = !string.IsNullOrEmpty(employer.DateUpdated)
+                                        ? Convert.ToDateTime(employer.DateUpdated).ToString("MMM,dd,yyyy")
+                                        : string.Empty,
+
                                        // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
-                                      
+
                                        // DateUpdated = customer.DateUpdated,
                                        UpdatedBy = employer.UpdatedBy,
                                     
@@ -595,7 +611,9 @@ namespace HRACCPortal.Models
                                    EmployeeTitle = employee.EmployeeTitle,
                                    DateAdded = employee.DateAdded,
                                    // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
-                                   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   DateUpdated = DateTime.TryParse(employee.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                    // DateUpdated = customer.DateUpdated,
                                    UpdatedBy = employee.UpdatedBy,
                                    EmployeeIdPk = employee.EmployeeIdPk,
@@ -638,7 +656,9 @@ namespace HRACCPortal.Models
                                        EmployeeZip = employee.EmployeeZip,
                                        isActive = employee.isActive,
                                        DateAdded = employee.DateAdded,
-                                      
+                                       DateUpdated = !string.IsNullOrEmpty(employee.DateUpdated)
+                                        ? Convert.ToDateTime(employee.DateUpdated).ToString("MMM,dd,yyyy")
+                                        : string.Empty,
                                        UpdatedBy = employee.UpdatedBy,
                                    }).ToList();
         }
@@ -685,7 +705,10 @@ namespace HRACCPortal.Models
                                        EmployeeZip = employees.EmployeeZip,
                                        isActive = employees.isActive,
                                        DateAdded = employees.DateAdded,
-                                    //   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                       //   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                       DateUpdated = !string.IsNullOrEmpty(employee.DateUpdated)
+                                         ? Convert.ToDateTime(employee.DateUpdated).ToString("MMM,dd,yyyy")
+                                         : string.Empty,
                                        UpdatedBy = employees.UpdatedBy,
                                    }).ToList();
         }
@@ -1071,7 +1094,10 @@ namespace HRACCPortal.Models
                                    DateAdded = obj.DateAdded, //string.IsNullOrEmpty(obj.DateAdded) == true ? DateTime.Now.ToString("MM/dd/yyyy") : DateTime.Parse(obj.DateAdded).ToString("MM/dd/yyyy"),
                                                               //  DateUpdated = obj.DateUpdated,
                                                               //DateUpdated = Convert.ToDateTime(obj.DateUpdated).ToString("MMM,dd, yyyy"),
-                                   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                                              //DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   DateUpdated = DateTime.TryParse(obj.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                    UpdatedBy = obj.UpdatedBy,
                                    State = obj.State,
                                    WorkerType = obj.WorkerType,
@@ -1107,7 +1133,10 @@ namespace HRACCPortal.Models
                                   UserName = obj.UserName,
                                   StartDate = obj.StartDate,
                                   DateAdded = obj.DateAdded,
-                                  DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  //DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  DateUpdated = DateTime.TryParse(obj.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                   UpdatedBy = obj.UpdatedBy,
                                   State = obj.State,
                                   WorkerType = obj.WorkerType,
@@ -1145,7 +1174,10 @@ namespace HRACCPortal.Models
                                   UserName = obj.UserName,
                                   StartDate = obj.StartDate,
                                   DateAdded = obj.DateAdded,
-                                  DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  //DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                  DateUpdated = DateTime.TryParse(obj.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                   UpdatedBy = obj.UpdatedBy,
                                   State = obj.State,
                                   WorkerType = obj.WorkerType,
@@ -1278,7 +1310,9 @@ namespace HRACCPortal.Models
 
                                    DateAdded = contact.DateAdded,
                                    // DateUpdated = Convert.ToDateTime(customer.DateUpdated).ToString("MMM,dd, yyyy"),
-                                   DateUpdated = DateTime.Now.ToString("MMM,dd,yyyy"),
+                                   DateUpdated = DateTime.TryParse(contact.DateUpdated, out var parsedDate)
+                                    ? parsedDate.ToString("MMM,dd,yyyy")
+                                    : string.Empty,
                                    // DateUpdated = customer.DateUpdated,
                                    UpdatedBy = contact.UpdatedBy,
                                    
@@ -1416,7 +1450,7 @@ namespace HRACCPortal.Models
 
         public InvoicePdfModel GenratePdf(int id)
         {
-            InvoicePdfModel invoicePdfModel = new InvoicePdfModel();
+                InvoicePdfModel invoicePdfModel = new InvoicePdfModel();
             invoicePdfModel.invDetails = (from inv in entities.Invoices
                                           join cpd in entities.ConsultantPositionDetails on inv.ConsultantPositionIdFK equals cpd.ConsultantPositionIdPK
                                           join ct in entities.Consultants on cpd.ConsultantIdFK equals ct.ConsultantIdPK
@@ -1425,7 +1459,7 @@ namespace HRACCPortal.Models
                                           join c in entities.Customers on p.CustomerIdFK equals c.CustomerIdPK
                                           //      join e in entities.Employers on p.EmployerIdFK equals e.EmployerIdPK
                                           where inv.InvoiceIdPK == id
-                                          select new { inv, cpd, p, c, ct, pr }).AsEnumerable().Select(x => new InvoicePdfModel
+                                          select new { inv, cpd, p, c, ct, pr }).AsEnumerable().Select(x =>     new InvoicePdfModel
                                           {
                                               CustomerName = x.c.CustomerName,
                                               CustomerContactAddress1 = x.c.CustomerContactAddress1,

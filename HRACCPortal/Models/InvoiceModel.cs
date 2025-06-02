@@ -117,13 +117,17 @@ namespace HRACCPortal.Models
                     ConsultantIdFK = model.ConsultantIdFK,
                     ConsultantPositionIdFK = model.ConsultantPositionIdFK,
                     InvoiceAmount = model.InvoiceAmount,
-                    RegularHours=model.RegularHours,
-                    OvertimeHours=model.OvertimeHours,
+                    RegularHours = model.RegularHours,
+                    OvertimeHours = model.OvertimeHours,
                     DateAdded = IndianTimeNow,
                     DateUpdated = IndianTimeNow,
                     AddedBy = "ADMIN",
                     UpdatedBy = "ADMIN"
                 };
+                if (model.CustomerId > 0)
+                {
+                    invdata.CustomerId = model.CustomerId;
+                }
 
                 hRACCDBEntities.Invoices.AddObject(invdata);
                 statusDetail = hRACCDBEntities.SaveChanges() == 1 ? "Success" : "Failed";
