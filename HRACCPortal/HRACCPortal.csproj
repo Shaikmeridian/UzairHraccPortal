@@ -205,6 +205,7 @@
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\InvoiceFromController.cs" />
     <Compile Include="Controllers\InvoiceGenerationController.cs" />
     <Compile Include="Controllers\InvoiceSubmissionController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\EmployerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InvoiceFrom.cs" />
     <Compile Include="Models\InvoiceGenerationModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\InvoicePdfModel.cs" />
@@ -2636,6 +2638,7 @@
     <Content Include="Views\PaymentsReceived\ChequeReport.cshtml" />
     <Content Include="Views\BalanceSheet\Index.cshtml" />
     <Content Include="Views\QuaterlySalesReport\QuarterlyReport.cshtml" />
+    <Content Include="Views\InvoiceFrom\Index.cshtml" />
     <None Include="_bin_deployableAssemblies\amd64\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\amd64\sqlceme40.dll" />

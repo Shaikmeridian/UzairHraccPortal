@@ -68,6 +68,8 @@
         <EntityTypeShape EntityType="HRACCDBModel.Deliverable" Width="1.5" PointX="7" PointY="24.875" />
         <AssociationConnector Association="HRACCDBModel.FK__ChequeDet__Payme__473C8FC7" />
         <AssociationConnector Association="HRACCDBModel.FK__Deliverab__Posit__3429BB53" />
+        <EntityTypeShape EntityType="HRACCDBModel.InvoicesFrom" Width="1.5" PointX="7.5" PointY="27.875" />
+        <AssociationConnector Association="HRACCDBModel.FK__InvoicesF__Subco__740F363E" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

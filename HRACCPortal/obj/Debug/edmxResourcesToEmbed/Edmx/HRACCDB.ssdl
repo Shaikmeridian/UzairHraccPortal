@@ -375,6 +375,18 @@
     <Property Name="AddedBy" Type="nvarchar(max)" />
     <Property Name="UpdatedBy" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="InvoicesFrom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubcontractorId" Type="int" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="InvoiceDate" Type="date" Nullable="false" />
+    <Property Name="PaymentStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="InvoiceSubmission">
     <Key>
       <PropertyRef Name="InvoiceSubmissionId" />
@@ -714,6 +726,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__InvoicesF__Subco__740F363E">
+    <End Role="SubContractor" Type="Self.SubContractor" Multiplicity="1" />
+    <End Role="InvoicesFrom" Type="Self.InvoicesFrom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubContractor">
+        <PropertyRef Name="SubContractorIdPK" />
+      </Principal>
+      <Dependent Role="InvoicesFrom">
+        <PropertyRef Name="SubcontractorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__SecurityQ__UserI__1F63A897">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
     <End Role="SecurityQuestions" Type="Self.SecurityQuestions" Multiplicity="*" />
@@ -895,6 +919,7 @@
     <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InvoiceGeneration" EntityType="Self.InvoiceGeneration" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InvoiceReconcile" EntityType="Self.InvoiceReconcile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoicesFrom" EntityType="Self.InvoicesFrom" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InvoiceSubmission" EntityType="Self.InvoiceSubmission" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentsReceived" EntityType="Self.PaymentsReceived" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
@@ -955,6 +980,10 @@
     <AssociationSet Name="FK__EmployeeE__Emplo__3552E9B6" Association="Self.FK__EmployeeE__Emplo__3552E9B6">
       <End Role="Employer" EntitySet="Employer" />
       <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InvoicesF__Subco__740F363E" Association="Self.FK__InvoicesF__Subco__740F363E">
+      <End Role="SubContractor" EntitySet="SubContractor" />
+      <End Role="InvoicesFrom" EntitySet="InvoicesFrom" />
     </AssociationSet>
     <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />

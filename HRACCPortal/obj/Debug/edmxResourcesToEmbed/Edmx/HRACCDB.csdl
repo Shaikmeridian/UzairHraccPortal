@@ -204,6 +204,11 @@
       <End Role="Position" EntitySet="Positions" />
       <End Role="Deliverable" EntitySet="Deliverables" />
     </AssociationSet>
+    <EntitySet Name="InvoicesFrom" EntityType="HRACCDBModel.InvoicesFrom" />
+    <AssociationSet Name="FK__InvoicesF__Subco__740F363E" Association="HRACCDBModel.FK__InvoicesF__Subco__740F363E">
+      <End Role="SubContractor" EntitySet="SubContractors" />
+      <End Role="InvoicesFrom" EntitySet="InvoicesFrom" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Position">
     <Key>
@@ -541,6 +546,7 @@
     <Property Name="isActive" Type="Boolean" Nullable="false" />
     <Property Name="SubContractorFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubContractor" ToRole="SubcontractorEmployer" />
+    <NavigationProperty Name="InvoicesFrom" Relationship="HRACCDBModel.FK__InvoicesF__Subco__740F363E" FromRole="SubContractor" ToRole="InvoicesFrom" />
   </EntityType>
   <EntityType Name="BalanceSheet">
     <Key>
@@ -1047,6 +1053,31 @@
       </Principal>
       <Dependent Role="Deliverable">
         <PropertyRef Name="PositionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="InvoicesFrom">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubcontractorId" Type="Int32" Nullable="false" />
+    <Property Name="InvoiceNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SubContractor" Relationship="HRACCDBModel.FK__InvoicesF__Subco__740F363E" FromRole="InvoicesFrom" ToRole="SubContractor" />
+  </EntityType>
+  <Association Name="FK__InvoicesF__Subco__740F363E">
+    <End Type="HRACCDBModel.SubContractor" Role="SubContractor" Multiplicity="1" />
+    <End Type="HRACCDBModel.InvoicesFrom" Role="InvoicesFrom" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubContractor">
+        <PropertyRef Name="SubContractorIdPK" />
+      </Principal>
+      <Dependent Role="InvoicesFrom">
+        <PropertyRef Name="SubcontractorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -44,6 +44,7 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "AspNetUserRoles", "AspNetRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetRole), "AspNetUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.AspNetUser))]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__ChequeDet__Payme__473C8FC7", "PaymentsReceived", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.PaymentsReceived), "ChequeDetail", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.ChequeDetail), true)]
 [assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__Deliverab__Posit__3429BB53", "Position", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.Position), "Deliverable", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.Deliverable), true)]
+[assembly: EdmRelationshipAttribute("HRACCDBModel", "FK__InvoicesF__Subco__740F363E", "SubContractor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(HRACCPortal.Edmx.SubContractor), "InvoicesFrom", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(HRACCPortal.Edmx.InvoicesFrom), true)]
 
 #endregion
 
@@ -702,6 +703,22 @@ namespace HRACCPortal.Edmx
             }
         }
         private ObjectSet<Deliverable> _Deliverables;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<InvoicesFrom> InvoicesFrom
+        {
+            get
+            {
+                if ((_InvoicesFrom == null))
+                {
+                    _InvoicesFrom = base.CreateObjectSet<InvoicesFrom>("InvoicesFrom");
+                }
+                return _InvoicesFrom;
+            }
+        }
+        private ObjectSet<InvoicesFrom> _InvoicesFrom;
 
         #endregion
 
@@ -1009,6 +1026,14 @@ namespace HRACCPortal.Edmx
         public void AddToDeliverables(Deliverable deliverable)
         {
             base.AddObject("Deliverables", deliverable);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the InvoicesFrom EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToInvoicesFrom(InvoicesFrom invoicesFrom)
+        {
+            base.AddObject("InvoicesFrom", invoicesFrom);
         }
 
         #endregion
@@ -8805,6 +8830,258 @@ namespace HRACCPortal.Edmx
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="InvoicesFrom")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class InvoicesFrom : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new InvoicesFrom object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="subcontractorId">Initial value of the SubcontractorId property.</param>
+        /// <param name="invoiceNumber">Initial value of the InvoiceNumber property.</param>
+        /// <param name="invoiceAmount">Initial value of the InvoiceAmount property.</param>
+        /// <param name="invoiceDate">Initial value of the InvoiceDate property.</param>
+        /// <param name="paymentStatus">Initial value of the PaymentStatus property.</param>
+        public static InvoicesFrom CreateInvoicesFrom(global::System.Int32 id, global::System.Int32 subcontractorId, global::System.String invoiceNumber, global::System.Decimal invoiceAmount, global::System.DateTime invoiceDate, global::System.String paymentStatus)
+        {
+            InvoicesFrom invoicesFrom = new InvoicesFrom();
+            invoicesFrom.Id = id;
+            invoicesFrom.SubcontractorId = subcontractorId;
+            invoicesFrom.InvoiceNumber = invoiceNumber;
+            invoicesFrom.InvoiceAmount = invoiceAmount;
+            invoicesFrom.InvoiceDate = invoiceDate;
+            invoicesFrom.PaymentStatus = paymentStatus;
+            return invoicesFrom;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SubcontractorId
+        {
+            get
+            {
+                return _SubcontractorId;
+            }
+            set
+            {
+                OnSubcontractorIdChanging(value);
+                ReportPropertyChanging("SubcontractorId");
+                _SubcontractorId = StructuralObject.SetValidValue(value, "SubcontractorId");
+                ReportPropertyChanged("SubcontractorId");
+                OnSubcontractorIdChanged();
+            }
+        }
+        private global::System.Int32 _SubcontractorId;
+        partial void OnSubcontractorIdChanging(global::System.Int32 value);
+        partial void OnSubcontractorIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String InvoiceNumber
+        {
+            get
+            {
+                return _InvoiceNumber;
+            }
+            set
+            {
+                OnInvoiceNumberChanging(value);
+                ReportPropertyChanging("InvoiceNumber");
+                _InvoiceNumber = StructuralObject.SetValidValue(value, false, "InvoiceNumber");
+                ReportPropertyChanged("InvoiceNumber");
+                OnInvoiceNumberChanged();
+            }
+        }
+        private global::System.String _InvoiceNumber;
+        partial void OnInvoiceNumberChanging(global::System.String value);
+        partial void OnInvoiceNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal InvoiceAmount
+        {
+            get
+            {
+                return _InvoiceAmount;
+            }
+            set
+            {
+                OnInvoiceAmountChanging(value);
+                ReportPropertyChanging("InvoiceAmount");
+                _InvoiceAmount = StructuralObject.SetValidValue(value, "InvoiceAmount");
+                ReportPropertyChanged("InvoiceAmount");
+                OnInvoiceAmountChanged();
+            }
+        }
+        private global::System.Decimal _InvoiceAmount;
+        partial void OnInvoiceAmountChanging(global::System.Decimal value);
+        partial void OnInvoiceAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime InvoiceDate
+        {
+            get
+            {
+                return _InvoiceDate;
+            }
+            set
+            {
+                OnInvoiceDateChanging(value);
+                ReportPropertyChanging("InvoiceDate");
+                _InvoiceDate = StructuralObject.SetValidValue(value, "InvoiceDate");
+                ReportPropertyChanged("InvoiceDate");
+                OnInvoiceDateChanged();
+            }
+        }
+        private global::System.DateTime _InvoiceDate;
+        partial void OnInvoiceDateChanging(global::System.DateTime value);
+        partial void OnInvoiceDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PaymentStatus
+        {
+            get
+            {
+                return _PaymentStatus;
+            }
+            set
+            {
+                OnPaymentStatusChanging(value);
+                ReportPropertyChanging("PaymentStatus");
+                _PaymentStatus = StructuralObject.SetValidValue(value, false, "PaymentStatus");
+                ReportPropertyChanged("PaymentStatus");
+                OnPaymentStatusChanged();
+            }
+        }
+        private global::System.String _PaymentStatus;
+        partial void OnPaymentStatusChanging(global::System.String value);
+        partial void OnPaymentStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value, "CreatedDate");
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CreatedDate;
+        partial void OnCreatedDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnCreatedDateChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__InvoicesF__Subco__740F363E", "SubContractor")]
+        public SubContractor SubContractor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "SubContractor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "SubContractor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SubContractor> SubContractorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubContractor>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "SubContractor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubContractor>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "SubContractor", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="HRACCDBModel", Name="InvoiceSubmission")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -11376,6 +11653,28 @@ namespace HRACCPortal.Edmx
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SubcontractorEmployer>("HRACCDBModel.FK__Subcontra__Subco__7AF13DF7", "SubcontractorEmployer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("HRACCDBModel", "FK__InvoicesF__Subco__740F363E", "InvoicesFrom")]
+        public EntityCollection<InvoicesFrom> InvoicesFrom
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvoicesFrom>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "InvoicesFrom");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvoicesFrom>("HRACCDBModel.FK__InvoicesF__Subco__740F363E", "InvoicesFrom", value);
                 }
             }
         }

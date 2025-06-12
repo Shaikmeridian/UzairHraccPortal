@@ -380,6 +380,18 @@
           <Property Name="AddedBy" Type="nvarchar(max)" />
           <Property Name="UpdatedBy" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="InvoicesFrom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubcontractorId" Type="int" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InvoiceAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="InvoiceDate" Type="date" Nullable="false" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="InvoiceSubmission">
           <Key>
             <PropertyRef Name="InvoiceSubmissionId" />
@@ -719,6 +731,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__InvoicesF__Subco__740F363E">
+          <End Role="SubContractor" Type="Self.SubContractor" Multiplicity="1" />
+          <End Role="InvoicesFrom" Type="Self.InvoicesFrom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubContractor">
+              <PropertyRef Name="SubContractorIdPK" />
+            </Principal>
+            <Dependent Role="InvoicesFrom">
+              <PropertyRef Name="SubcontractorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SecurityQ__UserI__1F63A897">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="SecurityQuestions" Type="Self.SecurityQuestions" Multiplicity="*" />
@@ -900,6 +924,7 @@
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceGeneration" EntityType="Self.InvoiceGeneration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceReconcile" EntityType="Self.InvoiceReconcile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoicesFrom" EntityType="Self.InvoicesFrom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceSubmission" EntityType="Self.InvoiceSubmission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentsReceived" EntityType="Self.PaymentsReceived" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
@@ -960,6 +985,10 @@
           <AssociationSet Name="FK__EmployeeE__Emplo__3552E9B6" Association="Self.FK__EmployeeE__Emplo__3552E9B6">
             <End Role="Employer" EntitySet="Employer" />
             <End Role="EmployeeEmployer" EntitySet="EmployeeEmployer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoicesF__Subco__740F363E" Association="Self.FK__InvoicesF__Subco__740F363E">
+            <End Role="SubContractor" EntitySet="SubContractor" />
+            <End Role="InvoicesFrom" EntitySet="InvoicesFrom" />
           </AssociationSet>
           <AssociationSet Name="FK__SecurityQ__UserI__1F63A897" Association="Self.FK__SecurityQ__UserI__1F63A897">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1217,6 +1246,11 @@
           <AssociationSet Name="FK__Deliverab__Posit__3429BB53" Association="HRACCDBModel.FK__Deliverab__Posit__3429BB53">
             <End Role="Position" EntitySet="Positions" />
             <End Role="Deliverable" EntitySet="Deliverables" />
+          </AssociationSet>
+          <EntitySet Name="InvoicesFrom" EntityType="HRACCDBModel.InvoicesFrom" />
+          <AssociationSet Name="FK__InvoicesF__Subco__740F363E" Association="HRACCDBModel.FK__InvoicesF__Subco__740F363E">
+            <End Role="SubContractor" EntitySet="SubContractors" />
+            <End Role="InvoicesFrom" EntitySet="InvoicesFrom" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Position">
@@ -1555,6 +1589,7 @@
           <Property Name="isActive" Type="Boolean" Nullable="false" />
           <Property Name="SubContractorFEID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SubcontractorEmployers" Relationship="HRACCDBModel.FK__Subcontra__Subco__7AF13DF7" FromRole="SubContractor" ToRole="SubcontractorEmployer" />
+          <NavigationProperty Name="InvoicesFrom" Relationship="HRACCDBModel.FK__InvoicesF__Subco__740F363E" FromRole="SubContractor" ToRole="InvoicesFrom" />
         </EntityType>
         <EntityType Name="BalanceSheet">
           <Key>
@@ -2061,6 +2096,31 @@
             </Principal>
             <Dependent Role="Deliverable">
               <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="InvoicesFrom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubcontractorId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SubContractor" Relationship="HRACCDBModel.FK__InvoicesF__Subco__740F363E" FromRole="InvoicesFrom" ToRole="SubContractor" />
+        </EntityType>
+        <Association Name="FK__InvoicesF__Subco__740F363E">
+          <End Type="HRACCDBModel.SubContractor" Role="SubContractor" Multiplicity="1" />
+          <End Type="HRACCDBModel.InvoicesFrom" Role="InvoicesFrom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubContractor">
+              <PropertyRef Name="SubContractorIdPK" />
+            </Principal>
+            <Dependent Role="InvoicesFrom">
+              <PropertyRef Name="SubcontractorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2675,6 +2735,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="InvoicesFrom">
+            <EntityTypeMapping TypeName="HRACCDBModel.InvoicesFrom">
+              <MappingFragment StoreEntitySet="InvoicesFrom">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoiceAmount" ColumnName="InvoiceAmount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="SubcontractorId" ColumnName="SubcontractorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2689,8 +2762,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
       </DesignerInfoPropertySet>
